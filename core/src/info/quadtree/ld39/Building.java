@@ -40,6 +40,8 @@ public abstract class Building {
 
 	List<Connection> connections;
 
+	public boolean isPowered = false;
+
 	Collection<Building> neighbors;
 
 	public TilePos pos = new TilePos(0, 0);
@@ -194,7 +196,23 @@ public abstract class Building {
 			LD39.s.gs.addConnections(connections);
 		}
 
-		power += getNetPower();
+		isPowered = true;
+
+		if (getNetPower() > 0.1)
+			power += getNetPower();
+
+		if (getNetPower() < -0.1) {
+			double powerToConsume = -getNetPower();
+
+			if (powerToConsume > power) {
+				isPowered = false;
+				powerToConsume = power;
+			}
+
+			power -= powerToConsume;
+
+			LD39.s.gs.money += powerToConsume;
+		}
 
 		if (power < 0)
 			power = 0;
