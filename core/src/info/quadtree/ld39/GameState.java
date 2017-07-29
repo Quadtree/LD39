@@ -300,7 +300,7 @@ public class GameState implements InputProcessor {
 
 		int loops = 0;
 
-		while (!isAreaClearFor(nb)) {
+		while (!isAreaClear(TilePos.create(nb.pos.x - 1, nb.pos.y - 1), TilePos.create(nb.getSize().x + 2, nb.getSize().y + 2))) {
 			nb.pos = TilePos.create(nb.pos.x + MathUtils.random(-4, 4), nb.pos.y + MathUtils.random(-4, 4));
 
 			if (++loops > 10000)
