@@ -115,6 +115,10 @@ public abstract class Building {
 
 	public abstract TilePos getSize();
 
+	public double getSurgeDestructionOdds() {
+		return 0.25;
+	}
+
 	public boolean hasEnoughPower() {
 		if (isSink())
 			return power < getMaxPower();
@@ -124,7 +128,7 @@ public abstract class Building {
 	public void hitByPowerSurge() {
 		System.out.println(this + " hit by surge");
 
-		if (Math.random() < 0.25)
+		if (Math.random() < getSurgeDestructionOdds())
 			alive = false;
 	}
 

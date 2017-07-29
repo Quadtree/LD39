@@ -23,6 +23,8 @@ public class PowerLine extends Building {
 	}
 
 	@Override
-	public void hitByPowerSurge() {
+	public double getSurgeDestructionOdds() {
+		return 0;
 	}
+
 }

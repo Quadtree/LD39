@@ -23,12 +23,12 @@ public class SurgeProtector extends Building {
 	}
 
 	@Override
-	public void hitByPowerSurge() {
+	public double getSurgeDestructionOdds() {
+		return 0;
 	}
 
 	@Override
 	public boolean isSurgeStopper() {
 		return true;
 	}
-
 }
