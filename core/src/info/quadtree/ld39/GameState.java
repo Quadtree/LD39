@@ -11,6 +11,7 @@ public class GameState implements InputProcessor {
 	List<Building> buildings = new ArrayList<Building>();
 
 	Building heldBuilding = null;
+	List<Building> heldBuildingTrail;
 
 	int mx, my;
 
@@ -36,8 +37,8 @@ public class GameState implements InputProcessor {
 	@Override
 	public boolean keyDown(int keycode) {
 
-		// if (keycode == Input.Keys.NUM_1)
-		// heldBuilding = "PowerLine";
+		if (keycode == Input.Keys.NUM_1)
+			heldBuilding = new PowerLine();
 
 		if (keycode == Input.Keys.NUM_2)
 			heldBuilding = new SolarPlant();
