@@ -1,12 +1,35 @@
 package info.quadtree.ld39;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
+import java.util.PriorityQueue;
 import java.util.Set;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public abstract class Building {
+
+	class SearchNode implements Comparable<SearchNode> {
+		public final Building building;
+		public final double retained;
+
+		public SearchNode(Building building, double retained) {
+			super();
+			this.building = building;
+			this.retained = retained;
+		}
+
+		@Override
+		public int compareTo(SearchNode o) {
+			return (int) (this.retained * 10000 - o.retained * 10000);
+		}
+	}
+
+	List<Connection> connections;
+
+	Collection<Building> neighbors;
 
 	public TilePos pos = new TilePos(0, 0);
 
@@ -15,6 +38,10 @@ public abstract class Building {
 	Sprite sprite;
 
 	public Collection<Building> getAdjacentBuildings() {
+
+		if (neighbors != null)
+			return neighbors;
+
 		Set<Building> ret = new HashSet<Building>();
 
 		for (int x = 0; x < 2; ++x) {
@@ -57,6 +84,8 @@ public abstract class Building {
 
 		// System.out.println(ret);
 
+		this.neighbors = ret;
+
 		return ret;
 	}
 
@@ -70,7 +99,19 @@ public abstract class Building {
 		return 0;
 	}
 
+	public double getRetained() {
+		return 1;
+	}
+
 	public abstract TilePos getSize();
+
+	public boolean isSink() {
+		return getNetPower() < 0;
+	}
+
+	public boolean isSource() {
+		return getNetPower() > 0;
+	}
 
 	public boolean keep() {
 		return true;
@@ -92,15 +133,29 @@ public abstract class Building {
 	}
 
 	public void update() {
-		for (Building b : getAdjacentBuildings()) {
-			if (b.power > this.power) {
-				double transfer = (b.power - this.power) / 2;
+		if (connections == null && isSink()) {
+			connections = new ArrayList<Connection>();
 
-				// don't allow transfers over the maximum
-				transfer = Math.min(transfer, this.getMaxPower() - this.power);
-				b.power -= transfer;
-				this.power += transfer;
+			Set<Building> closed = new HashSet<Building>();
+			PriorityQueue<SearchNode> open = new PriorityQueue<SearchNode>();
+			open.add(new SearchNode(this, 0));
+
+			while (open.size() > 0) {
+				SearchNode topNode = open.poll();
+				closed.add(topNode.building);
+
+				if (topNode.building.isSource()) {
+					connections.add(new Connection(topNode.retained, topNode.building, this));
+				}
+
+				for (Building b : topNode.building.getAdjacentBuildings()) {
+					if (!closed.contains(b)) {
+						open.add(new SearchNode(b, topNode.retained * b.getRetained()));
+					}
+				}
 			}
+
+			System.out.println(connections);
 		}
 
 		power += getNetPower();
@@ -109,5 +164,10 @@ public abstract class Building {
 			power = 0;
 		if (power > getMaxPower())
 			power = getMaxPower();
+	}
+
+	public void updateTopology() {
+		connections = null;
+		neighbors = null;
 	}
 }

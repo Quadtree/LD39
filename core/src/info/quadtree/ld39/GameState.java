@@ -146,6 +146,11 @@ public class GameState implements InputProcessor {
 		}
 	}
 
+	public void topologyChanged() {
+		for (Building b : buildings)
+			b.updateTopology();
+	}
+
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 
@@ -179,6 +184,8 @@ public class GameState implements InputProcessor {
 
 			heldBuilding = null;
 			buildingDragStart = null;
+
+			topologyChanged();
 		}
 
 		return false;
