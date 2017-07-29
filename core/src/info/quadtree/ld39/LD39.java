@@ -12,10 +12,8 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -77,19 +75,18 @@ public class LD39 extends ApplicationAdapter {
 		uiStage = new Stage();
 
 		final Dialog wnd = new Dialog("", defaultDialogStyle);
-		wnd.setSize(300, 300);
+		// wnd.setSize(300, 300);
 		wnd.setX(400);
 		wnd.setY(400);
-		wnd.getContentTable().add(new Label("Some text", defaultLabelStyle));
-		TextButton bt = new TextButton("OK", defaultButtonStyle);
-		bt.addListener(new ChangeListener() {
+		wnd.getContentTable().add(Util.createLabel("Some text")).pad(8);
+		wnd.button(Util.createButton("Click", new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				System.out.println("CLICK");
 				wnd.remove();
 			}
-		});
-		wnd.button(bt);
+		})).pad(8);
+		wnd.pack();
 		uiStage.addActor(wnd);
 
 		multiplexer = new InputMultiplexer();
