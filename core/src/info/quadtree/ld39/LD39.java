@@ -2,7 +2,6 @@ package info.quadtree.ld39;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -13,6 +12,7 @@ public class LD39 extends ApplicationAdapter {
 
 	public static boolean CHEATS = true;
 
+	public final static int DAY_TICKS = 1000;
 	public final static float POWER_PRICE = .2f;
 	public static LD39 s;
 	public final static int TILE_SIZE = 16;
@@ -62,8 +62,8 @@ public class LD39 extends ApplicationAdapter {
 			updatesDone++;
 		}
 
-		Gdx.gl.glClearColor(0.3f, 0.3f, 0.3f, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		// Gdx.gl.glClearColor(0.3f, 0.3f, 0.3f, 1);
+		// Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		// Matrix4 m4 = new Matrix4();
 		// m4.setToOrtho(0, 1024, 768, 0, 0, 1);

@@ -10,6 +10,7 @@ import java.util.Set;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.GL20;
 
 public class GameState implements InputProcessor {
 	TilePos buildingDragStart = null;
@@ -18,10 +19,13 @@ public class GameState implements InputProcessor {
 	private List<Connection> connections = new ArrayList<Connection>();
 	boolean connectionsNeedsSort = false;
 
+	int dayTicks = 0;
+
 	Building heldBuilding = null;
 
-	float money = 1000;
+	public boolean isDay = true;
 
+	float money = 1000;
 	int mx, my;
 
 	List<VisualEffect> visualEffects = new ArrayList<VisualEffect>();
@@ -118,9 +122,25 @@ public class GameState implements InputProcessor {
 		if (keycode == Input.Keys.NUM_3)
 			heldBuilding = new SurgeProtector();
 
+		if (keycode == Input.Keys.NUM_4)
+			heldBuilding = new FusionPlant();
+
+		if (keycode == Input.Keys.NUM_5)
+			heldBuilding = new HydrocarbonPlant();
+
 		if (LD39.CHEATS) {
 			if (keycode == Input.Keys.S) {
 				powerSurge(getMouseTilePos());
+			}
+
+			if (keycode == Input.Keys.EQUALS)
+				money += 10000;
+			if (keycode == Input.Keys.MINUS)
+				money -= 10000;
+
+			if (keycode == Input.Keys.D) {
+				isDay = !isDay;
+				dayTicks = 0;
 			}
 		}
 
@@ -187,6 +207,12 @@ public class GameState implements InputProcessor {
 	}
 
 	public void render() {
+		if (isDay)
+			Gdx.gl.glClearColor(0.3f, 0.3f, 0.3f, 1);
+		else
+			Gdx.gl.glClearColor(0.15f, 0.15f, 0.15f, 1);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
 		LD39.s.batch.begin();
 		for (Building b : buildings)
 			b.render();
@@ -294,6 +320,13 @@ public class GameState implements InputProcessor {
 				visualEffects.get(i).update();
 			else
 				visualEffects.remove(i--);
+		}
+
+		dayTicks++;
+
+		if (dayTicks >= LD39.DAY_TICKS) {
+			dayTicks = 0;
+			isDay = !isDay;
 		}
 
 		long endTime = System.currentTimeMillis();

@@ -174,6 +174,8 @@ public abstract class Building {
 		} else
 			sprite.setColor(Color.RED);
 
+		sprite.setSize(getSize().x * 16, getSize().y * 16);
+
 		sprite.draw(LD39.s.batch);
 	}
 
