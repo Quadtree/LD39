@@ -2,11 +2,19 @@ package info.quadtree.ld39;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 
 public class LD39 extends ApplicationAdapter {
 
@@ -14,6 +22,7 @@ public class LD39 extends ApplicationAdapter {
 
 	public final static int DAY_TICKS = 1000;
 	public final static int GROSS_INCOME_TICKS = 60 * 60;
+	public final static int GROSS_INCOME_TO_WIN = 400;
 	public final static float POWER_PRICE = .2f;
 	public static LD39 s;
 	public final static int TILE_SIZE = 16;
@@ -22,13 +31,22 @@ public class LD39 extends ApplicationAdapter {
 
 	public SpriteBatch batch;
 
+	public WindowStyle defaultDialogStyle;
+	public LabelStyle defaultLabelStyle;
+
 	public GameState gs;
 
 	public Texture img;
 
 	public BitmapFont mainFont;
 
+	InputMultiplexer multiplexer;
+
 	public ShapeRenderer shapeRnd;
+
+	public Stage uiStage;
+
+	public Table uiTable;
 
 	public long updatesDone = 0;
 
@@ -42,9 +60,24 @@ public class LD39 extends ApplicationAdapter {
 		img = new Texture("badlogic.jpg");
 		shapeRnd = new ShapeRenderer();
 
+		mainFont = new BitmapFont();
+
+		defaultLabelStyle = new LabelStyle(mainFont, Color.WHITE);
+		defaultDialogStyle = new WindowStyle(mainFont, Color.WHITE, new NinePatchDrawable(atlas.createPatch("dialog1")));
+
 		gs = new GameState();
 
-		mainFont = new BitmapFont();
+		uiStage = new Stage();
+
+		Window wnd = new Window("Test", defaultDialogStyle);
+		wnd.setSize(300, 300);
+		wnd.setX(400);
+		wnd.setY(400);
+		uiStage.addActor(wnd);
+
+		multiplexer = new InputMultiplexer();
+		multiplexer.addProcessor(uiStage);
+		multiplexer.addProcessor(gs);
 
 		updatesDone = System.currentTimeMillis() / 16;
 	}
@@ -72,6 +105,8 @@ public class LD39 extends ApplicationAdapter {
 		// batch.begin();
 
 		gs.render();
+
+		uiStage.draw();
 
 		// batch.end();
 

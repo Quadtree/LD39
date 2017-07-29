@@ -265,7 +265,7 @@ public class GameState implements InputProcessor {
 
 		LD39.s.batch.begin();
 		LD39.s.mainFont.draw(LD39.s.batch, "Credits: " + (int) money, 20, Gdx.graphics.getHeight() - 40);
-		LD39.s.mainFont.draw(LD39.s.batch, "Income/minute: " + (int) getGrossIncome(), 20, Gdx.graphics.getHeight() - 20);
+		LD39.s.mainFont.draw(LD39.s.batch, "Income/minute: " + (int) getGrossIncome() + "/" + LD39.GROSS_INCOME_TO_WIN, 20, Gdx.graphics.getHeight() - 20);
 		LD39.s.batch.end();
 	}
 
@@ -420,6 +420,10 @@ public class GameState implements InputProcessor {
 		if (colonyGrowthTimer >= 60 * 8) {
 			spawnColonyBuilding();
 			colonyGrowthTimer = 0;
+		}
+
+		if (getGrossIncome() >= LD39.GROSS_INCOME_TO_WIN) {
+
 		}
 
 		long endTime = System.currentTimeMillis();
