@@ -1,6 +1,8 @@
 package info.quadtree.ld39;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
@@ -11,7 +13,8 @@ public class GameState implements InputProcessor {
 	TilePos buildingDragStart = null;
 
 	List<Building> buildings = new ArrayList<Building>();
-	public List<Connection> connections = new ArrayList<Connection>();
+	private List<Connection> connections = new ArrayList<Connection>();
+	boolean connectionsNeedsSort = false;
 
 	Building heldBuilding = null;
 
@@ -26,6 +29,11 @@ public class GameState implements InputProcessor {
 		}
 
 		Gdx.input.setInputProcessor(this);
+	}
+
+	public void addConnections(Collection<Connection> conns) {
+		connections.addAll(conns);
+		connectionsNeedsSort = true;
 	}
 
 	public Building getBuildingOnTile(TilePos pos) {
@@ -76,7 +84,7 @@ public class GameState implements InputProcessor {
 						ctp = TilePos.create(ctp.x, ctp.y + 1);
 				}
 
-				System.out.println(ctp);
+				// System.out.println(ctp);
 			}
 		}
 		return buildingsToPlace;
@@ -122,6 +130,10 @@ public class GameState implements InputProcessor {
 		if (heldBuilding != null)
 			setHeldBuildingLoc();
 		return false;
+	}
+
+	public void removeConnections(Collection<Connection> conns) {
+		connections.removeAll(conns);
 	}
 
 	public void render() {
@@ -194,6 +206,12 @@ public class GameState implements InputProcessor {
 	}
 
 	public void update() {
+
+		if (connectionsNeedsSort) {
+			Collections.sort(connections);
+			System.out.println(connections);
+			connectionsNeedsSort = false;
+		}
 
 		for (Connection conn : connections)
 			conn.execute();

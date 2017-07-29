@@ -2,7 +2,6 @@ package info.quadtree.ld39;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.PriorityQueue;
@@ -91,7 +90,7 @@ public abstract class Building {
 
 		ret.remove(null);
 
-		System.out.println(this + " " + ret);
+		// System.out.println(this + " " + ret);
 
 		this.neighbors = ret;
 
@@ -170,13 +169,7 @@ public abstract class Building {
 				}
 			}
 
-			LD39.s.gs.connections.addAll(connections);
-			Collections.sort(LD39.s.gs.connections);
-
-			System.out.println("^^^");
-			for (Connection conn : LD39.s.gs.connections) {
-				System.out.println(conn.sink + " <- " + conn.retained + " -- " + conn.source);
-			}
+			LD39.s.gs.addConnections(connections);
 		}
 
 		power += getNetPower();
@@ -189,7 +182,7 @@ public abstract class Building {
 
 	public void updateTopology() {
 		if (connections != null)
-			LD39.s.gs.connections.removeAll(connections);
+			LD39.s.gs.removeConnections(connections);
 
 		connections = null;
 		neighbors = null;
