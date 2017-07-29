@@ -62,11 +62,11 @@ public class LD39 extends ApplicationAdapter {
 		// Matrix4 m4 = new Matrix4();
 		// m4.setToOrtho(0, 1024, 768, 0, 0, 1);
 		// batch.setProjectionMatrix(m4);
-		batch.begin();
+		// batch.begin();
 
 		gs.render();
 
-		batch.end();
+		// batch.end();
 
 	}
 }

@@ -37,7 +37,7 @@ public class GameState implements InputProcessor {
 
 		Lightning lg = new Lightning();
 		lg.start = TilePos.create(0, 0);
-		lg.end = TilePos.create(20, 20);
+		lg.end = TilePos.create(4, 4);
 		visualEffects.add(lg);
 
 		Gdx.input.setInputProcessor(this);
@@ -186,12 +186,14 @@ public class GameState implements InputProcessor {
 	}
 
 	public void render() {
+		LD39.s.batch.begin();
 		for (Building b : buildings)
 			b.render();
 
 		for (Building b : getBuildingsToPlace()) {
 			b.render();
 		}
+		LD39.s.batch.end();
 
 		for (VisualEffect ve : visualEffects)
 			ve.render();
@@ -275,6 +277,13 @@ public class GameState implements InputProcessor {
 				buildings.get(i).update();
 			else
 				buildings.remove(i--);
+		}
+
+		for (int i = 0; i < visualEffects.size(); ++i) {
+			if (visualEffects.get(i).keep)
+				visualEffects.get(i).update();
+			else
+				visualEffects.remove(i--);
 		}
 
 		long endTime = System.currentTimeMillis();
