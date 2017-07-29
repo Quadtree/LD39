@@ -1,19 +1,25 @@
 package info.quadtree.ld39;
 
 public class Connection implements Comparable<Connection> {
+	public final int priority;
 	public final double retained;
 	public final Building sink;
 	public final Building source;
 
-	public Connection(double retained, Building source, Building sink) {
+	public Connection(double retained, Building source, Building sink, int priority) {
 		super();
 		this.retained = retained;
 		this.source = source;
 		this.sink = sink;
+		this.priority = priority;
 	}
 
 	@Override
 	public int compareTo(Connection o) {
+
+		if (o.priority != this.priority)
+			return this.priority - o.priority;
+
 		return (int) (o.retained * 10000 - this.retained * 10000);
 	}
 

@@ -128,6 +128,9 @@ public class GameState implements InputProcessor {
 		if (keycode == Input.Keys.NUM_5)
 			heldBuilding = new HydrocarbonPlant();
 
+		if (keycode == Input.Keys.NUM_6)
+			heldBuilding = new Battery();
+
 		if (LD39.CHEATS) {
 			if (keycode == Input.Keys.S) {
 				powerSurge(getMouseTilePos());

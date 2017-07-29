@@ -120,6 +120,10 @@ public abstract class Building {
 		return 1;
 	}
 
+	public int getSinkPriority() {
+		return 0;
+	}
+
 	public abstract TilePos getSize();
 
 	public double getSurgeDestructionOdds() {
@@ -218,7 +222,7 @@ public abstract class Building {
 				closed.add(topNode.building);
 
 				if (topNode.building.isSource()) {
-					connections.add(new Connection(topNode.retained, topNode.building, this));
+					connections.add(new Connection(topNode.retained, topNode.building, this, getSinkPriority()));
 				}
 
 				for (Building b : topNode.building.getAdjacentBuildings()) {
