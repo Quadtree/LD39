@@ -69,7 +69,7 @@ public class GameState implements InputProcessor {
 
 		buildingsToPlace.add(heldBuilding);
 
-		if (buildingDragStart != null && heldBuilding instanceof PowerLine) {
+		if (buildingDragStart != null && (heldBuilding instanceof PowerLine || heldBuilding instanceof Battery)) {
 			TilePos ctp = buildingDragStart;
 
 			while (!ctp.equals(heldBuilding.pos)) {
@@ -77,6 +77,8 @@ public class GameState implements InputProcessor {
 
 				if (heldBuilding instanceof PowerLine)
 					nb = new PowerLine();
+				if (heldBuilding instanceof Battery)
+					nb = new Battery();
 
 				if (nb == null)
 					break;
@@ -146,6 +148,8 @@ public class GameState implements InputProcessor {
 				dayTicks = 0;
 			}
 		}
+
+		setHeldBuildingLoc();
 
 		return false;
 	}

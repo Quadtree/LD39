@@ -222,7 +222,9 @@ public abstract class Building {
 				closed.add(topNode.building);
 
 				if (topNode.building.isSource()) {
-					connections.add(new Connection(topNode.retained, topNode.building, this, getSinkPriority()));
+					if (!isSource() || topNode.building.getSinkPriority() < this.getSinkPriority()) {
+						connections.add(new Connection(topNode.retained, topNode.building, this, getSinkPriority()));
+					}
 				}
 
 				for (Building b : topNode.building.getAdjacentBuildings()) {
