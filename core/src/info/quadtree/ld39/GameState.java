@@ -44,8 +44,6 @@ public class GameState implements InputProcessor {
 		 */
 
 		spawnColonyBuilding();
-
-		Gdx.input.setInputProcessor(this);
 	}
 
 	public void addConnections(Collection<Connection> conns) {

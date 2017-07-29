@@ -9,11 +9,16 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 
 public class LD39 extends ApplicationAdapter {
@@ -31,6 +36,7 @@ public class LD39 extends ApplicationAdapter {
 
 	public SpriteBatch batch;
 
+	public TextButtonStyle defaultButtonStyle;
 	public WindowStyle defaultDialogStyle;
 	public LabelStyle defaultLabelStyle;
 
@@ -64,20 +70,33 @@ public class LD39 extends ApplicationAdapter {
 
 		defaultLabelStyle = new LabelStyle(mainFont, Color.WHITE);
 		defaultDialogStyle = new WindowStyle(mainFont, Color.WHITE, new NinePatchDrawable(atlas.createPatch("dialog1")));
+		defaultButtonStyle = new TextButtonStyle(new NinePatchDrawable(atlas.createPatch("dialog1")), new NinePatchDrawable(atlas.createPatch("dialog1")), new NinePatchDrawable(atlas.createPatch("dialog1")), mainFont);
 
 		gs = new GameState();
 
 		uiStage = new Stage();
 
-		Window wnd = new Window("Test", defaultDialogStyle);
+		final Dialog wnd = new Dialog("", defaultDialogStyle);
 		wnd.setSize(300, 300);
 		wnd.setX(400);
 		wnd.setY(400);
+		wnd.getContentTable().add(new Label("Some text", defaultLabelStyle));
+		TextButton bt = new TextButton("OK", defaultButtonStyle);
+		bt.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				System.out.println("CLICK");
+				wnd.remove();
+			}
+		});
+		wnd.button(bt);
 		uiStage.addActor(wnd);
 
 		multiplexer = new InputMultiplexer();
 		multiplexer.addProcessor(uiStage);
 		multiplexer.addProcessor(gs);
+
+		Gdx.input.setInputProcessor(multiplexer);
 
 		updatesDone = System.currentTimeMillis() / 16;
 	}
