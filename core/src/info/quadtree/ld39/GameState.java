@@ -10,7 +10,6 @@ import java.util.Set;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.math.Vector2;
 
 public class GameState implements InputProcessor {
 	TilePos buildingDragStart = null;
@@ -33,13 +32,7 @@ public class GameState implements InputProcessor {
 
 				buildings.add(nh);
 			}
-
 		}
-
-		Lightning lg = new Lightning();
-		lg.setStart(new Vector2(10, 10));
-		lg.setEnd(new Vector2(300, 300));
-		visualEffects.add(lg);
 
 		Gdx.input.setInputProcessor(this);
 	}
@@ -172,8 +165,13 @@ public class GameState implements InputProcessor {
 
 				if (!next.isSurgeStopper()) {
 					for (Building b : next.getAdjacentBuildings()) {
-						if (!closed.contains(b)) {
+						if (!closed.contains(b) && !open.contains(b)) {
 							open.add(b);
+
+							Lightning lg = new Lightning();
+							lg.setStart(next.getCenter());
+							lg.setEnd(b.getCenter());
+							visualEffects.add(lg);
 						}
 					}
 				}

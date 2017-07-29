@@ -8,6 +8,7 @@ import java.util.PriorityQueue;
 import java.util.Set;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Vector2;
 
 public abstract class Building {
 
@@ -97,6 +98,10 @@ public abstract class Building {
 		this.neighbors = ret;
 
 		return ret;
+	}
+
+	public Vector2 getCenter() {
+		return new Vector2(pos.x * LD39.TILE_SIZE + getSize().x * LD39.TILE_SIZE / 2, pos.y * LD39.TILE_SIZE + getSize().y * LD39.TILE_SIZE / 2);
 	}
 
 	public abstract String getGraphic();
