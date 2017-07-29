@@ -20,6 +20,8 @@ public class GameState implements InputProcessor {
 
 	Building heldBuilding = null;
 
+	float money = 1000;
+
 	int mx, my;
 
 	List<VisualEffect> visualEffects = new ArrayList<VisualEffect>();
@@ -196,6 +198,10 @@ public class GameState implements InputProcessor {
 
 		for (VisualEffect ve : visualEffects)
 			ve.render();
+
+		LD39.s.batch.begin();
+		LD39.s.mainFont.draw(LD39.s.batch, "Credits: " + (int) money, 20, Gdx.graphics.getHeight() - 20);
+		LD39.s.batch.end();
 	}
 
 	@Override
