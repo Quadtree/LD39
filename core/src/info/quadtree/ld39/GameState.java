@@ -274,8 +274,10 @@ public class GameState implements InputProcessor {
 		for (int i = 0; i < buildings.size(); ++i) {
 			if (buildings.get(i).keep())
 				buildings.get(i).update();
-			else
+			else {
 				buildings.remove(i--);
+				topologyChanged();
+			}
 		}
 
 		for (int i = 0; i < visualEffects.size(); ++i) {

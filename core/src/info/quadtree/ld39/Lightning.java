@@ -14,6 +14,8 @@ public class Lightning extends VisualEffect {
 
 	Vector2 start;
 
+	float[] vertArr = null;
+
 	public Vector2 getEnd() {
 		return new Vector2(end);
 	}
@@ -26,36 +28,38 @@ public class Lightning extends VisualEffect {
 	public void render() {
 		super.render();
 
-		Vector2 curPos = new Vector2(start);
-		Vector2 trgPos = new Vector2(end);
+		if (vertArr == null) {
+			Vector2 curPos = new Vector2(start);
+			Vector2 trgPos = new Vector2(end);
 
-		List<Float> verts = new ArrayList<Float>();
+			List<Float> verts = new ArrayList<Float>();
 
-		while (curPos.dst2(trgPos) > 6 * 6) {
-			verts.add(curPos.x);
-			verts.add(curPos.y);
+			while (curPos.dst2(trgPos) > 6 * 6) {
+				verts.add(curPos.x);
+				verts.add(curPos.y);
 
-			float dx = trgPos.x - curPos.x;
-			float dy = trgPos.y - curPos.y;
-			float mag = trgPos.dst(curPos);
-			dx /= mag;
-			dy /= mag;
+				float dx = trgPos.x - curPos.x;
+				float dy = trgPos.y - curPos.y;
+				float mag = trgPos.dst(curPos);
+				dx /= mag;
+				dy /= mag;
 
-			curPos.add(dx * 4, dy * 4);
-			curPos.add(MathUtils.random(-2, 2), MathUtils.random(-2, 2));
+				curPos.add(dx * 4, dy * 4);
+				curPos.add(MathUtils.random(-2, 2), MathUtils.random(-2, 2));
+			}
+
+			verts.add(trgPos.x);
+			verts.add(trgPos.y);
+
+			if (verts.size() < 4) {
+				System.out.println(verts);
+				return;
+			}
+
+			vertArr = new float[verts.size()];
+			for (int i = 0; i < verts.size(); ++i)
+				vertArr[i] = verts.get(i);
 		}
-
-		verts.add(trgPos.x);
-		verts.add(trgPos.y);
-
-		if (verts.size() < 4) {
-			System.out.println(verts);
-			return;
-		}
-
-		float[] vertArr = new float[verts.size()];
-		for (int i = 0; i < verts.size(); ++i)
-			vertArr[i] = verts.get(i);
 
 		LD39.s.shapeRnd.begin(ShapeType.Line);
 		LD39.s.shapeRnd.setColor(0.3f, 0.3f, 1.f, fade);
