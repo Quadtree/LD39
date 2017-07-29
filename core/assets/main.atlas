@@ -25,3 +25,10 @@ wire
   orig: 16, 16
   offset: 0, 0
   index: -1
+wire_prot
+  rotate: false
+  xy: 104, 34
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1

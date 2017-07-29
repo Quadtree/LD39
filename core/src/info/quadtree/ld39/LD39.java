@@ -9,9 +9,11 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
 public class LD39 extends ApplicationAdapter {
 
-	public static LD39 s;
+	public static boolean CHEATS = true;
 
+	public static LD39 s;
 	public final static int TILE_SIZE = 16;
+
 	public TextureAtlas atlas;
 
 	public SpriteBatch batch;

@@ -35,6 +35,8 @@ public abstract class Building {
 
 	}
 
+	boolean alive = true;
+
 	List<Connection> connections;
 
 	Collection<Building> neighbors;
@@ -119,6 +121,13 @@ public abstract class Building {
 		return true;
 	}
 
+	public void hitByPowerSurge() {
+		System.out.println(this + " hit by surge");
+
+		if (Math.random() < 0.25)
+			alive = false;
+	}
+
 	public boolean isSink() {
 		return getNetPower() < 0;
 	}
@@ -127,8 +136,12 @@ public abstract class Building {
 		return getNetPower() > 0;
 	}
 
+	public boolean isSurgeStopper() {
+		return false;
+	}
+
 	public boolean keep() {
-		return true;
+		return alive;
 	}
 
 	public void render() {

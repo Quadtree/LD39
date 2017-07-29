@@ -1,10 +1,10 @@
 package info.quadtree.ld39;
 
-public class PowerLine extends Building {
+public class SurgeProtector extends Building {
 
 	@Override
 	public String getGraphic() {
-		return "wire";
+		return "wire_prot";
 	}
 
 	@Override
@@ -14,7 +14,7 @@ public class PowerLine extends Building {
 
 	@Override
 	public double getRetained() {
-		return 0.97;
+		return 0.8;
 	}
 
 	@Override
@@ -25,4 +25,10 @@ public class PowerLine extends Building {
 	@Override
 	public void hitByPowerSurge() {
 	}
+
+	@Override
+	public boolean isSurgeStopper() {
+		return true;
+	}
+
 }

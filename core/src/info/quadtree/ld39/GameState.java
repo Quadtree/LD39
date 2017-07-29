@@ -3,7 +3,9 @@ package info.quadtree.ld39;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -21,8 +23,8 @@ public class GameState implements InputProcessor {
 	int mx, my;
 
 	public GameState() {
-		for (int i = 0; i < 12; ++i) {
-			for (int j = 0; j < 4; ++j) {
+		for (int i = 0; i < 3; ++i) {
+			for (int j = 0; j < 1; ++j) {
 				Hab nh = new Hab();
 				nh.pos = new TilePos(16 + j * 2, 16 + i * 2);
 
@@ -110,6 +112,15 @@ public class GameState implements InputProcessor {
 		if (keycode == Input.Keys.NUM_2)
 			heldBuilding = new SolarPlant();
 
+		if (keycode == Input.Keys.NUM_3)
+			heldBuilding = new SurgeProtector();
+
+		if (LD39.CHEATS) {
+			if (keycode == Input.Keys.S) {
+				powerSurge(getMouseTilePos());
+			}
+		}
+
 		return false;
 	}
 
@@ -133,6 +144,34 @@ public class GameState implements InputProcessor {
 		if (heldBuilding != null)
 			setHeldBuildingLoc();
 		return false;
+	}
+
+	public void powerSurge(TilePos pos) {
+		Building start = this.getBuildingOnTile(pos);
+
+		if (start != null) {
+			Set<Building> closed = new HashSet<Building>();
+			Set<Building> open = new HashSet<Building>();
+			open.add(start);
+
+			while (open.size() > 0) {
+				Building next = open.iterator().next();
+
+				closed.add(next);
+				open.remove(next);
+
+				next.hitByPowerSurge();
+
+				if (!next.isSurgeStopper()) {
+					for (Building b : next.getAdjacentBuildings()) {
+						if (!closed.contains(b)) {
+							open.add(b);
+						}
+					}
+				}
+
+			}
+		}
 	}
 
 	public void removeConnections(Collection<Connection> conns) {
