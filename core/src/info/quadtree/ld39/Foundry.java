@@ -1,7 +1,11 @@
 package info.quadtree.ld39;
 
+import com.badlogic.gdx.math.MathUtils;
+
 public class Foundry extends Building {
 	public final static String NAME = "Foundry";
+
+	int runTime = 0;
 
 	@Override
 	public String getGraphic() {
@@ -10,7 +14,7 @@ public class Foundry extends Building {
 
 	@Override
 	public double getNetPower() {
-		return -1;
+		return runTime > 0 ? -5 : -0.5;
 	}
 
 	@Override
@@ -26,5 +30,16 @@ public class Foundry extends Building {
 	@Override
 	public boolean isColonyBuilding() {
 		return true;
+	}
+
+	@Override
+	public void update() {
+		super.update();
+
+		if (MathUtils.random() < 1 / 60.f / 7.f) {
+			runTime = 60;
+		}
+
+		runTime--;
 	}
 }

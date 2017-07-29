@@ -207,6 +207,10 @@ public abstract class Building {
 			LD39.s.gs.money += powerToConsume * LD39.POWER_PRICE;
 		}
 
+		if (isColonyBuilding() && isPowered < 0.95f) {
+			LD39.s.gs.colonyGrowthTimer = 0;
+		}
+
 		if (power < 0)
 			power = 0;
 		if (power > getMaxPower())

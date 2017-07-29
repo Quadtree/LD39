@@ -17,7 +17,9 @@ public class GameState implements InputProcessor {
 	TilePos buildingDragStart = null;
 
 	List<Building> buildings = new ArrayList<Building>();
+	public int colonyGrowthTimer = 0;
 	private List<Connection> connections = new ArrayList<Connection>();
+
 	boolean connectionsNeedsSort = false;
 
 	int dayTicks = 0;
@@ -392,6 +394,13 @@ public class GameState implements InputProcessor {
 		if (dayTicks >= LD39.DAY_TICKS) {
 			dayTicks = 0;
 			isDay = !isDay;
+		}
+
+		colonyGrowthTimer++;
+
+		if (colonyGrowthTimer >= 60 * 8) {
+			spawnColonyBuilding();
+			colonyGrowthTimer = 0;
 		}
 
 		long endTime = System.currentTimeMillis();
