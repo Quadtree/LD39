@@ -11,7 +11,6 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
@@ -74,20 +73,13 @@ public class LD39 extends ApplicationAdapter {
 
 		uiStage = new Stage();
 
-		final Dialog wnd = new Dialog("", defaultDialogStyle);
-		// wnd.setSize(300, 300);
-		wnd.setX(400);
-		wnd.setY(400);
-		wnd.getContentTable().add(Util.createLabel("Some text")).pad(8);
-		wnd.button(Util.createButton("Click", new ChangeListener() {
+		Util.createDialog("TEST", Util.createButton("Click", new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				System.out.println("CLICK");
-				wnd.remove();
+				Util.getParentDialog(actor).remove();
 			}
-		})).pad(8);
-		wnd.pack();
-		uiStage.addActor(wnd);
+		}));
 
 		multiplexer = new InputMultiplexer();
 		multiplexer.addProcessor(uiStage);
