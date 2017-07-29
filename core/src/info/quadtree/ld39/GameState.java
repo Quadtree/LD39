@@ -26,6 +26,19 @@ public class GameState implements InputProcessor {
 		Gdx.input.setInputProcessor(this);
 	}
 
+	public Building getBuildingOnTile(TilePos pos) {
+		for (Building b : buildings) {
+			int dx = pos.x - b.pos.x;
+			int dy = pos.y - b.pos.y;
+
+			if (dx >= 0 && dy >= 0 && dx <= b.getSize().x && dy <= b.getSize().y) {
+				return b;
+			}
+		}
+
+		return null;
+	}
+
 	protected List<Building> getBuildingsToPlace() {
 		List<Building> buildingsToPlace = new ArrayList<Building>();
 

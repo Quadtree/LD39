@@ -9,7 +9,13 @@ public class Hab extends Building {
 	}
 
 	@Override
+	public double getNetPower() {
+		return -1;
+	}
+
+	@Override
 	public TilePos getSize() {
 		return new TilePos(2, 2);
 	}
+
 }

@@ -6,9 +6,19 @@ public abstract class Building {
 
 	public TilePos pos = new TilePos(0, 0);
 
+	double power;
+
 	Sprite sprite;
 
 	public abstract String getGraphic();
+
+	public double getMaxPower() {
+		return 100;
+	}
+
+	public double getNetPower() {
+		return 0;
+	}
 
 	public abstract TilePos getSize();
 
@@ -22,6 +32,7 @@ public abstract class Building {
 
 		sprite.setX(pos.x * LD39.TILE_SIZE);
 		sprite.setY(pos.y * LD39.TILE_SIZE);
+		sprite.setColor((float) (power / getMaxPower()), (float) (power / getMaxPower()), (float) (power / getMaxPower()), 1);
 		sprite.draw(LD39.s.batch);
 	}
 
