@@ -9,7 +9,12 @@ public class Battery extends Building {
 
 	@Override
 	public double getMaxPower() {
-		return 200;
+		return 500;
+	}
+
+	@Override
+	public double getRetained() {
+		return 0.8;
 	}
 
 	@Override
