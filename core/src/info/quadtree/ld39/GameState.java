@@ -16,9 +16,9 @@ public class GameState implements InputProcessor {
 	int mx, my;
 
 	public GameState() {
-		for (int i = 0; i < 4; ++i) {
+		for (int i = 0; i < 1; ++i) {
 			Hab nh = new Hab();
-			nh.pos = new TilePos(1, 3 + i * 2);
+			nh.pos = new TilePos(16, 16 + i * 2);
 
 			buildings.add(nh);
 		}
@@ -31,7 +31,7 @@ public class GameState implements InputProcessor {
 			int dx = pos.x - b.pos.x;
 			int dy = pos.y - b.pos.y;
 
-			if (dx >= 0 && dy >= 0 && dx <= b.getSize().x && dy <= b.getSize().y) {
+			if (dx >= 0 && dy >= 0 && dx < b.getSize().x && dy < b.getSize().y) {
 				return b;
 			}
 		}

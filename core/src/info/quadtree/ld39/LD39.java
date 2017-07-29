@@ -61,5 +61,6 @@ public class LD39 extends ApplicationAdapter {
 		gs.render();
 
 		batch.end();
+
 	}
 }

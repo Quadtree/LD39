@@ -8,6 +8,11 @@ public class PowerLine extends Building {
 	}
 
 	@Override
+	public double getMaxPower() {
+		return 10;
+	}
+
+	@Override
 	public TilePos getSize() {
 		return new TilePos(1, 1);
 	}
