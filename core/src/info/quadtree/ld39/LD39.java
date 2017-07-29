@@ -20,6 +20,8 @@ public class LD39 extends ApplicationAdapter {
 
 	public Texture img;
 
+	public long updatesDone = 0;
+
 	@Override
 	public void create() {
 		LD39.s = this;
@@ -30,6 +32,8 @@ public class LD39 extends ApplicationAdapter {
 		img = new Texture("badlogic.jpg");
 
 		gs = new GameState();
+
+		updatesDone = System.currentTimeMillis() / 16;
 	}
 
 	@Override
@@ -40,6 +44,12 @@ public class LD39 extends ApplicationAdapter {
 
 	@Override
 	public void render() {
+
+		while (updatesDone * 16 < System.currentTimeMillis()) {
+			gs.update();
+			updatesDone++;
+		}
+
 		Gdx.gl.glClearColor(0.3f, 0.3f, 0.3f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 

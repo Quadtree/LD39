@@ -37,5 +37,11 @@ public abstract class Building {
 	}
 
 	public void update() {
+		power += getNetPower();
+
+		if (power < 0)
+			power = 0;
+		if (power > getMaxPower())
+			power = getMaxPower();
 	}
 }

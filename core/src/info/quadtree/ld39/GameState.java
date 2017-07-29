@@ -185,6 +185,11 @@ public class GameState implements InputProcessor {
 	}
 
 	public void update() {
-
+		for (int i = 0; i < buildings.size(); ++i) {
+			if (buildings.get(i).keep())
+				buildings.get(i).update();
+			else
+				buildings.remove(i--);
+		}
 	}
 }
