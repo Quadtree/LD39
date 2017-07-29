@@ -82,18 +82,16 @@ public abstract class Building {
 
 		sprite.setX(pos.x * LD39.TILE_SIZE);
 		sprite.setY(pos.y * LD39.TILE_SIZE);
-		sprite.setColor((float) (power / getMaxPower()), (float) (power / getMaxPower()), (float) (power / getMaxPower()), 1);
+		if (power > 0.1) {
+			sprite.setColor((float) (power / getMaxPower()), (float) (power / getMaxPower()), (float) (power / getMaxPower()), 1);
+		} else {
+			sprite.setColor(1, 0, 0, 1);
+		}
+
 		sprite.draw(LD39.s.batch);
 	}
 
 	public void update() {
-		power += getNetPower();
-
-		if (power < 0)
-			power = 0;
-		if (power > getMaxPower())
-			power = getMaxPower();
-
 		for (Building b : getAdjacentBuildings()) {
 			if (b.power > this.power) {
 				double transfer = (b.power - this.power) / 2;
@@ -104,5 +102,12 @@ public abstract class Building {
 				this.power += transfer;
 			}
 		}
+
+		power += getNetPower();
+
+		if (power < 0)
+			power = 0;
+		if (power > getMaxPower())
+			power = getMaxPower();
 	}
 }

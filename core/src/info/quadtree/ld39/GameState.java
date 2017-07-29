@@ -16,7 +16,7 @@ public class GameState implements InputProcessor {
 	int mx, my;
 
 	public GameState() {
-		for (int i = 0; i < 1; ++i) {
+		for (int i = 0; i < 4; ++i) {
 			Hab nh = new Hab();
 			nh.pos = new TilePos(16, 16 + i * 2);
 
