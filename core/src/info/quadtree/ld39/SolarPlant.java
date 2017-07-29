@@ -9,7 +9,7 @@ public class SolarPlant extends Building {
 
 	@Override
 	public double getNetPower() {
-		return 2;
+		return 2.2;
 	}
 
 	@Override

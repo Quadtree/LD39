@@ -25,6 +25,14 @@ public abstract class Building {
 		public int compareTo(SearchNode o) {
 			return (int) (this.retained * 10000 - o.retained * 10000);
 		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (obj instanceof SearchNode)
+				return (int) (((SearchNode) (obj)).retained * 10000) == (int) (this.retained * 10000);
+			return super.equals(obj);
+		}
+
 	}
 
 	List<Connection> connections;
@@ -82,7 +90,7 @@ public abstract class Building {
 
 		ret.remove(null);
 
-		// System.out.println(ret);
+		System.out.println(this + " " + ret);
 
 		this.neighbors = ret;
 
@@ -104,6 +112,12 @@ public abstract class Building {
 	}
 
 	public abstract TilePos getSize();
+
+	public boolean hasEnoughPower() {
+		if (isSink())
+			return power < getMaxPower();
+		return true;
+	}
 
 	public boolean isSink() {
 		return getNetPower() < 0;
@@ -157,7 +171,10 @@ public abstract class Building {
 
 			LD39.s.gs.connections.addAll(connections);
 
-			System.out.println(LD39.s.gs.connections);
+			System.out.println("^^^");
+			for (Connection conn : LD39.s.gs.connections) {
+				System.out.println(conn.sink + " <- " + conn.retained + " -- " + conn.source);
+			}
 		}
 
 		power += getNetPower();

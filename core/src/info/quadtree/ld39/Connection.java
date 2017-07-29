@@ -24,9 +24,19 @@ public class Connection implements Comparable<Connection> {
 		return super.equals(obj);
 	}
 
+	public void execute() {
+		double transfer = sink.getMaxPower() - sink.power;
+		transfer = Math.min(transfer, source.power);
+
+		if (transfer > 0.1) {
+			source.power -= transfer;
+			sink.power += transfer;
+			// System.out.println(this + " " + transfer);
+		}
+	}
+
 	@Override
 	public String toString() {
 		return "Connection [retained=" + retained + ", sink=" + sink + ", source=" + source + "]";
 	}
-
 }
