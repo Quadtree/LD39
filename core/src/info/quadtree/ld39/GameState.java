@@ -11,6 +11,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.math.MathUtils;
 
 public class GameState implements InputProcessor {
 	TilePos buildingDragStart = null;
@@ -31,14 +32,14 @@ public class GameState implements InputProcessor {
 	List<VisualEffect> visualEffects = new ArrayList<VisualEffect>();
 
 	public GameState() {
-		for (int i = 0; i < 3; ++i) {
-			for (int j = 0; j < 1; ++j) {
-				Hab nh = new Hab();
-				nh.pos = new TilePos(16 + j * 2, 16 + i * 2);
+		/*
+		 * for (int i = 0; i < 3; ++i) { for (int j = 0; j < 1; ++j) { Hab nh =
+		 * new Hab(); nh.pos = new TilePos(16 + j * 2, 16 + i * 2);
+		 *
+		 * buildings.add(nh); } }
+		 */
 
-				buildings.add(nh);
-			}
-		}
+		spawnColonyBuilding();
 
 		Gdx.input.setInputProcessor(this);
 	}
@@ -108,8 +109,19 @@ public class GameState implements InputProcessor {
 		return new TilePos(mx / LD39.TILE_SIZE, (768 - my) / LD39.TILE_SIZE);
 	}
 
-	public boolean isAreaClearFor(Building b) {
+	public boolean isAreaClear(TilePos area, TilePos size) {
+		for (int x = area.x; x < area.x + size.x; x++) {
+			for (int y = area.y; y < area.y + size.y; y++) {
+				if (this.getBuildingOnTile(TilePos.create(x, y)) != null)
+					return false;
+			}
+		}
+
 		return true;
+	}
+
+	public boolean isAreaClearFor(Building b) {
+		return isAreaClear(b.pos, b.getSize());
 	}
 
 	@Override
@@ -147,6 +159,10 @@ public class GameState implements InputProcessor {
 				isDay = !isDay;
 				dayTicks = 0;
 			}
+
+			if (keycode == Input.Keys.B)
+				spawnColonyBuilding();
+
 		}
 
 		setHeldBuildingLoc();
@@ -250,6 +266,48 @@ public class GameState implements InputProcessor {
 		if (heldBuilding != null) {
 			heldBuilding.pos = getMouseTilePos();
 		}
+	}
+
+	public void spawnColonyBuilding() {
+		Building nb = null;
+
+		int totalColonyBuildings = 0;
+
+		for (Building cb : buildings)
+			if (cb.isColonyBuilding())
+				totalColonyBuildings++;
+
+		if (totalColonyBuildings < 4) {
+			nb = new Hab();
+		} else if (totalColonyBuildings < 10) {
+			if (MathUtils.random() < 0.6f)
+				nb = new Hab();
+			else
+				nb = new Foundry();
+		} else {
+			if (MathUtils.random() < 0.4f)
+				nb = new Hab();
+			else {
+				if (MathUtils.randomBoolean())
+					nb = new Foundry();
+				else
+					nb = new Labratory();
+			}
+
+		}
+
+		nb.pos = TilePos.create(Gdx.graphics.getWidth() / LD39.TILE_SIZE / 2, Gdx.graphics.getHeight() / LD39.TILE_SIZE / 2);
+
+		int loops = 0;
+
+		while (!isAreaClearFor(nb)) {
+			nb.pos = TilePos.create(nb.pos.x + MathUtils.random(-4, 4), nb.pos.y + MathUtils.random(-4, 4));
+
+			if (++loops > 10000)
+				return;
+		}
+
+		buildings.add(nb);
 	}
 
 	public void topologyChanged() {

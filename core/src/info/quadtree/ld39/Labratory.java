@@ -1,11 +1,11 @@
 package info.quadtree.ld39;
 
-public class Hab extends Building {
-	public final static String NAME = "Hab";
+public class Labratory extends Building {
+	public final static String NAME = "Lab";
 
 	@Override
 	public String getGraphic() {
-		return "hab";
+		return "lab";
 	}
 
 	@Override

@@ -143,6 +143,10 @@ public abstract class Building {
 			alive = false;
 	}
 
+	public boolean isColonyBuilding() {
+		return false;
+	}
+
 	public boolean isSink() {
 		return getNetPower() < 0;
 	}
