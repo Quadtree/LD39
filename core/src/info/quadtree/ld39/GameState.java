@@ -22,6 +22,8 @@ public class GameState implements InputProcessor {
 
 	int mx, my;
 
+	List<VisualEffect> visualEffects = new ArrayList<VisualEffect>();
+
 	public GameState() {
 		for (int i = 0; i < 3; ++i) {
 			for (int j = 0; j < 1; ++j) {
@@ -32,6 +34,11 @@ public class GameState implements InputProcessor {
 			}
 
 		}
+
+		Lightning lg = new Lightning();
+		lg.start = TilePos.create(0, 0);
+		lg.end = TilePos.create(20, 20);
+		visualEffects.add(lg);
 
 		Gdx.input.setInputProcessor(this);
 	}
@@ -185,6 +192,9 @@ public class GameState implements InputProcessor {
 		for (Building b : getBuildingsToPlace()) {
 			b.render();
 		}
+
+		for (VisualEffect ve : visualEffects)
+			ve.render();
 	}
 
 	@Override

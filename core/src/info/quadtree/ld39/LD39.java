@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 public class LD39 extends ApplicationAdapter {
 
@@ -22,6 +23,8 @@ public class LD39 extends ApplicationAdapter {
 
 	public Texture img;
 
+	public ShapeRenderer shapeRnd;
+
 	public long updatesDone = 0;
 
 	@Override
@@ -32,6 +35,7 @@ public class LD39 extends ApplicationAdapter {
 
 		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
+		shapeRnd = new ShapeRenderer();
 
 		gs = new GameState();
 
