@@ -1,8 +1,5 @@
 package info.quadtree.ld39;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -19,7 +16,7 @@ public class LD39 extends ApplicationAdapter {
 
 	public SpriteBatch batch;
 
-	List<Building> buildings = new ArrayList<Building>();
+	public GameState gs;
 
 	public Texture img;
 
@@ -32,12 +29,7 @@ public class LD39 extends ApplicationAdapter {
 		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
 
-		for (int i = 0; i < 4; ++i) {
-			Hab nh = new Hab();
-			nh.pos = new TilePos(1, 3 + i * 2);
-
-			buildings.add(nh);
-		}
+		gs = new GameState();
 	}
 
 	@Override
@@ -52,8 +44,7 @@ public class LD39 extends ApplicationAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
 
-		for (Building b : buildings)
-			b.render();
+		gs.render();
 
 		batch.end();
 	}
