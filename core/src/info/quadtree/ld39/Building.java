@@ -7,11 +7,11 @@ import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Set;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 
 public abstract class Building {
-
 	class SearchNode implements Comparable<SearchNode> {
 		public final Building building;
 		public final double retained;
@@ -40,7 +40,7 @@ public abstract class Building {
 
 	List<Connection> connections;
 
-	public boolean isPowered = false;
+	public double isPowered = 0;
 
 	Collection<Building> neighbors;
 
@@ -109,7 +109,7 @@ public abstract class Building {
 	public abstract String getGraphic();
 
 	public double getMaxPower() {
-		return 100;
+		return Math.abs(getNetPower());
 	}
 
 	public double getNetPower() {
@@ -161,11 +161,18 @@ public abstract class Building {
 
 		sprite.setX(pos.x * LD39.TILE_SIZE);
 		sprite.setY(pos.y * LD39.TILE_SIZE);
-		if (power > 0.1) {
-			sprite.setColor((float) (power / getMaxPower()), (float) (power / getMaxPower()), (float) (power / getMaxPower()), 1);
-		} else {
-			sprite.setColor(1, 0, 0, 1);
-		}
+		/*
+		 * if (power > 0.1) { sprite.setColor((float) (power / getMaxPower()),
+		 * (float) (power / getMaxPower()), (float) (power / getMaxPower()), 1);
+		 * } else { sprite.setColor(1, 0, 0, 1); }
+		 */
+
+		if (isPowered > 0.99f) {
+			sprite.setColor(Color.WHITE);
+		} else if (isPowered > 0.01f) {
+			sprite.setColor(Color.YELLOW);
+		} else
+			sprite.setColor(Color.RED);
 
 		sprite.draw(LD39.s.batch);
 	}
@@ -196,7 +203,7 @@ public abstract class Building {
 			LD39.s.gs.addConnections(connections);
 		}
 
-		isPowered = true;
+		isPowered = 1;
 
 		if (getNetPower() > 0.1)
 			power += getNetPower();
@@ -205,7 +212,7 @@ public abstract class Building {
 			double powerToConsume = -getNetPower();
 
 			if (powerToConsume > power) {
-				isPowered = false;
+				isPowered = power / powerToConsume;
 				powerToConsume = power;
 			}
 
