@@ -21,11 +21,14 @@ public class GameState implements InputProcessor {
 	int mx, my;
 
 	public GameState() {
-		for (int i = 0; i < 4; ++i) {
-			Hab nh = new Hab();
-			nh.pos = new TilePos(16, 16 + i * 2);
+		for (int i = 0; i < 12; ++i) {
+			for (int j = 0; j < 4; ++j) {
+				Hab nh = new Hab();
+				nh.pos = new TilePos(16 + j * 2, 16 + i * 2);
 
-			buildings.add(nh);
+				buildings.add(nh);
+			}
+
 		}
 
 		Gdx.input.setInputProcessor(this);
@@ -207,9 +210,11 @@ public class GameState implements InputProcessor {
 
 	public void update() {
 
+		long startTime = System.currentTimeMillis();
+
 		if (connectionsNeedsSort) {
 			Collections.sort(connections);
-			System.out.println(connections);
+			// System.out.println(connections);
 			connectionsNeedsSort = false;
 		}
 
@@ -221,6 +226,12 @@ public class GameState implements InputProcessor {
 				buildings.get(i).update();
 			else
 				buildings.remove(i--);
+		}
+
+		long endTime = System.currentTimeMillis();
+
+		if (endTime - startTime > 16) {
+			System.out.println("Frame took " + (endTime - startTime) + "ms!");
 		}
 	}
 }
