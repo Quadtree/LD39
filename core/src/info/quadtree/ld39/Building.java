@@ -204,7 +204,9 @@ public abstract class Building {
 
 			power -= powerToConsume;
 
-			LD39.s.gs.money += powerToConsume * LD39.POWER_PRICE;
+			double income = powerToConsume * LD39.POWER_PRICE;
+			LD39.s.gs.money += income;
+			LD39.s.gs.grossIncome.set(0, (float) (LD39.s.gs.grossIncome.get(0) + income));
 		}
 
 		if (isColonyBuilding() && isPowered < 0.95f) {

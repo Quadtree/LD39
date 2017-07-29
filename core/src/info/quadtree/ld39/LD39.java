@@ -13,6 +13,7 @@ public class LD39 extends ApplicationAdapter {
 	public static boolean CHEATS = true;
 
 	public final static int DAY_TICKS = 1000;
+	public final static int GROSS_INCOME_TICKS = 60 * 60;
 	public final static float POWER_PRICE = .2f;
 	public static LD39 s;
 	public final static int TILE_SIZE = 16;

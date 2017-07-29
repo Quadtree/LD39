@@ -24,6 +24,8 @@ public class GameState implements InputProcessor {
 
 	int dayTicks = 0;
 
+	public List<Float> grossIncome = new ArrayList<Float>();
+
 	Building heldBuilding = null;
 
 	public boolean isDay = true;
@@ -107,6 +109,15 @@ public class GameState implements InputProcessor {
 		return buildingsToPlace;
 	}
 
+	public float getGrossIncome() {
+		float ret = 0;
+
+		for (Float f : grossIncome)
+			ret += f;
+
+		return ret;
+	}
+
 	public TilePos getMouseTilePos() {
 		return new TilePos(mx / LD39.TILE_SIZE, (768 - my) / LD39.TILE_SIZE);
 	}
@@ -165,6 +176,8 @@ public class GameState implements InputProcessor {
 			if (keycode == Input.Keys.B)
 				spawnColonyBuilding();
 
+			if (keycode == Input.Keys.R)
+				topologyChanged();
 		}
 
 		setHeldBuildingLoc();
@@ -251,7 +264,8 @@ public class GameState implements InputProcessor {
 			ve.render();
 
 		LD39.s.batch.begin();
-		LD39.s.mainFont.draw(LD39.s.batch, "Credits: " + (int) money, 20, Gdx.graphics.getHeight() - 20);
+		LD39.s.mainFont.draw(LD39.s.batch, "Credits: " + (int) money, 20, Gdx.graphics.getHeight() - 40);
+		LD39.s.mainFont.draw(LD39.s.batch, "Income/minute: " + (int) getGrossIncome(), 20, Gdx.graphics.getHeight() - 20);
 		LD39.s.batch.end();
 	}
 
@@ -360,6 +374,11 @@ public class GameState implements InputProcessor {
 	public void update() {
 
 		long startTime = System.currentTimeMillis();
+
+		grossIncome.add(0, 0.f);
+
+		while (grossIncome.size() > LD39.GROSS_INCOME_TICKS)
+			grossIncome.remove(LD39.GROSS_INCOME_TICKS);
 
 		for (Building b : buildings)
 			b.updateConnections();
