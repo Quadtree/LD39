@@ -138,7 +138,7 @@ public abstract class Building {
 
 			Set<Building> closed = new HashSet<Building>();
 			PriorityQueue<SearchNode> open = new PriorityQueue<SearchNode>();
-			open.add(new SearchNode(this, 0));
+			open.add(new SearchNode(this, 1));
 
 			while (open.size() > 0) {
 				SearchNode topNode = open.poll();
@@ -155,7 +155,9 @@ public abstract class Building {
 				}
 			}
 
-			System.out.println(connections);
+			LD39.s.gs.connections.addAll(connections);
+
+			System.out.println(LD39.s.gs.connections);
 		}
 
 		power += getNetPower();
@@ -167,6 +169,9 @@ public abstract class Building {
 	}
 
 	public void updateTopology() {
+		if (connections != null)
+			LD39.s.gs.connections.removeAll(connections);
+
 		connections = null;
 		neighbors = null;
 	}

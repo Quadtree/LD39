@@ -14,8 +14,12 @@ public class Hab extends Building {
 	}
 
 	@Override
+	public double getRetained() {
+		return 0.8;
+	}
+
+	@Override
 	public TilePos getSize() {
 		return new TilePos(2, 2);
 	}
-
 }

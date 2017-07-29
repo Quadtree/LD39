@@ -2,6 +2,7 @@ package info.quadtree.ld39;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeSet;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -11,6 +12,8 @@ public class GameState implements InputProcessor {
 	TilePos buildingDragStart = null;
 
 	List<Building> buildings = new ArrayList<Building>();
+	public TreeSet<Connection> connections = new TreeSet<Connection>();
+
 	Building heldBuilding = null;
 
 	int mx, my;

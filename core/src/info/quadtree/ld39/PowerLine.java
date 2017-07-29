@@ -13,6 +13,11 @@ public class PowerLine extends Building {
 	}
 
 	@Override
+	public double getRetained() {
+		return 0.97;
+	}
+
+	@Override
 	public TilePos getSize() {
 		return new TilePos(1, 1);
 	}

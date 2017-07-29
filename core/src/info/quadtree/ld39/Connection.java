@@ -14,7 +14,14 @@ public class Connection implements Comparable<Connection> {
 
 	@Override
 	public int compareTo(Connection o) {
-		return (int) (this.retained * 10000 - o.retained * 10000);
+		return (int) (o.retained * 10000 - this.retained * 10000);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Connection)
+			return (int) (this.retained * 10000) == (int) (((Connection) (obj)).retained * 10000);
+		return super.equals(obj);
 	}
 
 	@Override
