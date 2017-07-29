@@ -9,4 +9,9 @@ public class TilePos {
 		this.y = y;
 	}
 
+	@Override
+	public String toString() {
+		return "TilePos [x=" + x + ", y=" + y + "]";
+	}
+
 }

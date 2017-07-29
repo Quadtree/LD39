@@ -42,6 +42,10 @@ public class LD39 extends ApplicationAdapter {
 	public void render() {
 		Gdx.gl.glClearColor(0.3f, 0.3f, 0.3f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+		// Matrix4 m4 = new Matrix4();
+		// m4.setToOrtho(0, 1024, 768, 0, 0, 1);
+		// batch.setProjectionMatrix(m4);
 		batch.begin();
 
 		gs.render();
