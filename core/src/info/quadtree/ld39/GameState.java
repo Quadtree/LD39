@@ -8,10 +8,10 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 
 public class GameState implements InputProcessor {
-	List<Building> buildings = new ArrayList<Building>();
+	TilePos buildingDragStart = null;
 
+	List<Building> buildings = new ArrayList<Building>();
 	Building heldBuilding = null;
-	List<Building> heldBuildingTrail;
 
 	int mx, my;
 
@@ -98,11 +98,8 @@ public class GameState implements InputProcessor {
 		mx = screenX;
 		my = screenY;
 
-		if (heldBuilding != null && isAreaClearFor(heldBuilding)) {
-			setHeldBuildingLoc();
-			buildings.add(heldBuilding);
-			heldBuilding = null;
-		}
+		if (heldBuilding != null)
+			buildingDragStart = getMouseTilePos();
 
 		return false;
 	}
@@ -115,7 +112,17 @@ public class GameState implements InputProcessor {
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
+
+		if (heldBuilding != null) {
+			List<Building> buildingsToPlace = new ArrayList<Building>();
+
+			buildingsToPlace.add(heldBuilding);
+
+			if (heldBuilding.getSize().x == 1 && heldBuilding.getSize().y == 1) {
+
+			}
+		}
+
 		return false;
 	}
 
