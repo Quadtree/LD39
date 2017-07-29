@@ -26,6 +26,47 @@ public class GameState implements InputProcessor {
 		Gdx.input.setInputProcessor(this);
 	}
 
+	protected List<Building> getBuildingsToPlace() {
+		List<Building> buildingsToPlace = new ArrayList<Building>();
+
+		if (heldBuilding == null)
+			return buildingsToPlace;
+
+		buildingsToPlace.add(heldBuilding);
+
+		if (buildingDragStart != null && heldBuilding instanceof PowerLine) {
+			TilePos ctp = buildingDragStart;
+
+			while (!ctp.equals(heldBuilding.pos)) {
+				Building nb = null;
+
+				if (heldBuilding instanceof PowerLine)
+					nb = new PowerLine();
+
+				if (nb == null)
+					break;
+
+				nb.pos = ctp;
+				buildingsToPlace.add(nb);
+
+				if (ctp.x != heldBuilding.pos.x) {
+					if (ctp.x > heldBuilding.pos.x)
+						ctp = TilePos.create(ctp.x - 1, ctp.y);
+					else
+						ctp = TilePos.create(ctp.x + 1, ctp.y);
+				} else {
+					if (ctp.y > heldBuilding.pos.y)
+						ctp = TilePos.create(ctp.x, ctp.y - 1);
+					else
+						ctp = TilePos.create(ctp.x, ctp.y + 1);
+				}
+
+				System.out.println(ctp);
+			}
+		}
+		return buildingsToPlace;
+	}
+
 	public TilePos getMouseTilePos() {
 		return new TilePos(mx / LD39.TILE_SIZE, (768 - my) / LD39.TILE_SIZE);
 	}
@@ -72,8 +113,8 @@ public class GameState implements InputProcessor {
 		for (Building b : buildings)
 			b.render();
 
-		if (heldBuilding != null) {
-			heldBuilding.render();
+		for (Building b : getBuildingsToPlace()) {
+			b.render();
 		}
 	}
 
@@ -106,7 +147,9 @@ public class GameState implements InputProcessor {
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		// TODO Auto-generated method stub
+		mx = screenX;
+		my = screenY;
+		setHeldBuildingLoc();
 		return false;
 	}
 
@@ -114,13 +157,15 @@ public class GameState implements InputProcessor {
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
 
 		if (heldBuilding != null) {
-			List<Building> buildingsToPlace = new ArrayList<Building>();
+			List<Building> buildingsToPlace = getBuildingsToPlace();
 
-			buildingsToPlace.add(heldBuilding);
-
-			if (heldBuilding.getSize().x == 1 && heldBuilding.getSize().y == 1) {
-
+			for (Building b : buildingsToPlace) {
+				if (isAreaClearFor(b))
+					buildings.add(b);
 			}
+
+			heldBuilding = null;
+			buildingDragStart = null;
 		}
 
 		return false;
