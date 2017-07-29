@@ -268,6 +268,9 @@ public class GameState implements InputProcessor {
 
 		long startTime = System.currentTimeMillis();
 
+		for (Building b : buildings)
+			b.updateConnections();
+
 		if (connectionsNeedsSort) {
 			Collections.sort(connections);
 			// System.out.println(connections);

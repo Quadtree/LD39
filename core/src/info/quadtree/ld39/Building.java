@@ -178,6 +178,32 @@ public abstract class Building {
 	}
 
 	public void update() {
+
+		isPowered = 1;
+
+		if (getNetPower() > 0.1)
+			power += getNetPower();
+
+		if (getNetPower() < -0.1) {
+			double powerToConsume = -getNetPower();
+
+			if (powerToConsume > power) {
+				isPowered = power / powerToConsume;
+				powerToConsume = power;
+			}
+
+			power -= powerToConsume;
+
+			LD39.s.gs.money += powerToConsume * LD39.POWER_PRICE;
+		}
+
+		if (power < 0)
+			power = 0;
+		if (power > getMaxPower())
+			power = getMaxPower();
+	}
+
+	public void updateConnections() {
 		if (connections == null && isSink()) {
 			connections = new ArrayList<Connection>();
 
@@ -202,29 +228,6 @@ public abstract class Building {
 
 			LD39.s.gs.addConnections(connections);
 		}
-
-		isPowered = 1;
-
-		if (getNetPower() > 0.1)
-			power += getNetPower();
-
-		if (getNetPower() < -0.1) {
-			double powerToConsume = -getNetPower();
-
-			if (powerToConsume > power) {
-				isPowered = power / powerToConsume;
-				powerToConsume = power;
-			}
-
-			power -= powerToConsume;
-
-			LD39.s.gs.money += powerToConsume;
-		}
-
-		if (power < 0)
-			power = 0;
-		if (power > getMaxPower())
-			power = getMaxPower();
 	}
 
 	public void updateTopology() {
