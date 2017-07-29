@@ -9,17 +9,25 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Lightning extends VisualEffect {
 
-	public TilePos end;
+	Vector2 end;
 	public float fade = 1;
 
-	public TilePos start;
+	Vector2 start;
+
+	public Vector2 getEnd() {
+		return new Vector2(end);
+	}
+
+	public Vector2 getStart() {
+		return new Vector2(start);
+	}
 
 	@Override
 	public void render() {
 		super.render();
 
-		Vector2 curPos = new Vector2(start.x * LD39.TILE_SIZE + LD39.TILE_SIZE / 2, start.y * LD39.TILE_SIZE + LD39.TILE_SIZE / 2);
-		Vector2 trgPos = new Vector2(end.x * LD39.TILE_SIZE + LD39.TILE_SIZE / 2, end.y * LD39.TILE_SIZE + LD39.TILE_SIZE / 2);
+		Vector2 curPos = new Vector2(start);
+		Vector2 trgPos = new Vector2(end);
 
 		List<Float> verts = new ArrayList<Float>();
 
@@ -53,6 +61,14 @@ public class Lightning extends VisualEffect {
 		LD39.s.shapeRnd.setColor(0.3f, 0.3f, 1.f, fade);
 		LD39.s.shapeRnd.polyline(vertArr);
 		LD39.s.shapeRnd.end();
+	}
+
+	public void setEnd(Vector2 end) {
+		this.end = new Vector2(end);
+	}
+
+	public void setStart(Vector2 start) {
+		this.start = new Vector2(start);
 	}
 
 	@Override

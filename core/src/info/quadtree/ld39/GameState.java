@@ -10,6 +10,7 @@ import java.util.Set;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.math.Vector2;
 
 public class GameState implements InputProcessor {
 	TilePos buildingDragStart = null;
@@ -36,8 +37,8 @@ public class GameState implements InputProcessor {
 		}
 
 		Lightning lg = new Lightning();
-		lg.start = TilePos.create(0, 0);
-		lg.end = TilePos.create(4, 4);
+		lg.setStart(new Vector2(10, 10));
+		lg.setEnd(new Vector2(300, 300));
 		visualEffects.add(lg);
 
 		Gdx.input.setInputProcessor(this);
