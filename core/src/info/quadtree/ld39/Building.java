@@ -193,6 +193,8 @@ public abstract class Building {
 				}
 			}
 
+			LD39.s.playSound("explosion" + MathUtils.random(0, 1) + ".wav");
+
 			int surgeProtectors = 0;
 
 			for (Building b : LD39.s.gs.buildings) {

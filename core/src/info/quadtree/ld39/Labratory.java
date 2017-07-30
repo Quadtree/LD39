@@ -37,6 +37,7 @@ public class Labratory extends Building {
 		if (isPowered > 0.0001) {
 			if (MathUtils.random() < 1 / 60.f / 15.f) {
 				LD39.s.gs.powerSurge(pos);
+				LD39.s.playSound("electric" + MathUtils.random(0, 1) + ".wav");
 			}
 		}
 	}

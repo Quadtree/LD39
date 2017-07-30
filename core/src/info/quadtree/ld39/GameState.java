@@ -623,6 +623,8 @@ public class GameState implements InputProcessor {
 
 				topologyChanged();
 				money -= totalCost;
+			} else {
+				LD39.s.playSound("nope.wav");
 			}
 
 		}

@@ -1,8 +1,12 @@
 package info.quadtree.ld39;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -68,8 +72,10 @@ public class LD39 extends ApplicationAdapter {
 	public BitmapFont mainFont;
 	InputMultiplexer multiplexer;
 	public ShapeRenderer shapeRnd;
+	Map<String, Sound> soundMap = new HashMap<String, Sound>();
 	public Stage uiStage;
 	public Table uiTable;
+
 	public long updatesDone = 0;
 
 	@Override
@@ -199,6 +205,13 @@ public class LD39 extends ApplicationAdapter {
 	@Override
 	public void dispose() {
 		batch.dispose();
+	}
+
+	public void playSound(String sound) {
+		if (!soundMap.containsKey(sound))
+			soundMap.put(sound, Gdx.audio.newSound(Gdx.files.internal("sound/" + sound)));
+
+		soundMap.get(sound).play();
 	}
 
 	@Override

@@ -46,6 +46,8 @@ public class Thundercloud {
 			}
 
 			LD39.s.gs.powerSurge(target);
+
+			LD39.s.playSound("lightning" + MathUtils.random(0, 3) + ".wav");
 		}
 	}
 }
