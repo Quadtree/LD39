@@ -44,6 +44,10 @@ public class Util {
 	}
 
 	public static Dialog createHelpText(String text, Vector2 location) {
+		return createHelpText(text, location, false);
+	}
+
+	public static Dialog createHelpText(String text, Vector2 location, boolean always) {
 		final Dialog wnd = new Dialog("", LD39.s.defaultDialogStyle);
 		// wnd.setSize(300, 300);
 

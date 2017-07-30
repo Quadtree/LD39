@@ -251,19 +251,19 @@ public class GameState implements InputProcessor {
 			heldBuilding = new PowerLine();
 
 		if (keycode == Input.Keys.NUM_2)
-			heldBuilding = new SolarPlant();
+			heldBuilding = new Battery();
 
 		if (keycode == Input.Keys.NUM_3)
 			heldBuilding = new SurgeProtector();
 
 		if (keycode == Input.Keys.NUM_4)
-			heldBuilding = new FusionPlant();
+			heldBuilding = new SolarPlant();
 
 		if (keycode == Input.Keys.NUM_5)
 			heldBuilding = new HydrocarbonPlant();
 
 		if (keycode == Input.Keys.NUM_6)
-			heldBuilding = new Battery();
+			heldBuilding = new FusionPlant();
 
 		if (LD39.CHEATS) {
 			if (keycode == Input.Keys.S) {

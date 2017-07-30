@@ -159,37 +159,38 @@ public class LD39 extends ApplicationAdapter {
 
 		Table buyButtons = new Table();
 
-		buyButtons.add(createBuyButton("Wire", "Transfers power between buildings, but there\nis a small amount lost in transit.", new BuildingFactory() {
+		buyButtons.add(createBuyButton("Wire", "1", "Transfers power between buildings, but there\nis a small amount lost in transit.", new BuildingFactory() {
 			@Override
 			public Building create() {
 				return new PowerLine();
 			}
 		})).pad(6).fill().row();
-		buyButtons.add(createBuyButton("Battery", "Stores " + (int) (new Battery().getMaxPower() * LD39.POWER_PRICE) + " power.", new BuildingFactory() {
+		buyButtons.add(createBuyButton("Battery", "2", "Stores " + (int) (new Battery().getMaxPower() * LD39.POWER_PRICE) + " power.", new BuildingFactory() {
 			@Override
 			public Building create() {
 				return new Battery();
 			}
 		})).pad(6).fill().row();
-		buyButtons.add(createBuyButton("Surge Protector", "Power surges cannot cross one of these,\nbut " + (100 - (int) (new SurgeProtector().getRetained() * 100)) + "% of power passing through is lost.", new BuildingFactory() {
-			@Override
-			public Building create() {
-				return new SurgeProtector();
-			}
-		})).pad(6).fill().row();
-		buyButtons.add(createBuyButton("Solar Plant", "Generates " + (int) (new SolarPlant().getNetPower() * 60 * LD39.POWER_PRICE) + " power per\nsecond, but only during the day.", new BuildingFactory() {
+		buyButtons.add(
+				createBuyButton("Surge Protector", "3", "Power surges cannot cross one of these,\nbut " + (100 - (int) (new SurgeProtector().getRetained() * 100)) + "% of power passing through is lost.", new BuildingFactory() {
+					@Override
+					public Building create() {
+						return new SurgeProtector();
+					}
+				})).pad(6).fill().row();
+		buyButtons.add(createBuyButton("Solar Plant", "4", "Generates " + (int) (new SolarPlant().getNetPower() * 60 * LD39.POWER_PRICE) + " power per\nsecond, but only during the day.", new BuildingFactory() {
 			@Override
 			public Building create() {
 				return new SolarPlant();
 			}
 		})).pad(6).fill().row();
-		buyButtons.add(createBuyButton("Geothermal Plant", "Generates " + (int) (new HydrocarbonPlant().getNetPower() * 60 * LD39.POWER_PRICE) + " power per\nsecond, but must be placed on a vent.", new BuildingFactory() {
+		buyButtons.add(createBuyButton("Geothermal Plant", "5", "Generates " + (int) (new HydrocarbonPlant().getNetPower() * 60 * LD39.POWER_PRICE) + " power per\nsecond, but must be placed on a vent.", new BuildingFactory() {
 			@Override
 			public Building create() {
 				return new HydrocarbonPlant();
 			}
 		})).pad(6).fill().row();
-		buyButtons.add(createBuyButton("Fusion Plant",
+		buyButtons.add(createBuyButton("Fusion Plant", "6",
 				"Generates " + (int) (new FusionPlant().getBaseNetPower() * 60 * LD39.POWER_PRICE) + " power per\nsecond, but costs " + (int) (new FusionPlant().getFuelCost() * 60) + " per second for fuel.",
 				new BuildingFactory() {
 					@Override
@@ -221,9 +222,9 @@ public class LD39 extends ApplicationAdapter {
 		updatesDone = System.currentTimeMillis() / 16;
 	}
 
-	Button createBuyButton(String text, String tooltip, final BuildingFactory fact) {
+	Button createBuyButton(String text, String hotkey, String tooltip, final BuildingFactory fact) {
 		Button buyButton1 = new Button(defaultButtonStyle);
-		buyButton1.add(Util.createLabel(text)).row();
+		buyButton1.add(Util.createLabel(text + " (" + hotkey + ")")).row();
 		Image img = new Image(new TextureRegionDrawable(atlas.createSprite(fact.create().getGraphic())));
 		buyButton1.add(img).width(32).height(32).pad(2).row();
 		buyButton1.add(Util.createLabel("$" + fact.create().getCost())).row();
@@ -233,7 +234,7 @@ public class LD39 extends ApplicationAdapter {
 				LD39.s.gs.heldBuilding = fact.create();
 			}
 		});
-		buyButton1.addListener(new TextTooltip(tooltip, defaultTooltipStyle));
+		buyButton1.addListener(new TextTooltip(tooltip + "\nHotkey=" + hotkey, defaultTooltipStyle));
 
 		return buyButton1;
 	}
