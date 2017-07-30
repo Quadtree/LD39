@@ -207,12 +207,17 @@ public class GameState implements InputProcessor {
 	}
 
 	public boolean isAreaClear(TilePos area, TilePos size) {
+		// 53, 47
+
 		for (int x = area.x; x < area.x + size.x; x++) {
 			for (int y = area.y; y < area.y + size.y; y++) {
 				if (x >= 0 && y >= 0 && x < 75 && y < 75 && terrainTypes[x][y] == TerrainType.Rock)
 					return false;
 				Building bldg = this.getBuildingOnTile(TilePos.create(x, y));
 				if (bldg != null && !(bldg instanceof PowerLine) && !(bldg instanceof SurgeProtector))
+					return false;
+
+				if (x > 53 || y > 47 || x < 0 || y < 0)
 					return false;
 			}
 		}
@@ -282,11 +287,16 @@ public class GameState implements InputProcessor {
 			if (keycode == Input.Keys.L)
 				startStorm();
 
+			if (keycode == Input.Keys.H)
+				System.out.println(getMouseTilePos());
+
 			if (keycode == Input.Keys.X) {
 				Gdx.app.getPreferences(Util.PREF_NAME).clear();
 				Gdx.app.getPreferences(Util.PREF_NAME).flush();
 			}
 		}
+
+		// 53, 47
 
 		setHeldBuildingLoc();
 
@@ -475,7 +485,7 @@ public class GameState implements InputProcessor {
 		// System.out.println(getMouseTilePos());
 
 		if (heldBuilding != null) {
-			heldBuilding.pos = getMouseTilePos();
+			heldBuilding.pos = TilePos.create(getMouseTilePos().x - (heldBuilding.getSize().x - 1) / 2, getMouseTilePos().y - (heldBuilding.getSize().y - 1) / 2);
 		}
 	}
 
