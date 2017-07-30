@@ -1,19 +1,19 @@
 
 main.png
-size: 512,64
+size: 512,512
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 battery
   rotate: false
-  xy: 2, 13
+  xy: 2, 86
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 dialog1
   rotate: false
-  xy: 2, 2
+  xy: 260, 299
   size: 8, 9
   split: 3, 3, 3, 3
   pad: 3, 3, 3, 4
@@ -22,56 +22,63 @@ dialog1
   index: -1
 foundry
   rotate: false
-  xy: 202, 29
+  xy: 260, 310
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 fusion
   rotate: false
-  xy: 52, 13
+  xy: 260, 344
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 hab
   rotate: false
-  xy: 236, 29
+  xy: 310, 360
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 hydro
   rotate: false
-  xy: 102, 13
+  xy: 2, 36
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 lab
   rotate: false
-  xy: 270, 29
+  xy: 2, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 solar
   rotate: false
-  xy: 152, 13
+  xy: 52, 86
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
+thundercloud
+  rotate: false
+  xy: 2, 136
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
 wire
   rotate: false
-  xy: 304, 45
+  xy: 52, 68
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 wire_prot
   rotate: false
-  xy: 322, 45
+  xy: 102, 118
   size: 16, 16
   orig: 16, 16
   offset: 0, 0

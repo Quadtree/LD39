@@ -19,7 +19,9 @@ public class GameState implements InputProcessor {
 	TilePos buildingDragStart = null;
 
 	List<Building> buildings = new ArrayList<Building>();
+	List<Thundercloud> clouds = new ArrayList<Thundercloud>();
 	public int colonyGrowthTimer = 0;
+
 	private List<Connection> connections = new ArrayList<Connection>();
 
 	boolean connectionsNeedsSort = false;
@@ -31,8 +33,8 @@ public class GameState implements InputProcessor {
 	boolean hasWonYet = false;
 
 	Building heldBuilding = null;
-
 	public boolean isDay = true;
+
 	float money = LD39.START_MONEY;
 
 	int mx, my;
@@ -53,6 +55,10 @@ public class GameState implements InputProcessor {
 	public void addConnections(Collection<Connection> conns) {
 		connections.addAll(conns);
 		connectionsNeedsSort = true;
+	}
+
+	public void addVisualEffect(VisualEffect vf) {
+		visualEffects.add(vf);
 	}
 
 	public Building getBuildingOnTile(TilePos pos) {
@@ -180,6 +186,9 @@ public class GameState implements InputProcessor {
 
 			if (keycode == Input.Keys.R)
 				topologyChanged();
+
+			if (keycode == Input.Keys.L)
+				startStorm();
 		}
 
 		setHeldBuildingLoc();
@@ -260,6 +269,11 @@ public class GameState implements InputProcessor {
 		for (Building b : getBuildingsToPlace()) {
 			b.render();
 		}
+
+		for (Thundercloud tc : clouds) {
+			tc.render();
+		}
+
 		LD39.s.batch.end();
 
 		for (VisualEffect ve : visualEffects)
@@ -326,6 +340,12 @@ public class GameState implements InputProcessor {
 		}
 
 		buildings.add(nb);
+	}
+
+	public void startStorm() {
+		for (int i = 0; i < 20; ++i) {
+			clouds.add(new Thundercloud());
+		}
 	}
 
 	public void topologyChanged() {
@@ -418,6 +438,13 @@ public class GameState implements InputProcessor {
 				visualEffects.get(i).update();
 			else
 				visualEffects.remove(i--);
+		}
+
+		for (int i = 0; i < clouds.size(); ++i) {
+			if (clouds.get(i).keep())
+				clouds.get(i).update();
+			else
+				clouds.remove(i--);
 		}
 
 		dayTicks++;

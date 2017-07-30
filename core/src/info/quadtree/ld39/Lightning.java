@@ -10,9 +10,12 @@ import com.badlogic.gdx.math.Vector2;
 public class Lightning extends VisualEffect {
 
 	Vector2 end;
+	public float endWidth = 2;
+
 	public float fade = 1;
 
 	Vector2 start;
+	public float startWidth = 2;
 
 	float[] vertArr = null;
 
@@ -79,7 +82,7 @@ public class Lightning extends VisualEffect {
 	public void update() {
 		super.update();
 
-		fade -= 1 / 60.f;
+		fade -= 1 / 30.f;
 
 		if (fade < 0)
 			keep = false;
