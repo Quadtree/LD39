@@ -408,16 +408,29 @@ public class GameState implements InputProcessor {
 
 		LD39.s.batch.end();
 
-		LD39.s.batch.begin();
-		LD39.s.mainFont.draw(LD39.s.batch, "Credits: " + (int) money, 20, Gdx.graphics.getHeight() - 40);
-		LD39.s.mainFont.draw(LD39.s.batch, "Income/minute: " + (int) getGrossIncome() + "/" + LD39.GROSS_INCOME_TO_WIN, 20, Gdx.graphics.getHeight() - 20);
-
-		LD39.s.mainFont.draw(LD39.s.batch, "== Power ==", Gdx.graphics.getWidth() - 140, Gdx.graphics.getHeight() - 20);
-		LD39.s.mainFont.draw(LD39.s.batch, "Generated: " + (int) (this.lastFramePowerGenerated * LD39.POWER_PRICE * 60), Gdx.graphics.getWidth() - 140, Gdx.graphics.getHeight() - 40);
-		LD39.s.mainFont.draw(LD39.s.batch, "In Storage: " + (int) (this.lastFrameTotalPowerStored * LD39.POWER_PRICE * 60), Gdx.graphics.getWidth() - 140, Gdx.graphics.getHeight() - 60);
-		LD39.s.mainFont.draw(LD39.s.batch, "Sold: " + (int) (this.lastFramePowerSold * LD39.POWER_PRICE * 60), Gdx.graphics.getWidth() - 140, Gdx.graphics.getHeight() - 80);
-		LD39.s.mainFont.draw(LD39.s.batch, "Wasted: " + (int) (this.lastFramePowerWasted * LD39.POWER_PRICE * 60), Gdx.graphics.getWidth() - 140, Gdx.graphics.getHeight() - 100);
-		LD39.s.batch.end();
+		/*
+		 * LD39.s.batch.begin(); LD39.s.mainFont.draw(LD39.s.batch, "Credits: "
+		 * + (int) money, 20, Gdx.graphics.getHeight() - 40);
+		 * LD39.s.mainFont.draw(LD39.s.batch, "Income/minute: " + (int)
+		 * getGrossIncome() + "/" + LD39.GROSS_INCOME_TO_WIN, 20,
+		 * Gdx.graphics.getHeight() - 20);
+		 * 
+		 * LD39.s.mainFont.draw(LD39.s.batch, "== Power ==",
+		 * Gdx.graphics.getWidth() - 140, Gdx.graphics.getHeight() - 20);
+		 * LD39.s.mainFont.draw(LD39.s.batch, "Generated: " + (int)
+		 * (this.lastFramePowerGenerated * LD39.POWER_PRICE * 60),
+		 * Gdx.graphics.getWidth() - 140, Gdx.graphics.getHeight() - 40);
+		 * LD39.s.mainFont.draw(LD39.s.batch, "In Storage: " + (int)
+		 * (this.lastFrameTotalPowerStored * LD39.POWER_PRICE * 60),
+		 * Gdx.graphics.getWidth() - 140, Gdx.graphics.getHeight() - 60);
+		 * LD39.s.mainFont.draw(LD39.s.batch, "Sold: " + (int)
+		 * (this.lastFramePowerSold * LD39.POWER_PRICE * 60),
+		 * Gdx.graphics.getWidth() - 140, Gdx.graphics.getHeight() - 80);
+		 * LD39.s.mainFont.draw(LD39.s.batch, "Wasted: " + (int)
+		 * (this.lastFramePowerWasted * LD39.POWER_PRICE * 60),
+		 * Gdx.graphics.getWidth() - 140, Gdx.graphics.getHeight() - 100);
+		 * LD39.s.batch.end();
+		 */
 	}
 
 	@Override
@@ -464,7 +477,7 @@ public class GameState implements InputProcessor {
 
 		}
 
-		nb.pos = TilePos.create(Gdx.graphics.getWidth() / LD39.TILE_SIZE / 2, Gdx.graphics.getHeight() / LD39.TILE_SIZE / 2);
+		nb.pos = TilePos.create(Gdx.graphics.getWidth() / LD39.TILE_SIZE / 2 - 4, Gdx.graphics.getHeight() / LD39.TILE_SIZE / 2);
 
 		int loops = 0;
 

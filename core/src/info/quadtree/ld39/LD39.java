@@ -13,10 +13,10 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
@@ -53,16 +53,23 @@ public class LD39 extends ApplicationAdapter {
 
 	public Texture img;
 
+	Label infoGrossIncome;
+
+	Label infoLastFramePowerGenerated;
+
+	Label infoLastFramePowerSold;
+
+	Label infoLastFramePowerWasted;
+
+	Label infoLastFrameTotalPowerStored;
+
+	Label infoMoney;
+
 	public BitmapFont mainFont;
-
 	InputMultiplexer multiplexer;
-
 	public ShapeRenderer shapeRnd;
-
 	public Stage uiStage;
-
 	public Table uiTable;
-
 	public long updatesDone = 0;
 
 	@Override
@@ -106,8 +113,25 @@ public class LD39 extends ApplicationAdapter {
 		rightPaneTable.setBackground(new NinePatchDrawable(atlas.createPatch("dialog1")));
 		rightPaneTable.setX(Gdx.graphics.getWidth() - 150);
 
-		VerticalGroup infoLabels = new VerticalGroup();
-		infoLabels.addActor(Util.createLabel("TEST"));
+		Table infoLabels = new Table();
+		infoLabels.add(Util.createLabel("$")).pad(4);
+		infoLabels.add(infoMoney = Util.createLabel("")).pad(4).row();
+
+		infoLabels.add(Util.createLabel("$/min")).pad(4);
+		infoLabels.add(infoGrossIncome = Util.createLabel("")).pad(4).row();
+
+		infoLabels.add(Util.createLabel("Pwr/s Gner")).pad(4);
+		infoLabels.add(infoLastFramePowerGenerated = Util.createLabel("")).pad(4).row();
+
+		infoLabels.add(Util.createLabel("Pwr/s Lost")).pad(4);
+		infoLabels.add(infoLastFramePowerWasted = Util.createLabel("")).pad(4).row();
+
+		infoLabels.add(Util.createLabel("Pwr/s Sold")).pad(4);
+		infoLabels.add(infoLastFramePowerSold = Util.createLabel("")).pad(4).row();
+
+		infoLabels.add(Util.createLabel("Pwr Stored")).pad(4);
+		infoLabels.add(infoLastFrameTotalPowerStored = Util.createLabel("")).pad(4).row();
+
 		rightPaneTable.add(infoLabels).align(Align.top).fill().top().row();
 
 		Table buyButtons = new Table();
@@ -184,6 +208,13 @@ public class LD39 extends ApplicationAdapter {
 			gs.update();
 			updatesDone++;
 		}
+
+		infoMoney.setText("" + (int) gs.money);
+		infoGrossIncome.setText((int) gs.getGrossIncome() + "/" + LD39.GROSS_INCOME_TO_WIN);
+		infoLastFramePowerGenerated.setText("" + (int) (gs.lastFramePowerGenerated * LD39.POWER_PRICE * 60));
+		infoLastFramePowerSold.setText("" + (int) (gs.lastFramePowerSold * LD39.POWER_PRICE * 60));
+		infoLastFramePowerWasted.setText("" + (int) (gs.lastFramePowerWasted * LD39.POWER_PRICE * 60));
+		infoLastFrameTotalPowerStored.setText("" + (int) (gs.lastFrameTotalPowerStored * LD39.POWER_PRICE * 60));
 
 		// Gdx.gl.glClearColor(0.3f, 0.3f, 0.3f, 1);
 		// Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
