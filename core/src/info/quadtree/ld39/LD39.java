@@ -100,7 +100,7 @@ public class LD39 extends ApplicationAdapter {
 		batch = new SpriteBatch();
 		shapeRnd = new ShapeRenderer();
 
-		mainFont = new BitmapFont(Gdx.files.internal("in14.fnt"));
+		mainFont = new BitmapFont(Gdx.files.internal("teko18.fnt"));
 
 		defaultLabelStyle = new LabelStyle(mainFont, Color.WHITE);
 		defaultDialogStyle = new WindowStyle(mainFont, Color.WHITE, new NinePatchDrawable(atlas.createPatch("dialog1")));
@@ -132,28 +132,30 @@ public class LD39 extends ApplicationAdapter {
 		rightPaneTable.setBackground(new NinePatchDrawable(atlas.createPatch("dialog1")));
 		rightPaneTable.setX(Gdx.graphics.getWidth() - 150);
 
+		final int rghColWidth = 75;
+
 		Table infoLabels = new Table();
 		infoLabels.add(Util.createLabel("$", "Your current money.")).pad(4);
-		infoLabels.add(infoMoney = Util.createLabel("")).pad(4).row();
+		infoLabels.add(infoMoney = Util.createLabel("")).width(rghColWidth).pad(4).row();
 
 		infoLabels.add(Util.createLabel("$/min", "Your gross income per minute,\ncompared to the amount needed to win.")).pad(4);
-		infoLabels.add(infoGrossIncome = Util.createLabel("")).pad(4).row();
+		infoLabels.add(infoGrossIncome = Util.createLabel("")).width(rghColWidth).pad(4).row();
 
 		infoLabels.add(Util.createLabel("P/s Genr", "Power generated per second by all\nyour generators.")).pad(4);
-		infoLabels.add(infoLastFramePowerGenerated = Util.createLabel("")).pad(4).row();
+		infoLabels.add(infoLastFramePowerGenerated = Util.createLabel("")).width(rghColWidth).pad(4).row();
 
 		infoLabels.add(Util.createLabel("P/s Lost", "Power lost in transit per second.\nConsider shortening wires.")).pad(4);
-		infoLabels.add(infoLastFramePowerWasted = Util.createLabel("")).pad(4).row();
+		infoLabels.add(infoLastFramePowerWasted = Util.createLabel("")).width(rghColWidth).pad(4).row();
 
 		infoLabels.add(Util.createLabel("P/s Sold", "Power sold per second.")).pad(4);
-		infoLabels.add(infoLastFramePowerSold = Util.createLabel("")).pad(4).row();
+		infoLabels.add(infoLastFramePowerSold = Util.createLabel("")).width(rghColWidth).pad(4).row();
 
 		infoLabels.add(Util.createLabel("P Stored", "Total power stored in all your batteries.")).pad(4);
-		infoLabels.add(infoLastFrameTotalPowerStored = Util.createLabel("")).pad(4).row();
+		infoLabels.add(infoLastFrameTotalPowerStored = Util.createLabel("")).width(rghColWidth).pad(4).row();
 
 		rightPaneTable.add(infoLabels).align(Align.top).fill().top().row();
 
-		rightPaneTable.add().height(120).row();
+		rightPaneTable.add().height(80).row();
 
 		Table buyButtons = new Table();
 
@@ -223,7 +225,7 @@ public class LD39 extends ApplicationAdapter {
 		Button buyButton1 = new Button(defaultButtonStyle);
 		buyButton1.add(Util.createLabel(text)).row();
 		Image img = new Image(new TextureRegionDrawable(atlas.createSprite(fact.create().getGraphic())));
-		buyButton1.add(img).width(32).height(32).row();
+		buyButton1.add(img).width(32).height(32).pad(2).row();
 		buyButton1.add(Util.createLabel("$" + fact.create().getCost())).row();
 		buyButton1.addListener(new ChangeListener() {
 			@Override
