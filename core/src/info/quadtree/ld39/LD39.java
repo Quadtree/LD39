@@ -57,6 +57,8 @@ public class LD39 extends ApplicationAdapter {
 
 	public TextTooltipStyle defaultTooltipStyle;
 
+	boolean gameStarted = false;
+
 	public GameState gs;
 
 	public Texture img;
@@ -72,12 +74,16 @@ public class LD39 extends ApplicationAdapter {
 	Label infoLastFrameTotalPowerStored;
 
 	Label infoMoney;
-
 	public BitmapFont mainFont;
 	InputMultiplexer multiplexer;
 	public ShapeRenderer shapeRnd;
 	Map<String, Sound> soundMap = new HashMap<String, Sound>();
+	Button titleButton;
+
+	Image titleImage;
+
 	public Stage uiStage;
+
 	public Table uiTable;
 
 	public long updatesDone = 0;
@@ -194,6 +200,22 @@ public class LD39 extends ApplicationAdapter {
 
 		uiStage.addActor(rightPaneTable);
 
+		titleImage = new Image(new Texture(Gdx.files.internal("title.png")));
+		titleButton = Util.createButton("Start", new ChangeListener() {
+
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				titleImage.remove();
+				titleButton.remove();
+
+				gameStarted = true;
+			}
+		});
+		titleButton.setSize(200, 40);
+		titleButton.setPosition(Gdx.graphics.getWidth() / 2, 60, Align.center);
+		uiStage.addActor(titleImage);
+		uiStage.addActor(titleButton);
+
 		updatesDone = System.currentTimeMillis() / 16;
 	}
 
@@ -234,7 +256,8 @@ public class LD39 extends ApplicationAdapter {
 	public void render() {
 
 		while (updatesDone * 16 < System.currentTimeMillis()) {
-			gs.update();
+			if (gameStarted)
+				gs.update();
 			updatesDone++;
 		}
 
