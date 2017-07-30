@@ -6,93 +6,121 @@ filter: Nearest,Nearest
 repeat: none
 battery
   rotate: false
-  xy: 2, 86
+  xy: 2, 104
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 dialog1
   rotate: false
-  xy: 294, 333
+  xy: 294, 351
   size: 8, 9
   split: 3, 3, 3, 3
   pad: 3, 3, 3, 4
   orig: 8, 9
   offset: 0, 0
   index: -1
-foundry
+dirt1
+  rotate: false
+  xy: 52, 86
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+dirt2
+  rotate: false
+  xy: 102, 136
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+dirt3
   rotate: false
   xy: 260, 310
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+dirt4
+  rotate: false
+  xy: 344, 394
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+foundry
+  rotate: false
+  xy: 260, 328
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 fusion
   rotate: false
-  xy: 260, 344
+  xy: 260, 362
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 geo
   rotate: false
-  xy: 52, 68
+  xy: 2, 2
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 hab
   rotate: false
-  xy: 310, 360
+  xy: 310, 378
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 hydro
   rotate: false
-  xy: 2, 36
+  xy: 2, 54
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 lab
   rotate: false
-  xy: 2, 2
+  xy: 2, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 rock
   rotate: false
-  xy: 102, 118
+  xy: 52, 68
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 solar
   rotate: false
-  xy: 52, 86
+  xy: 52, 104
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 thundercloud
   rotate: false
-  xy: 2, 136
+  xy: 2, 154
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
 wire
   rotate: false
-  xy: 260, 292
+  xy: 70, 86
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 wire_prot
   rotate: false
-  xy: 344, 376
+  xy: 102, 118
   size: 16, 16
   orig: 16, 16
   offset: 0, 0

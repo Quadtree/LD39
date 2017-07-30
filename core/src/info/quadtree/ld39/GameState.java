@@ -34,6 +34,8 @@ public class GameState implements InputProcessor {
 
 	int dayTicks = 0;
 
+	Sprite[] dirtSprite;
+
 	Sprite geoSprite;
 
 	public List<Float> grossIncome = new ArrayList<Float>();
@@ -54,7 +56,9 @@ public class GameState implements InputProcessor {
 	float money = LD39.START_MONEY;
 	int mx, my;
 	Sprite rockSprite;
+	float[][] terrainFacing;
 	TerrainType[][] terrainTypes;
+	char[][] terrainVariation;
 
 	int ticksSinceLastSpawn = 0;
 
@@ -70,19 +74,31 @@ public class GameState implements InputProcessor {
 
 		geoSprite = LD39.s.atlas.createSprite("geo");
 		rockSprite = LD39.s.atlas.createSprite("rock");
+		dirtSprite = new Sprite[4];
+		dirtSprite[0] = LD39.s.atlas.createSprite("dirt1");
+		dirtSprite[1] = LD39.s.atlas.createSprite("dirt2");
+		dirtSprite[2] = LD39.s.atlas.createSprite("dirt3");
+		dirtSprite[3] = LD39.s.atlas.createSprite("dirt4");
 
 		terrainTypes = new TerrainType[75][];
-		for (int i = 0; i < terrainTypes.length; ++i)
+		terrainFacing = new float[75][];
+		terrainVariation = new char[75][];
+		for (int i = 0; i < terrainTypes.length; ++i) {
 			terrainTypes[i] = new TerrainType[75];
+			terrainFacing[i] = new float[75];
+			terrainVariation[i] = new char[75];
+		}
 
 		for (int x = 0; x < 75; ++x) {
 			for (int y = 0; y < 75; ++y) {
-				terrainTypes[x][y] = TerrainType.Ground;
 
 				if (MathUtils.randomBoolean(0.005f))
 					terrainTypes[x][y] = TerrainType.Rock;
 				if (MathUtils.randomBoolean(0.001f))
 					terrainTypes[x][y] = TerrainType.Geothermal;
+
+				terrainFacing[x][y] = MathUtils.random(360);
+				terrainVariation[x][y] = (char) MathUtils.random(0, 3);
 			}
 		}
 
@@ -324,10 +340,13 @@ public class GameState implements InputProcessor {
 
 		for (int x = 0; x < 75; ++x) {
 			for (int y = 0; y < 75; ++y) {
+
+				LD39.s.batch.draw(dirtSprite[terrainVariation[x][y]], x * LD39.TILE_SIZE, y * LD39.TILE_SIZE, 8, 8, 16, 16, 1, 1, ((int) (terrainFacing[x][y] / 90)) * 90);
+
 				if (terrainTypes[x][y] == TerrainType.Geothermal)
 					LD39.s.batch.draw(geoSprite, x * LD39.TILE_SIZE, y * LD39.TILE_SIZE);
 				if (terrainTypes[x][y] == TerrainType.Rock)
-					LD39.s.batch.draw(rockSprite, x * LD39.TILE_SIZE, y * LD39.TILE_SIZE);
+					LD39.s.batch.draw(rockSprite, x * LD39.TILE_SIZE, y * LD39.TILE_SIZE, 8, 8, 16, 16, 1, 1, terrainFacing[x][y]);
 			}
 		}
 
