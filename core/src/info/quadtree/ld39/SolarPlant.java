@@ -4,7 +4,7 @@ public class SolarPlant extends Building {
 
 	@Override
 	public int getCost() {
-		return 200;
+		return 300;
 	}
 
 	@Override
@@ -14,7 +14,7 @@ public class SolarPlant extends Building {
 
 	@Override
 	public double getNetPower() {
-		return LD39.s.gs.isDay ? 2.0 : 0;
+		return LD39.s.gs.isDay ? 3.0 : 0;
 	}
 
 	@Override

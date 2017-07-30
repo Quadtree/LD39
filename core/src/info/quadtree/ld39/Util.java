@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextTooltip;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
 public class Util {
@@ -84,6 +85,14 @@ public class Util {
 
 	public static Label createLabel(String text) {
 		Label ret = new Label(text, LD39.s.defaultLabelStyle);
+		return ret;
+	}
+
+	public static Label createLabel(String text, String tooltip) {
+		Label ret = new Label(text, LD39.s.defaultLabelStyle);
+
+		ret.addListener(new TextTooltip(tooltip, LD39.s.defaultTooltipStyle));
+
 		return ret;
 	}
 

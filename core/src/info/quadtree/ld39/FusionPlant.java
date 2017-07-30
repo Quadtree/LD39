@@ -4,13 +4,17 @@ public class FusionPlant extends Building {
 
 	boolean hasFuel = false;
 
+	public double getBaseNetPower() {
+		return 20;
+	}
+
 	@Override
 	public int getCost() {
 		return 1500;
 	}
 
 	public float getFuelCost() {
-		return LD39.POWER_PRICE * 6;
+		return LD39.POWER_PRICE * 8;
 	}
 
 	@Override
@@ -20,7 +24,7 @@ public class FusionPlant extends Building {
 
 	@Override
 	public double getNetPower() {
-		return hasFuel ? 12 : 0;
+		return hasFuel ? this.getBaseNetPower() : 0;
 	}
 
 	@Override

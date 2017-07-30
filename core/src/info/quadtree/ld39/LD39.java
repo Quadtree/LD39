@@ -21,6 +21,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.TextTooltip;
+import com.badlogic.gdx.scenes.scene2d.ui.TextTooltip.TextTooltipStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
@@ -50,8 +52,9 @@ public class LD39 extends ApplicationAdapter {
 	public SpriteBatch batch;
 	public TextButtonStyle defaultButtonStyle;
 	public WindowStyle defaultDialogStyle;
-
 	public LabelStyle defaultLabelStyle;
+
+	public TextTooltipStyle defaultTooltipStyle;
 
 	public GameState gs;
 
@@ -82,6 +85,9 @@ public class LD39 extends ApplicationAdapter {
 	public void create() {
 		LD39.s = this;
 
+		// TooltipManager.getInstance().initialTime = 0.2f;
+		// TooltipManager.getInstance().animations = false;
+
 		atlas = new TextureAtlas(Gdx.files.internal("main.atlas"));
 
 		batch = new SpriteBatch();
@@ -92,6 +98,7 @@ public class LD39 extends ApplicationAdapter {
 		defaultLabelStyle = new LabelStyle(mainFont, Color.WHITE);
 		defaultDialogStyle = new WindowStyle(mainFont, Color.WHITE, new NinePatchDrawable(atlas.createPatch("dialog1")));
 		defaultButtonStyle = new TextButtonStyle(new NinePatchDrawable(atlas.createPatch("dialog3")), new NinePatchDrawable(atlas.createPatch("dialog2")), new NinePatchDrawable(atlas.createPatch("dialog3")), mainFont);
+		defaultTooltipStyle = new TextTooltipStyle(defaultLabelStyle, new NinePatchDrawable(atlas.createPatch("dialog1")));
 
 		gs = new GameState();
 
@@ -119,22 +126,22 @@ public class LD39 extends ApplicationAdapter {
 		rightPaneTable.setX(Gdx.graphics.getWidth() - 150);
 
 		Table infoLabels = new Table();
-		infoLabels.add(Util.createLabel("$")).pad(4);
+		infoLabels.add(Util.createLabel("$", "Your current money.")).pad(4);
 		infoLabels.add(infoMoney = Util.createLabel("")).pad(4).row();
 
-		infoLabels.add(Util.createLabel("$/min")).pad(4);
+		infoLabels.add(Util.createLabel("$/min", "Your gross income per minute,\ncompared to the amount needed to win.")).pad(4);
 		infoLabels.add(infoGrossIncome = Util.createLabel("")).pad(4).row();
 
-		infoLabels.add(Util.createLabel("P/s Genr")).pad(4);
+		infoLabels.add(Util.createLabel("P/s Genr", "Power generated per second by all\nyour generators.")).pad(4);
 		infoLabels.add(infoLastFramePowerGenerated = Util.createLabel("")).pad(4).row();
 
-		infoLabels.add(Util.createLabel("P/s Lost")).pad(4);
+		infoLabels.add(Util.createLabel("P/s Lost", "Power lost in transit per second.\nConsider shortening wires.")).pad(4);
 		infoLabels.add(infoLastFramePowerWasted = Util.createLabel("")).pad(4).row();
 
-		infoLabels.add(Util.createLabel("P/s Sold")).pad(4);
+		infoLabels.add(Util.createLabel("P/s Sold", "Power sold per second.")).pad(4);
 		infoLabels.add(infoLastFramePowerSold = Util.createLabel("")).pad(4).row();
 
-		infoLabels.add(Util.createLabel("P Stored")).pad(4);
+		infoLabels.add(Util.createLabel("P Stored", "Total power stored in all your batteries.")).pad(4);
 		infoLabels.add(infoLastFrameTotalPowerStored = Util.createLabel("")).pad(4).row();
 
 		rightPaneTable.add(infoLabels).align(Align.top).fill().top().row();
@@ -143,42 +150,44 @@ public class LD39 extends ApplicationAdapter {
 
 		Table buyButtons = new Table();
 
-		buyButtons.add(createBuyButton("Wire", new BuildingFactory() {
+		buyButtons.add(createBuyButton("Wire", "Transfers power between buildings, but there\nis a small amount lost in transit.", new BuildingFactory() {
 			@Override
 			public Building create() {
 				return new PowerLine();
 			}
 		})).pad(6).fill().row();
-		buyButtons.add(createBuyButton("Battery", new BuildingFactory() {
+		buyButtons.add(createBuyButton("Battery", "Stores " + (int) (new Battery().getMaxPower() * LD39.POWER_PRICE) + " power.", new BuildingFactory() {
 			@Override
 			public Building create() {
 				return new Battery();
 			}
 		})).pad(6).fill().row();
-		buyButtons.add(createBuyButton("Surge Protector", new BuildingFactory() {
+		buyButtons.add(createBuyButton("Surge Protector", "Power surges cannot cross one of these,\nbut " + (100 - (int) (new SurgeProtector().getRetained() * 100)) + "% of power passing through is lost.", new BuildingFactory() {
 			@Override
 			public Building create() {
 				return new SurgeProtector();
 			}
 		})).pad(6).fill().row();
-		buyButtons.add(createBuyButton("Solar Plant", new BuildingFactory() {
+		buyButtons.add(createBuyButton("Solar Plant", "Generates " + (int) (new SolarPlant().getNetPower() * 60 * LD39.POWER_PRICE) + " power per\nsecond, but only during the day.", new BuildingFactory() {
 			@Override
 			public Building create() {
 				return new SolarPlant();
 			}
 		})).pad(6).fill().row();
-		buyButtons.add(createBuyButton("Geothermal Plant", new BuildingFactory() {
+		buyButtons.add(createBuyButton("Geothermal Plant", "Generates " + (int) (new HydrocarbonPlant().getNetPower() * 60 * LD39.POWER_PRICE) + " power per\nsecond, but must be placed on a vent.", new BuildingFactory() {
 			@Override
 			public Building create() {
 				return new HydrocarbonPlant();
 			}
 		})).pad(6).fill().row();
-		buyButtons.add(createBuyButton("Fusion Plant", new BuildingFactory() {
-			@Override
-			public Building create() {
-				return new FusionPlant();
-			}
-		})).pad(6).fill().row();
+		buyButtons.add(createBuyButton("Fusion Plant",
+				"Generates " + (int) (new FusionPlant().getBaseNetPower() * 60 * LD39.POWER_PRICE) + " power per\nsecond, but costs " + (int) (new FusionPlant().getFuelCost() * 60) + " per second for fuel.",
+				new BuildingFactory() {
+					@Override
+					public Building create() {
+						return new FusionPlant();
+					}
+				})).pad(6).fill().row();
 
 		rightPaneTable.add(buyButtons);
 
@@ -187,10 +196,11 @@ public class LD39 extends ApplicationAdapter {
 		updatesDone = System.currentTimeMillis() / 16;
 	}
 
-	Button createBuyButton(String text, final BuildingFactory fact) {
+	Button createBuyButton(String text, String tooltip, final BuildingFactory fact) {
 		Button buyButton1 = new Button(defaultButtonStyle);
 		buyButton1.add(Util.createLabel(text)).row();
-		buyButton1.add(new Image(new TextureRegionDrawable(atlas.createSprite(fact.create().getGraphic())))).width(32).height(32).row();
+		Image img = new Image(new TextureRegionDrawable(atlas.createSprite(fact.create().getGraphic())));
+		buyButton1.add(img).width(32).height(32).row();
 		buyButton1.add(Util.createLabel("$" + fact.create().getCost())).row();
 		buyButton1.addListener(new ChangeListener() {
 			@Override
@@ -198,6 +208,7 @@ public class LD39 extends ApplicationAdapter {
 				LD39.s.gs.heldBuilding = fact.create();
 			}
 		});
+		buyButton1.addListener(new TextTooltip(tooltip, defaultTooltipStyle));
 
 		return buyButton1;
 	}
@@ -243,6 +254,7 @@ public class LD39 extends ApplicationAdapter {
 
 		gs.render();
 
+		uiStage.act();
 		uiStage.draw();
 
 		// batch.end();
