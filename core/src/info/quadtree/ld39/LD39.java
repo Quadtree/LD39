@@ -23,6 +23,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextTooltip;
 import com.badlogic.gdx.scenes.scene2d.ui.TextTooltip.TextTooltipStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.TooltipManager;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
@@ -85,8 +86,8 @@ public class LD39 extends ApplicationAdapter {
 	public void create() {
 		LD39.s = this;
 
-		// TooltipManager.getInstance().initialTime = 0.2f;
-		// TooltipManager.getInstance().animations = false;
+		TooltipManager.getInstance().initialTime = 0.5f;
+		TooltipManager.getInstance().hideAll();
 
 		atlas = new TextureAtlas(Gdx.files.internal("main.atlas"));
 
