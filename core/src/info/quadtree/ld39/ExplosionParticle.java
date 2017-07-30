@@ -8,9 +8,11 @@ public class ExplosionParticle extends VisualEffect {
 
 	static Sprite[] sprites = null;
 
-	float phase = 0;
+	public float drag = .4f;
 
+	float phase = 0;
 	Vector2 pos;
+
 	Vector2 vel;
 
 	public ExplosionParticle(float phase, Vector2 pos, Vector2 vel) {
@@ -53,7 +55,7 @@ public class ExplosionParticle extends VisualEffect {
 			keep = false;
 
 		pos.add(vel);
-		vel.scl(0.4f);
+		vel.scl(drag);
 	}
 
 }
