@@ -6,6 +6,7 @@ import java.util.Map;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -91,6 +92,11 @@ public class LD39 extends ApplicationAdapter {
 	@Override
 	public void create() {
 		LD39.s = this;
+
+		Music mainMusic = Gdx.audio.newMusic(Gdx.files.internal("ld39.ogg"));
+		mainMusic.setLooping(true);
+		mainMusic.setVolume(0.25f);
+		mainMusic.play();
 
 		TooltipManager.getInstance().initialTime = 0.5f;
 		TooltipManager.getInstance().hideAll();
