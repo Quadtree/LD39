@@ -1,15 +1,10 @@
 package info.quadtree.ld39;
 
-public class HydrocarbonPlant extends FusionPlant {
+public class HydrocarbonPlant extends Building {
 
 	@Override
 	public int getCost() {
 		return 400;
-	}
-
-	@Override
-	public float getFuelCost() {
-		return (float) (LD39.POWER_PRICE * getNetPower() * 0.15f);
 	}
 
 	@Override
