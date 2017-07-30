@@ -13,6 +13,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
@@ -497,6 +498,8 @@ public class GameState implements InputProcessor {
 	}
 
 	public void update() {
+
+		Util.createHelpText("Click on a solar plant on the right sidebar\nand place it next to the colony in the middle", new Vector2(800, 300));
 
 		long startTime = System.currentTimeMillis();
 
