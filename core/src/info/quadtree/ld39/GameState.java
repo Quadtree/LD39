@@ -99,6 +99,8 @@ public class GameState implements InputProcessor {
 		for (int x = 0; x < 75; ++x) {
 			for (int y = 0; y < 75; ++y) {
 
+				terrainTypes[x][y] = TerrainType.Ground;
+
 				if (MathUtils.randomBoolean(0.005f))
 					terrainTypes[x][y] = TerrainType.Rock;
 				if (MathUtils.randomBoolean(0.001f))
