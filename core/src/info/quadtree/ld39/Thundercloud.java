@@ -32,13 +32,18 @@ public class Thundercloud {
 		pos.x += 3;
 
 		if (MathUtils.random(60 * 5) == 0) {
-			TilePos target = TilePos.create((int) ((pos.x + MathUtils.random(-64, 64)) / 16), (int) ((pos.y + MathUtils.random(-64, 64)) / 16));
+			TilePos target = TilePos.create((int) ((pos.x + MathUtils.random(-64, 64)) / LD39.TILE_SIZE), (int) ((pos.y + MathUtils.random(-64, 64)) / LD39.TILE_SIZE));
 
 			Lightning lg = new Lightning();
-			lg.end = new Vector2(target.x * LD39.TILE_SIZE, target.y * LD39.TILE_SIZE);
+			lg.end = new Vector2(target.toVector2());
 			lg.start = pos.cpy().add(new Vector2(0, 1200));
 			lg.startWidth = 20;
 			LD39.s.gs.addVisualEffect(lg);
+
+			for (int i = 0; i < 5; ++i) {
+				ExplosionParticle ep = new ExplosionParticle(0, target.toVector2().add(MathUtils.random(-10, 10), MathUtils.random(-10, 10)), new Vector2(MathUtils.random(-10, 10), MathUtils.random(-10, 10)));
+				LD39.s.gs.addVisualEffect(ep);
+			}
 
 			LD39.s.gs.powerSurge(target);
 		}

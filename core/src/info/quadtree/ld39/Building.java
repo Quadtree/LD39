@@ -8,6 +8,7 @@ import java.util.PriorityQueue;
 import java.util.Set;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
 public abstract class Building {
@@ -177,6 +178,17 @@ public abstract class Building {
 
 		if (Math.random() < getSurgeDestructionOdds()) {
 			alive = false;
+
+			for (int x = 0; x < getSize().x; ++x) {
+				for (int y = 0; y < getSize().y; ++y) {
+					TilePos tp = TilePos.create(pos.x + x, pos.y + y);
+
+					for (int i = 0; i < 10; ++i) {
+						ExplosionParticle ep = new ExplosionParticle(0, tp.toVector2().add(MathUtils.random(-10, 10), MathUtils.random(-10, 10)), new Vector2(MathUtils.random(-20, 20), MathUtils.random(-20, 20)));
+						LD39.s.gs.addVisualEffect(ep);
+					}
+				}
+			}
 
 			int surgeProtectors = 0;
 

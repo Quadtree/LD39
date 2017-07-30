@@ -388,10 +388,10 @@ public class GameState implements InputProcessor {
 			tc.render();
 		}
 
-		LD39.s.batch.end();
-
 		for (VisualEffect ve : visualEffects)
 			ve.render();
+
+		LD39.s.batch.end();
 
 		LD39.s.batch.begin();
 		LD39.s.mainFont.draw(LD39.s.batch, "Credits: " + (int) money, 20, Gdx.graphics.getHeight() - 40);
