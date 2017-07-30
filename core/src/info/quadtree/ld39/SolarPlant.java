@@ -4,7 +4,7 @@ public class SolarPlant extends Building {
 
 	@Override
 	public int getCost() {
-		return 250;
+		return 200;
 	}
 
 	@Override

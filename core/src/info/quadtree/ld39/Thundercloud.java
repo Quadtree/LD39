@@ -31,7 +31,7 @@ public class Thundercloud {
 	public void update() {
 		pos.x += 3;
 
-		if (MathUtils.random(60 * 5) == 0) {
+		if (MathUtils.random(60 * 20) == 0) {
 			TilePos target = TilePos.create((int) ((pos.x + MathUtils.random(-64, 64)) / LD39.TILE_SIZE), (int) ((pos.y + MathUtils.random(-64, 64)) / LD39.TILE_SIZE));
 
 			Lightning lg = new Lightning();

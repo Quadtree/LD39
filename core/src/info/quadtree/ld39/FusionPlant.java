@@ -32,7 +32,7 @@ public class FusionPlant extends Building {
 	public void update() {
 		super.update();
 
-		if (LD39.s.gs.money >= getFuelCost()) {
+		if (LD39.s.gs.money >= 250) {
 			LD39.s.gs.money -= getFuelCost();
 			hasFuel = true;
 			isPowered = 1;

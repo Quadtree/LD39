@@ -535,6 +535,9 @@ public class GameState implements InputProcessor {
 		if (nb instanceof Foundry)
 			Util.createHelpText("Foundries need power in short bursts.\nAdd batteries to this circuit.", nb.pos.toVector2().add(40, 0));
 
+		if (dayTicks > 0)
+			Util.createHelpText("Add a wire to connect this building,\nbut beware of power surges.", nb.pos.toVector2().add(40, 0));
+
 		buildings.add(nb);
 
 		topologyChanged();

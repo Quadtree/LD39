@@ -36,8 +36,8 @@ public class LD39 extends ApplicationAdapter {
 	public static boolean CHEATS = true;
 	public final static int DAY_TICKS = 1000;
 	public final static int GROSS_INCOME_TICKS = 60 * 60;
-	public final static int GROSS_INCOME_TO_WIN = 2500;
-	public final static float POWER_PRICE = .2f;
+	public final static int GROSS_INCOME_TO_WIN = 12000;
+	public final static float POWER_PRICE = .25f;
 	public final static float REFUND_PCT = 0.5f;
 	public static LD39 s;
 	public final static int START_MONEY = 750;
@@ -125,16 +125,16 @@ public class LD39 extends ApplicationAdapter {
 		infoLabels.add(Util.createLabel("$/min")).pad(4);
 		infoLabels.add(infoGrossIncome = Util.createLabel("")).pad(4).row();
 
-		infoLabels.add(Util.createLabel("Pwr/s Gner")).pad(4);
+		infoLabels.add(Util.createLabel("P/s Genr")).pad(4);
 		infoLabels.add(infoLastFramePowerGenerated = Util.createLabel("")).pad(4).row();
 
-		infoLabels.add(Util.createLabel("Pwr/s Lost")).pad(4);
+		infoLabels.add(Util.createLabel("P/s Lost")).pad(4);
 		infoLabels.add(infoLastFramePowerWasted = Util.createLabel("")).pad(4).row();
 
-		infoLabels.add(Util.createLabel("Pwr/s Sold")).pad(4);
+		infoLabels.add(Util.createLabel("P/s Sold")).pad(4);
 		infoLabels.add(infoLastFramePowerSold = Util.createLabel("")).pad(4).row();
 
-		infoLabels.add(Util.createLabel("Pwr Stored")).pad(4);
+		infoLabels.add(Util.createLabel("P Stored")).pad(4);
 		infoLabels.add(infoLastFrameTotalPowerStored = Util.createLabel("")).pad(4).row();
 
 		rightPaneTable.add(infoLabels).align(Align.top).fill().top().row();

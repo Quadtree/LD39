@@ -18,7 +18,7 @@ public class Battery extends Building {
 
 	@Override
 	public double getMaxPower() {
-		return 500;
+		return 1000;
 	}
 
 	@Override

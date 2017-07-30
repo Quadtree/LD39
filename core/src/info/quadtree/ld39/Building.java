@@ -167,7 +167,7 @@ public abstract class Building {
 	public abstract TilePos getSize();
 
 	public double getSurgeDestructionOdds() {
-		return 0.25;
+		return 0.18;
 	}
 
 	public boolean hasEnoughPower() {

@@ -4,7 +4,7 @@ public class SurgeProtector extends Building {
 
 	@Override
 	public int getCost() {
-		return 100;
+		return 70;
 	}
 
 	@Override
@@ -19,7 +19,7 @@ public class SurgeProtector extends Building {
 
 	@Override
 	public double getRetained() {
-		return 0.85;
+		return 0.9;
 	}
 
 	@Override
