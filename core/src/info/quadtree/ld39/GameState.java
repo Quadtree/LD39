@@ -676,7 +676,7 @@ public class GameState implements InputProcessor {
 
 		if (connectionsNeedsSort) {
 			Collections.sort(connections);
-			System.out.println(connections);
+			// System.out.println(connections);
 			connectionsNeedsSort = false;
 		}
 
