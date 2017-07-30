@@ -33,6 +33,11 @@ public class FusionPlant extends Building {
 	}
 
 	@Override
+	public boolean isSource() {
+		return true;
+	}
+
+	@Override
 	public void update() {
 		super.update();
 

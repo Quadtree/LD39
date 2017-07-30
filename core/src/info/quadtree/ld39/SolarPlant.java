@@ -23,6 +23,11 @@ public class SolarPlant extends Building {
 	}
 
 	@Override
+	public boolean isSource() {
+		return true;
+	}
+
+	@Override
 	public void update() {
 		super.update();
 

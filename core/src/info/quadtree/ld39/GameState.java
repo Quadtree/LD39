@@ -552,6 +552,8 @@ public class GameState implements InputProcessor {
 	public void topologyChanged() {
 		for (Building b : buildings)
 			b.updateTopology();
+
+		System.out.println("Topology changed");
 	}
 
 	@Override
@@ -674,7 +676,7 @@ public class GameState implements InputProcessor {
 
 		if (connectionsNeedsSort) {
 			Collections.sort(connections);
-			// System.out.println(connections);
+			System.out.println(connections);
 			connectionsNeedsSort = false;
 		}
 
@@ -709,9 +711,6 @@ public class GameState implements InputProcessor {
 		if (dayTicks >= LD39.DAY_TICKS) {
 			dayTicks = 0;
 			isDay = !isDay;
-
-			// this really should NOT be needed!
-			topologyChanged();
 		}
 
 		colonyGrowthTimer++;

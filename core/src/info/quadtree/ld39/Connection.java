@@ -46,6 +46,7 @@ public class Connection implements Comparable<Connection> {
 
 	@Override
 	public String toString() {
-		return "Connection [retained=" + retained + ", sink=" + sink + ", source=" + source + "]";
+		return "Connection [priority=" + priority + ", retained=" + retained + ", sink=" + sink + ", source=" + source + "]";
 	}
+
 }

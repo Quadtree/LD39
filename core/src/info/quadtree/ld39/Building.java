@@ -131,7 +131,7 @@ public abstract class Building {
 			}
 		}
 
-		// System.out.println(this + " " + ret);
+		System.out.println(this + " " + ret);
 
 		this.neighbors = ret;
 
