@@ -110,15 +110,44 @@ public class LD39 extends ApplicationAdapter {
 		infoLabels.addActor(Util.createLabel("TEST"));
 		rightPaneTable.add(infoLabels).align(Align.top).fill().top().row();
 
-		VerticalGroup buyButtons = new VerticalGroup();
+		Table buyButtons = new Table();
 
-		buyButtons.addActor(createBuyButton("Solar Plant", new BuildingFactory() {
-
+		buyButtons.add(createBuyButton("Wire", new BuildingFactory() {
+			@Override
+			public Building create() {
+				return new PowerLine();
+			}
+		})).pad(6).fill().row();
+		buyButtons.add(createBuyButton("Battery", new BuildingFactory() {
+			@Override
+			public Building create() {
+				return new Battery();
+			}
+		})).pad(6).fill().row();
+		buyButtons.add(createBuyButton("Surge Protector", new BuildingFactory() {
+			@Override
+			public Building create() {
+				return new SurgeProtector();
+			}
+		})).pad(6).fill().row();
+		buyButtons.add(createBuyButton("Solar Plant", new BuildingFactory() {
 			@Override
 			public Building create() {
 				return new SolarPlant();
 			}
-		}));
+		})).pad(6).fill().row();
+		buyButtons.add(createBuyButton("Geothermal Plant", new BuildingFactory() {
+			@Override
+			public Building create() {
+				return new HydrocarbonPlant();
+			}
+		})).pad(6).fill().row();
+		buyButtons.add(createBuyButton("Fusion Plant", new BuildingFactory() {
+			@Override
+			public Building create() {
+				return new FusionPlant();
+			}
+		})).pad(6).fill().row();
 
 		rightPaneTable.add(buyButtons);
 
@@ -130,7 +159,7 @@ public class LD39 extends ApplicationAdapter {
 	Button createBuyButton(String text, final BuildingFactory fact) {
 		Button buyButton1 = new Button(defaultButtonStyle);
 		buyButton1.add(Util.createLabel(text)).row();
-		buyButton1.add(new Image(new TextureRegionDrawable(atlas.createSprite(fact.create().getGraphic())))).row();
+		buyButton1.add(new Image(new TextureRegionDrawable(atlas.createSprite(fact.create().getGraphic())))).width(32).height(32).row();
 		buyButton1.add(Util.createLabel("$" + fact.create().getCost())).row();
 		buyButton1.addListener(new ChangeListener() {
 			@Override
