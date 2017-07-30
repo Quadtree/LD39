@@ -10,6 +10,7 @@ import java.util.Set;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
@@ -405,6 +406,20 @@ public class GameState implements InputProcessor {
 
 		for (VisualEffect ve : visualEffects)
 			ve.render();
+
+		if (heldBuilding != null) {
+			int totalCost = 0;
+
+			for (Building b : getBuildingsToPlace())
+				totalCost += b.getCost();
+
+			if (totalCost > money)
+				LD39.s.mainFont.setColor(Color.RED);
+			else
+				LD39.s.mainFont.setColor(Color.WHITE);
+
+			LD39.s.mainFont.draw(LD39.s.batch, "$" + totalCost, getMouseTilePos().toVector2().x, getMouseTilePos().toVector2().y - 10);
+		}
 
 		LD39.s.batch.end();
 

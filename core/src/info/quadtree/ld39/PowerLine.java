@@ -18,7 +18,7 @@ public class PowerLine extends Building {
 
 	@Override
 	public int getCost() {
-		return 10;
+		return 5;
 	}
 
 	@Override

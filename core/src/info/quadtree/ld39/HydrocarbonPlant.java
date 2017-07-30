@@ -4,7 +4,7 @@ public class HydrocarbonPlant extends FusionPlant {
 
 	@Override
 	public int getCost() {
-		return 600;
+		return 400;
 	}
 
 	@Override

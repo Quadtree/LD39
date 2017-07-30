@@ -19,7 +19,7 @@ public class SurgeProtector extends Building {
 
 	@Override
 	public double getRetained() {
-		return 0.8;
+		return 0.85;
 	}
 
 	@Override
