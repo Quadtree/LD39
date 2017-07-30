@@ -254,18 +254,28 @@ public abstract class Building {
 		 */
 
 		sprite.setSize(getSize().x * 16, getSize().y * 16);
+		setupNightTint(sprite);
 
 		sprite.draw(LD39.s.batch);
 
-		if (isPowered > 0.99f) {
-		} else if (isPowered > 0.01f) {
-			LD39.s.batch.draw(lowPowerSprite, pos.toVector2().x, pos.toVector2().y + (getSize().y - 1) * LD39.TILE_SIZE);
-		} else
-			LD39.s.batch.draw(noPowerSprite, pos.toVector2().x, pos.toVector2().y + (getSize().y - 1) * LD39.TILE_SIZE);
+		if (getNetPower() < -0.1f) {
+			if (isPowered > 0.99f) {
+			} else if (isPowered > 0.01f) {
+				LD39.s.batch.draw(lowPowerSprite, pos.toVector2().x, pos.toVector2().y + (getSize().y - 1) * LD39.TILE_SIZE);
+			} else
+				LD39.s.batch.draw(noPowerSprite, pos.toVector2().x, pos.toVector2().y + (getSize().y - 1) * LD39.TILE_SIZE);
+		}
+
 	}
 
 	public boolean requiresGeo() {
 		return false;
+	}
+
+	void setupNightTint(Sprite sp) {
+		float tint = LD39.s.gs.isDay ? 1 : 0.5f;
+
+		sp.setColor(tint, tint, tint, 1);
 	}
 
 	public void update() {

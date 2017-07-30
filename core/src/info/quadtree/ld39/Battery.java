@@ -62,6 +62,8 @@ public class Battery extends Building {
 
 		sprite.setSize(getSize().x * 16, getSize().y * 16);
 
+		setupNightTint(sprite);
+
 		sprite.draw(LD39.s.batch);
 
 		LD39.s.batch.draw(levelSprite, sprite.getX() + 4, sprite.getY() + 5, 8, (float) (power * 10 / getMaxPower()));

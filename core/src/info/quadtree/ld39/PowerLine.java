@@ -6,6 +6,16 @@ public class PowerLine extends Building {
 
 	Sprite isoSprite = null;
 
+	void drawAtRotation(Sprite sprite, float x, float y, float rotation) {
+		sprite.setPosition(x, y);
+		sprite.setRotation(rotation);
+		sprite.setOrigin(8, 8);
+
+		setupNightTint(sprite);
+
+		sprite.draw(LD39.s.batch);
+	}
+
 	@Override
 	public int getCost() {
 		return 10;
@@ -44,7 +54,7 @@ public class PowerLine extends Building {
 		if (isoSprite == null)
 			isoSprite = LD39.s.atlas.createSprite("wire_iso");
 
-		LD39.s.batch.draw(isoSprite, pos.x * LD39.TILE_SIZE, pos.y * LD39.TILE_SIZE, LD39.TILE_SIZE, LD39.TILE_SIZE);
+		drawAtRotation(isoSprite, pos.x * LD39.TILE_SIZE, pos.y * LD39.TILE_SIZE, 0);
 
 		getAdjacentBuildings();
 
@@ -65,15 +75,15 @@ public class PowerLine extends Building {
 		}
 
 		if (hasBuildingToEast)
-			LD39.s.batch.draw(sprite, pos.x * LD39.TILE_SIZE, pos.y * LD39.TILE_SIZE, 8, 8, 16, 16, 1, 1, 0);
+			drawAtRotation(sprite, pos.x * LD39.TILE_SIZE, pos.y * LD39.TILE_SIZE, 0);
 
 		if (hasBuildingToNorth)
-			LD39.s.batch.draw(sprite, pos.x * LD39.TILE_SIZE, pos.y * LD39.TILE_SIZE, 8, 8, 16, 16, 1, 1, 90);
+			drawAtRotation(sprite, pos.x * LD39.TILE_SIZE, pos.y * LD39.TILE_SIZE, 90);
 
 		if (hasBuildingToWest)
-			LD39.s.batch.draw(sprite, pos.x * LD39.TILE_SIZE, pos.y * LD39.TILE_SIZE, 8, 8, 16, 16, 1, 1, 180);
+			drawAtRotation(sprite, pos.x * LD39.TILE_SIZE, pos.y * LD39.TILE_SIZE, 180);
 
 		if (hasBuildingToSouth)
-			LD39.s.batch.draw(sprite, pos.x * LD39.TILE_SIZE, pos.y * LD39.TILE_SIZE, 8, 8, 16, 16, 1, 1, 270);
+			drawAtRotation(sprite, pos.x * LD39.TILE_SIZE, pos.y * LD39.TILE_SIZE, 270);
 	}
 }

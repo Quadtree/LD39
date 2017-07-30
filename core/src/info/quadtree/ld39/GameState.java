@@ -366,6 +366,8 @@ public class GameState implements InputProcessor {
 			sp.setOrigin(8, 8);
 		}
 
+		float dayModifier = isDay ? 1 : 0.5f;
+
 		for (int x = 0; x < 75; ++x) {
 			for (int y = 0; y < 75; ++y) {
 
@@ -380,8 +382,13 @@ public class GameState implements InputProcessor {
 
 				if (terrainTypes[x][y] == TerrainType.Geothermal)
 					LD39.s.batch.draw(geoSprite, x * LD39.TILE_SIZE, y * LD39.TILE_SIZE);
-				if (terrainTypes[x][y] == TerrainType.Rock)
-					LD39.s.batch.draw(rockSprite, x * LD39.TILE_SIZE, y * LD39.TILE_SIZE, 8, 8, 16, 16, 1, 1, terrainFacing[x][y]);
+				if (terrainTypes[x][y] == TerrainType.Rock) {
+					rockSprite.setPosition(x * LD39.TILE_SIZE, y * LD39.TILE_SIZE);
+					rockSprite.setOrigin(8, 8);
+					rockSprite.setColor(dayModifier, dayModifier, dayModifier, 1);
+					rockSprite.setRotation(terrainFacing[x][y]);
+					rockSprite.draw(LD39.s.batch);
+				}
 			}
 		}
 
@@ -475,6 +482,8 @@ public class GameState implements InputProcessor {
 			Util.createHelpText("Foundries need power in short bursts.\nAdd batteries to this circuit.", nb.pos.toVector2().add(40, 0));
 
 		buildings.add(nb);
+
+		topologyChanged();
 	}
 
 	public void startStorm() {
