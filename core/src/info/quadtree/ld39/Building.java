@@ -143,8 +143,20 @@ public abstract class Building {
 	public void hitByPowerSurge() {
 		System.out.println(this + " hit by surge");
 
-		if (Math.random() < getSurgeDestructionOdds())
+		if (Math.random() < getSurgeDestructionOdds()) {
 			alive = false;
+
+			int surgeProtectors = 0;
+
+			for (Building b : LD39.s.gs.buildings) {
+				if (b instanceof SurgeProtector) {
+					surgeProtectors++;
+				}
+			}
+
+			if (surgeProtectors == 0)
+				Util.createHelpText("Add surge protectors to stop the propegation of power surges", new Vector2(500, 500));
+		}
 	}
 
 	public boolean isColonyBuilding() {

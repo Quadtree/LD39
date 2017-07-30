@@ -56,6 +56,8 @@ public class GameState implements InputProcessor {
 	Sprite rockSprite;
 	TerrainType[][] terrainTypes;
 
+	int ticksSinceLastSpawn = 0;
+
 	List<VisualEffect> visualEffects = new ArrayList<VisualEffect>();
 
 	public GameState() {
@@ -369,6 +371,7 @@ public class GameState implements InputProcessor {
 
 	public void spawnColonyBuilding() {
 		Building nb = null;
+		ticksSinceLastSpawn = 0;
 
 		int totalColonyBuildings = 0;
 
@@ -405,6 +408,12 @@ public class GameState implements InputProcessor {
 			if (++loops > 10000)
 				return;
 		}
+
+		if (nb instanceof Labratory)
+			Util.createHelpText("Labratories use lots of power, which is good\nbut the dangerous experiments tend to\ngenerate power surges. Add surge protectors\nto this circuit.", nb.pos.toVector2().add(40, 0));
+
+		if (nb instanceof Foundry)
+			Util.createHelpText("Foundries need power in short bursts.\nAdd batteries to this circuit.", nb.pos.toVector2().add(40, 0));
 
 		buildings.add(nb);
 	}
@@ -500,6 +509,24 @@ public class GameState implements InputProcessor {
 	public void update() {
 
 		Util.createHelpText("Click on a solar plant on the right sidebar\nand place it next to the colony in the middle", new Vector2(800, 300));
+
+		int solarCount = 0;
+		int batteryCount = 0;
+
+		for (Building b : buildings) {
+			if (b instanceof SolarPlant)
+				solarCount++;
+			if (b instanceof Battery)
+				batteryCount++;
+		}
+
+		if (!isDay && solarCount > 0 && batteryCount == 0)
+			Util.createHelpText("Solar plants don't work at night.\nConsider adding some batteries.", new Vector2(500, 500));
+
+		ticksSinceLastSpawn++;
+
+		if (ticksSinceLastSpawn > 60 * 30)
+			Util.createHelpText("All buildings must be constantly powered\nin order for the colony to expand.", new Vector2(500, 500));
 
 		long startTime = System.currentTimeMillis();
 

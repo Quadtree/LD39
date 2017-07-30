@@ -1,5 +1,7 @@
 package info.quadtree.ld39;
 
+import com.badlogic.gdx.math.Vector2;
+
 public class TilePos {
 	public static TilePos create(int x, int y) {
 		return new TilePos(x, y);
@@ -27,4 +29,7 @@ public class TilePos {
 		return "TilePos [x=" + x + ", y=" + y + "]";
 	}
 
+	public Vector2 toVector2() {
+		return new Vector2(x * LD39.TILE_SIZE, y * LD39.TILE_SIZE);
+	}
 }

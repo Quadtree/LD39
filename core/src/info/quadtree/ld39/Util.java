@@ -14,7 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
 public class Util {
 	private static final String NO_HINTS = "NO_HINTS";
-	private static final String PREF_NAME = "helpText";
+	private static final String PREF_NAME = "ld39-prefs.xml";
 
 	public static Button addButtonEvent(Button b, ChangeListener list) {
 		b.addListener(list);
@@ -66,6 +66,7 @@ public class Util {
 				public void changed(ChangeEvent event, Actor actor) {
 					Util.getParentDialog(actor).remove();
 					Gdx.app.getPreferences(PREF_NAME).putInteger(NO_HINTS, 1);
+					Gdx.app.getPreferences(PREF_NAME).flush();
 				}
 			}));
 
@@ -74,6 +75,7 @@ public class Util {
 				wnd.button(bt).pad(8);
 			wnd.pack();
 			wnd.setPosition(location.x, location.y);
+			wnd.setModal(false);
 			LD39.s.uiStage.addActor(wnd);
 		}
 
