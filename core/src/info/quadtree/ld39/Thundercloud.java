@@ -47,7 +47,7 @@ public class Thundercloud {
 
 			LD39.s.gs.powerSurge(target);
 
-			LD39.s.playSound("lightning" + MathUtils.random(0, 3) + ".wav");
+			LD39.s.playSound("lightning" + MathUtils.random(0, 3) + ".wav", Math.max(0.1f, 1 - (Math.abs(pos.x - 500) / 2000)));
 		}
 	}
 }

@@ -208,10 +208,14 @@ public class LD39 extends ApplicationAdapter {
 	}
 
 	public void playSound(String sound) {
+		this.playSound(sound, 1);
+	}
+
+	public void playSound(String sound, float volume) {
 		if (!soundMap.containsKey(sound))
 			soundMap.put(sound, Gdx.audio.newSound(Gdx.files.internal("sound/" + sound)));
 
-		soundMap.get(sound).play();
+		soundMap.get(sound).play(volume);
 	}
 
 	@Override
