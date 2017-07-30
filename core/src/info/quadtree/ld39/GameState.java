@@ -141,8 +141,9 @@ public class GameState implements InputProcessor {
 
 		if (buildingDragStart != null && (heldBuilding instanceof PowerLine || heldBuilding instanceof Battery)) {
 			TilePos ctp = buildingDragStart;
+			heldBuilding.removeExtraNeighbors();
 
-			Building lastBuilding = buildingsToPlace.get(0);
+			Building lastBuilding = null;
 
 			while (!ctp.equals(heldBuilding.pos)) {
 				Building nb = null;
@@ -179,6 +180,12 @@ public class GameState implements InputProcessor {
 
 				// System.out.println(ctp);
 			}
+
+			if (lastBuilding != null && heldBuilding != null) {
+				lastBuilding.addNeighbor(heldBuilding);
+				heldBuilding.addNeighbor(lastBuilding);
+			}
+
 		}
 		return buildingsToPlace;
 	}

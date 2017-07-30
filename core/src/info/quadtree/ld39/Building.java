@@ -39,6 +39,8 @@ public abstract class Building {
 
 	List<Connection> connections;
 
+	List<Building> extraNeighbors = new ArrayList<Building>();
+
 	boolean hasBuildingToEast = false;
 
 	boolean hasBuildingToNorth = false;
@@ -50,19 +52,14 @@ public abstract class Building {
 	public double isPowered = 0;
 
 	Collection<Building> neighbors;
-
 	public TilePos pos = new TilePos(0, 0);
 	double power;
+
 	Sprite sprite;
 
 	public void addNeighbor(Building b) {
-		if (neighbors == null) {
-			neighbors = new ArrayList<Building>();
-		}
-
-		if (neighbors instanceof ArrayList) {
-			List<Building> neigh = (List<Building>) neighbors;
-			neigh.add(b);
+		if (extraNeighbors != null) {
+			extraNeighbors.add(b);
 		}
 	}
 
@@ -70,6 +67,11 @@ public abstract class Building {
 
 		if (neighbors != null)
 			return neighbors;
+
+		hasBuildingToEast = false;
+		hasBuildingToNorth = false;
+		hasBuildingToSouth = false;
+		hasBuildingToWest = false;
 
 		Set<Building> ret = new HashSet<Building>();
 
@@ -209,6 +211,10 @@ public abstract class Building {
 		return alive;
 	}
 
+	public void removeExtraNeighbors() {
+		extraNeighbors.clear();
+	}
+
 	public void render() {
 		if (sprite == null)
 			sprite = LD39.s.atlas.createSprite(getGraphic());
@@ -306,5 +312,6 @@ public abstract class Building {
 
 		connections = null;
 		neighbors = null;
+		extraNeighbors = null;
 	}
 }

@@ -8,7 +8,7 @@ public class PowerLine extends Building {
 
 	@Override
 	public int getCost() {
-		return 25;
+		return 10;
 	}
 
 	@Override
@@ -46,8 +46,22 @@ public class PowerLine extends Building {
 
 		LD39.s.batch.draw(isoSprite, pos.x * LD39.TILE_SIZE, pos.y * LD39.TILE_SIZE, LD39.TILE_SIZE, LD39.TILE_SIZE);
 
-		for (Building b : getAdjacentBuildings()) {
+		getAdjacentBuildings();
 
+		if (extraNeighbors != null) {
+			for (Building b : extraNeighbors) {
+
+				if (b.pos.x > pos.x)
+					hasBuildingToEast = true;
+				if (b.pos.x < pos.x)
+					hasBuildingToWest = true;
+
+				if (b.pos.y > pos.y)
+					hasBuildingToNorth = true;
+				if (b.pos.y < pos.y)
+					hasBuildingToSouth = true;
+
+			}
 		}
 
 		if (hasBuildingToEast)
