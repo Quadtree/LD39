@@ -42,12 +42,17 @@ public class GameState implements InputProcessor {
 
 	public boolean isDay = true;
 
+	public float lastFramePowerGenerated = 0;
+
+	public float lastFramePowerSold = 0;
+
+	public float lastFramePowerWasted = 0;
+
+	public float lastFrameTotalPowerStored = 0;
+
 	float money = LD39.START_MONEY;
-
 	int mx, my;
-
 	Sprite rockSprite;
-
 	TerrainType[][] terrainTypes;
 
 	List<VisualEffect> visualEffects = new ArrayList<VisualEffect>();
@@ -336,6 +341,12 @@ public class GameState implements InputProcessor {
 		LD39.s.batch.begin();
 		LD39.s.mainFont.draw(LD39.s.batch, "Credits: " + (int) money, 20, Gdx.graphics.getHeight() - 40);
 		LD39.s.mainFont.draw(LD39.s.batch, "Income/minute: " + (int) getGrossIncome() + "/" + LD39.GROSS_INCOME_TO_WIN, 20, Gdx.graphics.getHeight() - 20);
+
+		LD39.s.mainFont.draw(LD39.s.batch, "== Power ==", Gdx.graphics.getWidth() - 140, Gdx.graphics.getHeight() - 20);
+		LD39.s.mainFont.draw(LD39.s.batch, "Generated: " + (int) (this.lastFramePowerGenerated / LD39.POWER_PRICE), Gdx.graphics.getWidth() - 140, Gdx.graphics.getHeight() - 40);
+		LD39.s.mainFont.draw(LD39.s.batch, "In Storage: " + (int) (this.lastFrameTotalPowerStored / LD39.POWER_PRICE), Gdx.graphics.getWidth() - 140, Gdx.graphics.getHeight() - 60);
+		LD39.s.mainFont.draw(LD39.s.batch, "Sold: " + (int) (this.lastFramePowerSold / LD39.POWER_PRICE), Gdx.graphics.getWidth() - 140, Gdx.graphics.getHeight() - 80);
+		LD39.s.mainFont.draw(LD39.s.batch, "Wasted: " + (int) (this.lastFramePowerWasted / LD39.POWER_PRICE), Gdx.graphics.getWidth() - 140, Gdx.graphics.getHeight() - 100);
 		LD39.s.batch.end();
 	}
 
@@ -461,6 +472,11 @@ public class GameState implements InputProcessor {
 	public void update() {
 
 		long startTime = System.currentTimeMillis();
+
+		this.lastFramePowerGenerated = 0;
+		this.lastFramePowerSold = 0;
+		this.lastFramePowerWasted = 0;
+		this.lastFrameTotalPowerStored = 0;
 
 		grossIncome.add(0, 0.f);
 

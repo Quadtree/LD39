@@ -60,5 +60,6 @@ public class Battery extends Building {
 
 	@Override
 	public void update() {
+		LD39.s.gs.lastFrameTotalPowerStored += power;
 	}
 }

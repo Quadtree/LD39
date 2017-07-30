@@ -199,8 +199,10 @@ public abstract class Building {
 
 		isPowered = 1;
 
-		if (getNetPower() > 0.1)
+		if (getNetPower() > 0.1) {
 			power += getNetPower();
+			LD39.s.gs.lastFramePowerGenerated += getNetPower();
+		}
 
 		if (getNetPower() < -0.1) {
 			double powerToConsume = -getNetPower();
@@ -210,6 +212,7 @@ public abstract class Building {
 				powerToConsume = power;
 			}
 
+			LD39.s.gs.lastFramePowerSold += powerToConsume;
 			power -= powerToConsume;
 
 			double income = powerToConsume * LD39.POWER_PRICE;

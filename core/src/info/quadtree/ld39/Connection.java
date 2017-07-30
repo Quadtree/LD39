@@ -36,7 +36,10 @@ public class Connection implements Comparable<Connection> {
 
 		if (transfer > 0.1) {
 			source.power -= transfer;
-			sink.power += transfer;
+			sink.power += transfer * retained;
+
+			LD39.s.gs.lastFramePowerWasted += (1 - retained) * transfer;
+
 			// System.out.println(this + " " + transfer);
 		}
 	}
