@@ -24,6 +24,7 @@ public class LD39 extends ApplicationAdapter {
 	public final static int GROSS_INCOME_TICKS = 60 * 60;
 	public final static int GROSS_INCOME_TO_WIN = 2500;
 	public final static float POWER_PRICE = .14f;
+	public final static float REFUND_PCT = 0.5f;
 	public static LD39 s;
 	public final static int START_MONEY = 750;
 	public final static int THUNDERCLOUD_MTTH = 60 * 30;

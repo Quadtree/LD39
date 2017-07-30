@@ -31,7 +31,7 @@ public class Connection implements Comparable<Connection> {
 	}
 
 	public void execute() {
-		double transfer = sink.getMaxPower() - sink.power;
+		double transfer = ((sink.getMaxPower() - sink.power) / retained);
 		transfer = Math.min(transfer, source.power);
 
 		if (transfer > 0.1) {

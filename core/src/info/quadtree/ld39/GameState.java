@@ -169,7 +169,8 @@ public class GameState implements InputProcessor {
 			for (int y = area.y; y < area.y + size.y; y++) {
 				if (x >= 0 && y >= 0 && x < 75 && y < 75 && terrainTypes[x][y] == TerrainType.Rock)
 					return false;
-				if (this.getBuildingOnTile(TilePos.create(x, y)) != null)
+				Building bldg = this.getBuildingOnTile(TilePos.create(x, y));
+				if (bldg != null && !(bldg instanceof PowerLine) && !(bldg instanceof SurgeProtector))
 					return false;
 			}
 		}
@@ -343,10 +344,10 @@ public class GameState implements InputProcessor {
 		LD39.s.mainFont.draw(LD39.s.batch, "Income/minute: " + (int) getGrossIncome() + "/" + LD39.GROSS_INCOME_TO_WIN, 20, Gdx.graphics.getHeight() - 20);
 
 		LD39.s.mainFont.draw(LD39.s.batch, "== Power ==", Gdx.graphics.getWidth() - 140, Gdx.graphics.getHeight() - 20);
-		LD39.s.mainFont.draw(LD39.s.batch, "Generated: " + (int) (this.lastFramePowerGenerated / LD39.POWER_PRICE), Gdx.graphics.getWidth() - 140, Gdx.graphics.getHeight() - 40);
-		LD39.s.mainFont.draw(LD39.s.batch, "In Storage: " + (int) (this.lastFrameTotalPowerStored / LD39.POWER_PRICE), Gdx.graphics.getWidth() - 140, Gdx.graphics.getHeight() - 60);
-		LD39.s.mainFont.draw(LD39.s.batch, "Sold: " + (int) (this.lastFramePowerSold / LD39.POWER_PRICE), Gdx.graphics.getWidth() - 140, Gdx.graphics.getHeight() - 80);
-		LD39.s.mainFont.draw(LD39.s.batch, "Wasted: " + (int) (this.lastFramePowerWasted / LD39.POWER_PRICE), Gdx.graphics.getWidth() - 140, Gdx.graphics.getHeight() - 100);
+		LD39.s.mainFont.draw(LD39.s.batch, "Generated: " + (int) (this.lastFramePowerGenerated * LD39.POWER_PRICE * 60), Gdx.graphics.getWidth() - 140, Gdx.graphics.getHeight() - 40);
+		LD39.s.mainFont.draw(LD39.s.batch, "In Storage: " + (int) (this.lastFrameTotalPowerStored * LD39.POWER_PRICE * 60), Gdx.graphics.getWidth() - 140, Gdx.graphics.getHeight() - 60);
+		LD39.s.mainFont.draw(LD39.s.batch, "Sold: " + (int) (this.lastFramePowerSold * LD39.POWER_PRICE * 60), Gdx.graphics.getWidth() - 140, Gdx.graphics.getHeight() - 80);
+		LD39.s.mainFont.draw(LD39.s.batch, "Wasted: " + (int) (this.lastFramePowerWasted * LD39.POWER_PRICE * 60), Gdx.graphics.getWidth() - 140, Gdx.graphics.getHeight() - 100);
 		LD39.s.batch.end();
 	}
 
@@ -424,6 +425,20 @@ public class GameState implements InputProcessor {
 		mx = screenX;
 		my = screenY;
 
+		if (button == Input.Buttons.RIGHT) {
+			if (heldBuilding != null) {
+				heldBuilding = null;
+			} else {
+				Building bldg = getBuildingOnTile(getMouseTilePos());
+
+				if (bldg != null && !bldg.isColonyBuilding()) {
+					money += bldg.getCost() * LD39.REFUND_PCT;
+					buildings.remove(bldg);
+				}
+			}
+			return true;
+		}
+
 		if (heldBuilding != null)
 			buildingDragStart = getMouseTilePos();
 
@@ -453,8 +468,20 @@ public class GameState implements InputProcessor {
 
 			if (totalCost > 0 && totalCost <= money) {
 				for (Building b : buildingsToPlace) {
-					if (isAreaClearFor(b))
+					if (isAreaClearFor(b)) {
+						for (int x = 0; x < b.getSize().x; ++x) {
+							for (int y = 0; y < b.getSize().y; ++y) {
+								Building bldg = getBuildingOnTile(TilePos.create(x + b.pos.x, y + b.pos.y));
+
+								if (bldg != null) {
+									money += bldg.getCost() * LD39.REFUND_PCT;
+									buildings.remove(bldg);
+								}
+							}
+						}
+
 						buildings.add(b);
+					}
 				}
 
 				heldBuilding = null;
