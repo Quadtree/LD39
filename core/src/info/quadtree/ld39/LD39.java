@@ -199,7 +199,6 @@ public class LD39 extends ApplicationAdapter {
 	@Override
 	public void dispose() {
 		batch.dispose();
-		img.dispose();
 	}
 
 	@Override

@@ -23,8 +23,10 @@ public class GameState implements InputProcessor {
 		Geothermal, Ground, Rock
 	}
 
+	static Sprite glowSprite;
 	TilePos buildingDragStart = null;
 	List<Building> buildings = new ArrayList<Building>();
+
 	List<Thundercloud> clouds = new ArrayList<Thundercloud>();
 
 	public int colonyGrowthTimer = 0;
@@ -38,8 +40,8 @@ public class GameState implements InputProcessor {
 	Sprite[] dirtSprite;
 
 	Sprite geoSprite;
-
 	public List<Float> grossIncome = new ArrayList<Float>();
+
 	boolean hasWonYet = false;
 
 	Building heldBuilding = null;
@@ -53,12 +55,12 @@ public class GameState implements InputProcessor {
 	public float lastFramePowerWasted = 0;
 
 	public float lastFrameTotalPowerStored = 0;
-
 	float money = LD39.START_MONEY;
 	int mx, my;
 	Sprite rockSprite;
 	float[][] terrainFacing;
 	TerrainType[][] terrainTypes;
+
 	char[][] terrainVariation;
 
 	int ticksSinceLastSpawn = 0;
@@ -351,6 +353,10 @@ public class GameState implements InputProcessor {
 	}
 
 	public void render() {
+
+		if (glowSprite == null)
+			glowSprite = LD39.s.atlas.createSprite("glow");
+
 		if (isDay)
 			Gdx.gl.glClearColor(0.3f, 0.3f, 0.3f, 1);
 		else
@@ -397,6 +403,16 @@ public class GameState implements InputProcessor {
 			b.render();
 
 		for (Building b : getBuildingsToPlace()) {
+
+			if (isAreaClearFor(b))
+				glowSprite.setColor(0, 1, 0, 0.5f);
+			else
+				glowSprite.setColor(1, 0, 0, 0.5f);
+
+			glowSprite.setPosition(b.pos.toVector2().x, b.pos.toVector2().y);
+			glowSprite.setSize(b.getSize().x * LD39.TILE_SIZE, b.getSize().y * LD39.TILE_SIZE);
+			glowSprite.draw(LD39.s.batch);
+
 			b.render();
 		}
 
