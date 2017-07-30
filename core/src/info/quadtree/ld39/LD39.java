@@ -9,17 +9,27 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 
 public class LD39 extends ApplicationAdapter {
 
-	public static boolean CHEATS = true;
+	interface BuildingFactory {
 
+	}
+
+	public static boolean CHEATS = true;
 	public final static int DAY_TICKS = 1000;
 	public final static int GROSS_INCOME_TICKS = 60 * 60;
 	public final static int GROSS_INCOME_TO_WIN = 2500;
@@ -28,14 +38,15 @@ public class LD39 extends ApplicationAdapter {
 	public static LD39 s;
 	public final static int START_MONEY = 750;
 	public final static int THUNDERCLOUD_MTTH = 60 * 30;
+
 	public final static int TILE_SIZE = 16;
 
 	public TextureAtlas atlas;
 
 	public SpriteBatch batch;
-
 	public TextButtonStyle defaultButtonStyle;
 	public WindowStyle defaultDialogStyle;
+
 	public LabelStyle defaultLabelStyle;
 
 	public GameState gs;
@@ -68,7 +79,7 @@ public class LD39 extends ApplicationAdapter {
 
 		defaultLabelStyle = new LabelStyle(mainFont, Color.WHITE);
 		defaultDialogStyle = new WindowStyle(mainFont, Color.WHITE, new NinePatchDrawable(atlas.createPatch("dialog1")));
-		defaultButtonStyle = new TextButtonStyle(new NinePatchDrawable(atlas.createPatch("dialog1")), new NinePatchDrawable(atlas.createPatch("dialog1")), new NinePatchDrawable(atlas.createPatch("dialog1")), mainFont);
+		defaultButtonStyle = new TextButtonStyle(new NinePatchDrawable(atlas.createPatch("dialog1")), new NinePatchDrawable(atlas.createPatch("dialog2")), new NinePatchDrawable(atlas.createPatch("dialog1")), mainFont);
 
 		gs = new GameState();
 
@@ -88,6 +99,34 @@ public class LD39 extends ApplicationAdapter {
 		multiplexer.addProcessor(gs);
 
 		Gdx.input.setInputProcessor(multiplexer);
+
+		Table rightPaneTable = new Table();
+		rightPaneTable.setWidth(150);
+		rightPaneTable.setHeight(Gdx.graphics.getHeight());
+		rightPaneTable.setBackground(new NinePatchDrawable(atlas.createPatch("dialog1")));
+		rightPaneTable.setX(Gdx.graphics.getWidth() - 150);
+
+		VerticalGroup infoLabels = new VerticalGroup();
+		infoLabels.addActor(Util.createLabel("TEST"));
+		rightPaneTable.add(infoLabels).align(Align.top).fill().top().row();
+
+		VerticalGroup buyButtons = new VerticalGroup();
+
+		Button buyButton1 = new Button(defaultButtonStyle);
+		buyButton1.add(Util.createLabel("Solar Plant")).row();
+		buyButton1.add(new Image(new TextureRegionDrawable(atlas.createSprite(new SolarPlant().getGraphic())))).row();
+		buyButton1.add(Util.createLabel("$" + new SolarPlant().getCost())).row();
+		buyButton1.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				LD39.s.gs.heldBuilding = new SolarPlant();
+			}
+		});
+		buyButtons.addActor(buyButton1);
+
+		rightPaneTable.add(buyButtons);
+
+		uiStage.addActor(rightPaneTable);
 
 		updatesDone = System.currentTimeMillis() / 16;
 	}
