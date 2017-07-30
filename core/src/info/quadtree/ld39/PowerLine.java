@@ -46,20 +46,20 @@ public class PowerLine extends Building {
 
 		LD39.s.batch.draw(isoSprite, pos.x * LD39.TILE_SIZE, pos.y * LD39.TILE_SIZE, LD39.TILE_SIZE, LD39.TILE_SIZE);
 
-		if (neighbors != null) {
-			for (Building b : neighbors) {
-				if (b.pos.x > pos.x)
-					LD39.s.batch.draw(sprite, pos.x * LD39.TILE_SIZE, pos.y * LD39.TILE_SIZE, 8, 8, 16, 16, 1, 1, 0);
+		for (Building b : getAdjacentBuildings()) {
 
-				if (b.pos.y > pos.y)
-					LD39.s.batch.draw(sprite, pos.x * LD39.TILE_SIZE, pos.y * LD39.TILE_SIZE, 8, 8, 16, 16, 1, 1, 90);
-
-				if (b.pos.x < pos.x)
-					LD39.s.batch.draw(sprite, pos.x * LD39.TILE_SIZE, pos.y * LD39.TILE_SIZE, 8, 8, 16, 16, 1, 1, 180);
-
-				if (b.pos.y < pos.y)
-					LD39.s.batch.draw(sprite, pos.x * LD39.TILE_SIZE, pos.y * LD39.TILE_SIZE, 8, 8, 16, 16, 1, 1, 270);
-			}
 		}
+
+		if (hasBuildingToEast)
+			LD39.s.batch.draw(sprite, pos.x * LD39.TILE_SIZE, pos.y * LD39.TILE_SIZE, 8, 8, 16, 16, 1, 1, 0);
+
+		if (hasBuildingToNorth)
+			LD39.s.batch.draw(sprite, pos.x * LD39.TILE_SIZE, pos.y * LD39.TILE_SIZE, 8, 8, 16, 16, 1, 1, 90);
+
+		if (hasBuildingToWest)
+			LD39.s.batch.draw(sprite, pos.x * LD39.TILE_SIZE, pos.y * LD39.TILE_SIZE, 8, 8, 16, 16, 1, 1, 180);
+
+		if (hasBuildingToSouth)
+			LD39.s.batch.draw(sprite, pos.x * LD39.TILE_SIZE, pos.y * LD39.TILE_SIZE, 8, 8, 16, 16, 1, 1, 270);
 	}
 }

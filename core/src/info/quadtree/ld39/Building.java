@@ -39,19 +39,30 @@ public abstract class Building {
 
 	List<Connection> connections;
 
+	boolean hasBuildingToEast = false;
+
+	boolean hasBuildingToNorth = false;
+
+	boolean hasBuildingToSouth = false;
+
+	boolean hasBuildingToWest = false;
+
 	public double isPowered = 0;
 
 	Collection<Building> neighbors;
 
 	public TilePos pos = new TilePos(0, 0);
-
 	double power;
-
 	Sprite sprite;
 
 	public void addNeighbor(Building b) {
 		if (neighbors == null) {
 			neighbors = new ArrayList<Building>();
+		}
+
+		if (neighbors instanceof ArrayList) {
+			List<Building> neigh = (List<Building>) neighbors;
+			neigh.add(b);
 		}
 	}
 
@@ -73,7 +84,15 @@ public abstract class Building {
 				 * sp.draw(LD39.s.batch); LD39.s.batch.end();
 				 */
 
-				ret.add(LD39.s.gs.getBuildingOnTile(cp));
+				Building bldg = LD39.s.gs.getBuildingOnTile(cp);
+
+				if (bldg != null && x == 0)
+					hasBuildingToWest = true;
+				if (bldg != null && x == 1)
+					hasBuildingToEast = true;
+
+				if (bldg != null)
+					ret.add(bldg);
 
 				if (ret.contains(this))
 					throw new RuntimeException("Invalid " + cp);
@@ -91,14 +110,20 @@ public abstract class Building {
 				 * sp.draw(LD39.s.batch); LD39.s.batch.end();
 				 */
 
-				ret.add(LD39.s.gs.getBuildingOnTile(cp));
+				Building bldg = LD39.s.gs.getBuildingOnTile(cp);
+
+				if (bldg != null && y == 0)
+					hasBuildingToSouth = true;
+				if (bldg != null && y == 1)
+					hasBuildingToNorth = true;
+
+				if (bldg != null)
+					ret.add(bldg);
 
 				if (ret.contains(this))
 					throw new RuntimeException("Invalid " + cp);
 			}
 		}
-
-		ret.remove(null);
 
 		// System.out.println(this + " " + ret);
 
