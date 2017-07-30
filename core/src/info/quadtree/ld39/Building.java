@@ -49,6 +49,12 @@ public abstract class Building {
 
 	Sprite sprite;
 
+	public void addNeighbor(Building b) {
+		if (neighbors == null) {
+			neighbors = new ArrayList<Building>();
+		}
+	}
+
 	public Collection<Building> getAdjacentBuildings() {
 
 		if (neighbors != null)

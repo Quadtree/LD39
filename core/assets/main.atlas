@@ -20,7 +20,7 @@ battery_power
   index: -1
 dialog1
   rotate: false
-  xy: 102, 109
+  xy: 294, 367
   size: 8, 9
   split: 3, 3, 3, 3
   pad: 3, 3, 3, 4
@@ -29,44 +29,44 @@ dialog1
   index: -1
 dirt1
   rotate: false
-  xy: 102, 120
+  xy: 84, 102
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 dirt2
   rotate: false
-  xy: 260, 278
+  xy: 134, 152
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 dirt3
   rotate: false
-  xy: 310, 344
+  xy: 260, 326
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 dirt4
   rotate: false
-  xy: 344, 378
+  xy: 344, 410
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 foundry
   rotate: false
-  xy: 2, 88
+  xy: 260, 378
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 fusion
   rotate: false
-  xy: 260, 346
-  size: 48, 48
-  orig: 48, 48
+  xy: 2, 88
+  size: 80, 80
+  orig: 80, 80
   offset: 0, 0
   index: -1
 geo
@@ -78,21 +78,21 @@ geo
   index: -1
 hab
   rotate: false
-  xy: 310, 362
+  xy: 260, 344
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 hydro
   rotate: false
-  xy: 2, 38
-  size: 48, 48
-  orig: 48, 48
+  xy: 310, 394
+  size: 32, 32
+  orig: 32, 32
   offset: 0, 0
   index: -1
 lab
   rotate: false
-  xy: 52, 88
+  xy: 2, 38
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
@@ -106,14 +106,14 @@ rock
   index: -1
 solar
   rotate: false
-  xy: 260, 296
+  xy: 84, 120
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 thundercloud
   rotate: false
-  xy: 2, 138
+  xy: 2, 170
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
@@ -125,9 +125,16 @@ wire
   orig: 16, 16
   offset: 0, 0
   index: -1
+wire_iso
+  rotate: false
+  xy: 102, 102
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
 wire_prot
   rotate: false
-  xy: 70, 70
+  xy: 134, 134
   size: 16, 16
   orig: 16, 16
   offset: 0, 0

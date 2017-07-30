@@ -80,6 +80,10 @@ public class GameState implements InputProcessor {
 		dirtSprite[2] = LD39.s.atlas.createSprite("dirt3");
 		dirtSprite[3] = LD39.s.atlas.createSprite("dirt4");
 
+		for (Sprite sp : dirtSprite) {
+			sp.setColor(0.74f, 0.74f, 0.74f, 1);
+			sp.setOrigin(8, 8);
+		}
 		terrainTypes = new TerrainType[75][];
 		terrainFacing = new float[75][];
 		terrainVariation = new char[75][];
@@ -341,7 +345,14 @@ public class GameState implements InputProcessor {
 		for (int x = 0; x < 75; ++x) {
 			for (int y = 0; y < 75; ++y) {
 
-				LD39.s.batch.draw(dirtSprite[terrainVariation[x][y]], x * LD39.TILE_SIZE, y * LD39.TILE_SIZE, 8, 8, 16, 16, 1, 1, ((int) (terrainFacing[x][y] / 90)) * 90);
+				Sprite sp = dirtSprite[terrainVariation[x][y]];
+				sp.setPosition(x * LD39.TILE_SIZE, y * LD39.TILE_SIZE);
+				sp.setRotation(((int) (terrainFacing[x][y] / 90)) * 90);
+				sp.draw(LD39.s.batch);
+
+				// LD39.s.batch.draw(dirtSprite[terrainVariation[x][y]], x *
+				// LD39.TILE_SIZE, y * LD39.TILE_SIZE, 8, 8, 16, 16, 1, 1,
+				// ((int) (terrainFacing[x][y] / 90)) * 90);
 
 				if (terrainTypes[x][y] == TerrainType.Geothermal)
 					LD39.s.batch.draw(geoSprite, x * LD39.TILE_SIZE, y * LD39.TILE_SIZE);
