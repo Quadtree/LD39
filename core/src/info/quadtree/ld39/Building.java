@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Set;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 
@@ -191,12 +190,11 @@ public abstract class Building {
 		 * } else { sprite.setColor(1, 0, 0, 1); }
 		 */
 
-		if (isPowered > 0.99f) {
-			sprite.setColor(Color.WHITE);
-		} else if (isPowered > 0.01f) {
-			sprite.setColor(Color.YELLOW);
-		} else
-			sprite.setColor(Color.RED);
+		/*
+		 * if (isPowered > 0.99f) { sprite.setColor(Color.WHITE); } else if
+		 * (isPowered > 0.01f) { sprite.setColor(Color.YELLOW); } else
+		 * sprite.setColor(Color.RED);
+		 */
 
 		sprite.setSize(getSize().x * 16, getSize().y * 16);
 

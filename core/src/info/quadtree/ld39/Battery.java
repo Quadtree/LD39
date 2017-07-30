@@ -1,6 +1,10 @@
 package info.quadtree.ld39;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
+
 public class Battery extends Building {
+
+	static Sprite levelSprite;
 
 	@Override
 	public int getCost() {
@@ -47,15 +51,20 @@ public class Battery extends Building {
 		if (sprite == null)
 			sprite = LD39.s.atlas.createSprite(getGraphic());
 
+		if (levelSprite == null)
+			levelSprite = LD39.s.atlas.createSprite("battery_power");
+
 		sprite.setX(pos.x * LD39.TILE_SIZE);
 		sprite.setY(pos.y * LD39.TILE_SIZE);
 
-		sprite.setColor((float) (power / getMaxPower()),
-				(float) (power / getMaxPower()), (float) (power / getMaxPower()), 1);
+		// sprite.setColor((float) (power / getMaxPower()),
+		// (float) (power / getMaxPower()), (float) (power / getMaxPower()), 1);
 
 		sprite.setSize(getSize().x * 16, getSize().y * 16);
 
 		sprite.draw(LD39.s.batch);
+
+		LD39.s.batch.draw(levelSprite, sprite.getX() + 4, sprite.getY() + 5, 8, (float) (power * 10 / getMaxPower()));
 	}
 
 	@Override
