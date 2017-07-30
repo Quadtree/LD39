@@ -242,6 +242,11 @@ public class GameState implements InputProcessor {
 
 			if (keycode == Input.Keys.L)
 				startStorm();
+
+			if (keycode == Input.Keys.X) {
+				Gdx.app.getPreferences(Util.PREF_NAME).clear();
+				Gdx.app.getPreferences(Util.PREF_NAME).flush();
+			}
 		}
 
 		setHeldBuildingLoc();

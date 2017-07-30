@@ -14,7 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
 public class Util {
 	private static final String NO_HINTS = "NO_HINTS";
-	private static final String PREF_NAME = "ld39-prefs.xml";
+	public static final String PREF_NAME = "ld39-prefs.xml";
 
 	public static Button addButtonEvent(Button b, ChangeListener list) {
 		b.addListener(list);
