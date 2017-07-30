@@ -26,7 +26,7 @@ import com.badlogic.gdx.utils.Align;
 public class LD39 extends ApplicationAdapter {
 
 	interface BuildingFactory {
-
+		Building create();
 	}
 
 	public static boolean CHEATS = true;
@@ -112,23 +112,34 @@ public class LD39 extends ApplicationAdapter {
 
 		VerticalGroup buyButtons = new VerticalGroup();
 
-		Button buyButton1 = new Button(defaultButtonStyle);
-		buyButton1.add(Util.createLabel("Solar Plant")).row();
-		buyButton1.add(new Image(new TextureRegionDrawable(atlas.createSprite(new SolarPlant().getGraphic())))).row();
-		buyButton1.add(Util.createLabel("$" + new SolarPlant().getCost())).row();
-		buyButton1.addListener(new ChangeListener() {
+		buyButtons.addActor(createBuyButton("Solar Plant", new BuildingFactory() {
+
 			@Override
-			public void changed(ChangeEvent event, Actor actor) {
-				LD39.s.gs.heldBuilding = new SolarPlant();
+			public Building create() {
+				return new SolarPlant();
 			}
-		});
-		buyButtons.addActor(buyButton1);
+		}));
 
 		rightPaneTable.add(buyButtons);
 
 		uiStage.addActor(rightPaneTable);
 
 		updatesDone = System.currentTimeMillis() / 16;
+	}
+
+	Button createBuyButton(String text, final BuildingFactory fact) {
+		Button buyButton1 = new Button(defaultButtonStyle);
+		buyButton1.add(Util.createLabel(text)).row();
+		buyButton1.add(new Image(new TextureRegionDrawable(atlas.createSprite(fact.create().getGraphic())))).row();
+		buyButton1.add(Util.createLabel("$" + fact.create().getCost())).row();
+		buyButton1.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				LD39.s.gs.heldBuilding = fact.create();
+			}
+		});
+
+		return buyButton1;
 	}
 
 	@Override
