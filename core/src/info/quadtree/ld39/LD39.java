@@ -287,7 +287,7 @@ public class LD39 extends ApplicationAdapter {
 		buyButton1.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				LD39.s.gs.heldBuilding = fact.create();
+				LD39.s.gs.setHeldBuilding(fact.create());
 			}
 		});
 		buyButton1.addListener(new TextTooltip(tooltip + "\nHotkey=" + hotkey, defaultTooltipStyle));

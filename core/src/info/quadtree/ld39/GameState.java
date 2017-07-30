@@ -44,7 +44,7 @@ public class GameState implements InputProcessor {
 
 	boolean hasWonYet = false;
 
-	Building heldBuilding = null;
+	private Building heldBuilding = null;
 
 	public boolean isDay = true;
 
@@ -206,6 +206,10 @@ public class GameState implements InputProcessor {
 		return ret;
 	}
 
+	public Building getHeldBuilding() {
+		return heldBuilding;
+	}
+
 	public TilePos getMouseTilePos() {
 		return new TilePos(mx / LD39.TILE_SIZE, (768 - my) / LD39.TILE_SIZE);
 	}
@@ -250,22 +254,22 @@ public class GameState implements InputProcessor {
 	public boolean keyDown(int keycode) {
 
 		if (keycode == Input.Keys.NUM_1)
-			heldBuilding = new PowerLine();
+			setHeldBuilding(new PowerLine());
 
 		if (keycode == Input.Keys.NUM_2)
-			heldBuilding = new Battery();
+			setHeldBuilding(new Battery());
 
 		if (keycode == Input.Keys.NUM_3)
-			heldBuilding = new SurgeProtector();
+			setHeldBuilding(new SurgeProtector());
 
 		if (keycode == Input.Keys.NUM_4)
-			heldBuilding = new SolarPlant();
+			setHeldBuilding(new SolarPlant());
 
 		if (keycode == Input.Keys.NUM_5)
-			heldBuilding = new HydrocarbonPlant();
+			setHeldBuilding(new HydrocarbonPlant());
 
 		if (keycode == Input.Keys.NUM_6)
-			heldBuilding = new FusionPlant();
+			setHeldBuilding(new FusionPlant());
 
 		if (keycode == Input.Keys.S)
 			sellMode = true;
@@ -507,6 +511,11 @@ public class GameState implements InputProcessor {
 		topologyChanged();
 	}
 
+	public void setHeldBuilding(Building heldBuilding) {
+		this.buildingDragStart = null;
+		this.heldBuilding = heldBuilding;
+	}
+
 	public void setHeldBuildingLoc() {
 		// System.out.println(mx + " " + my);
 		// System.out.println(getMouseTilePos());
@@ -591,17 +600,13 @@ public class GameState implements InputProcessor {
 
 		if (button == Input.Buttons.RIGHT) {
 			if (heldBuilding != null)
-				heldBuilding = null;
+				setHeldBuilding(null);
 			if (sellMode)
 				sellMode = false;
 		}
 
 		if (sellMode) {
-			if (heldBuilding != null) {
-				heldBuilding = null;
-			} else {
-				sellBuildingUnderCursor();
-			}
+			sellBuildingUnderCursor();
 			sellMode = false;
 			return true;
 		}
