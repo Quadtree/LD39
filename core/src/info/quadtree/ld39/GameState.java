@@ -358,6 +358,14 @@ public class GameState implements InputProcessor {
 
 		LD39.s.batch.begin();
 
+		for (Sprite sp : dirtSprite) {
+			if (isDay)
+				sp.setColor(0.74f, 0.74f, 0.74f, 1);
+			else
+				sp.setColor(0.3f, 0.3f, 0.3f, 1);
+			sp.setOrigin(8, 8);
+		}
+
 		for (int x = 0; x < 75; ++x) {
 			for (int y = 0; y < 75; ++y) {
 

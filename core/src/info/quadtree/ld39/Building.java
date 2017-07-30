@@ -36,6 +36,9 @@ public abstract class Building {
 
 	}
 
+	static Sprite lowPowerSprite;
+	static Sprite noPowerSprite;
+
 	boolean alive = true;
 
 	List<Connection> connections;
@@ -231,6 +234,11 @@ public abstract class Building {
 		if (sprite == null)
 			sprite = LD39.s.atlas.createSprite(getGraphic());
 
+		if (lowPowerSprite == null)
+			lowPowerSprite = LD39.s.atlas.createSprite("low_power");
+		if (noPowerSprite == null)
+			noPowerSprite = LD39.s.atlas.createSprite("no_power");
+
 		sprite.setX(pos.x * LD39.TILE_SIZE);
 		sprite.setY(pos.y * LD39.TILE_SIZE);
 		/*
@@ -248,6 +256,12 @@ public abstract class Building {
 		sprite.setSize(getSize().x * 16, getSize().y * 16);
 
 		sprite.draw(LD39.s.batch);
+
+		if (isPowered > 0.99f) {
+		} else if (isPowered > 0.01f) {
+			LD39.s.batch.draw(lowPowerSprite, pos.toVector2().x, pos.toVector2().y + (getSize().y - 1) * LD39.TILE_SIZE);
+		} else
+			LD39.s.batch.draw(noPowerSprite, pos.toVector2().x, pos.toVector2().y + (getSize().y - 1) * LD39.TILE_SIZE);
 	}
 
 	public boolean requiresGeo() {

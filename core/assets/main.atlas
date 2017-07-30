@@ -132,9 +132,23 @@ lightning1
   orig: 32, 32
   offset: 0, 0
   index: -1
-rock
+low_power
   rotate: false
   xy: 2, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+no_power
+  rotate: false
+  xy: 20, 38
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+rock
+  rotate: false
+  xy: 200, 218
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
@@ -155,21 +169,21 @@ thundercloud
   index: -1
 wire
   rotate: false
-  xy: 20, 38
+  xy: 218, 236
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 wire_iso
   rotate: false
-  xy: 200, 218
+  xy: 260, 310
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 wire_prot
   rotate: false
-  xy: 218, 236
+  xy: 326, 392
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
