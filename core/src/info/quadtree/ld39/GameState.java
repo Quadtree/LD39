@@ -461,6 +461,9 @@ public class GameState implements InputProcessor {
 			colonyGrowthTimer = 0;
 		}
 
+		if (MathUtils.random(LD39.THUNDERCLOUD_MTTH - 1) == 0)
+			startStorm();
+
 		if (!hasWonYet && getGrossIncome() >= LD39.GROSS_INCOME_TO_WIN) {
 			hasWonYet = true;
 			Util.createDialog("You have met your quota for income! Your advancement is assured.\nYou can continue playing if you like, or you can restart and play again!",

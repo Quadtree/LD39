@@ -26,6 +26,7 @@ public class LD39 extends ApplicationAdapter {
 	public final static float POWER_PRICE = .14f;
 	public static LD39 s;
 	public final static int START_MONEY = 750;
+	public final static int THUNDERCLOUD_MTTH = 60 * 30;
 	public final static int TILE_SIZE = 16;
 
 	public TextureAtlas atlas;
