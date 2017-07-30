@@ -14,7 +14,10 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Event;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -146,7 +149,7 @@ public class LD39 extends ApplicationAdapter {
 		infoLabels.add(Util.createLabel("$", txt)).pad(4);
 		infoLabels.add(infoMoney = Util.createLabel("", txt)).width(rghColWidth).pad(4).row();
 
-		txt = "Your gross income per minute,\ncompared to the amount needed to win.";
+		txt = "Your gross income per minute, compared\nto the amount needed to win.";
 		infoLabels.add(Util.createLabel("$/min", txt)).pad(4);
 		infoLabels.add(infoGrossIncome = Util.createLabel("", txt)).width(rghColWidth).pad(4).row();
 
@@ -181,7 +184,7 @@ public class LD39 extends ApplicationAdapter {
 				gs.sellMode = !gs.sellMode;
 			}
 		})).pad(2);
-		b2.addListener(new TextTooltip("Click this then mouseover a building to\nsell it.", defaultTooltipStyle));
+		b2.addListener(new TextTooltip("Click this then mouseover a building to\nsell it.\nHotkey=S", defaultTooltipStyle));
 
 		controlButtons.add(b2 = Util.createButton("Restart", new ChangeListener() {
 
@@ -248,7 +251,23 @@ public class LD39 extends ApplicationAdapter {
 				titleImage.remove();
 				titleButton.remove();
 
-				gameStarted = true;
+				Util.createHelpText(
+						"Welcome to your new posting! Your job will be to provide power to this\n" +
+								"off-world colony by building power plants and stringing wires to the buildings.\n" +
+								"Don't let the colony run out of power!\n" +
+								"You win when your gross income per minute reaches "
+								+ LD39.GROSS_INCOME_TO_WIN + ".",
+						new Vector2(150, 400), true).addListener(new EventListener() {
+
+							@Override
+							public boolean handle(Event event) {
+								if (event instanceof ChangeEvent) {
+									gameStarted = true;
+									return false;
+								}
+								return false;
+							}
+						});
 			}
 		});
 		titleButton.setSize(200, 40);

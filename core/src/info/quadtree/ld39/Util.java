@@ -51,7 +51,7 @@ public class Util {
 		final Dialog wnd = new Dialog("", LD39.s.defaultDialogStyle);
 		// wnd.setSize(300, 300);
 
-		if (Gdx.app.getPreferences(PREF_NAME).getInteger(text, 0) == 0 && Gdx.app.getPreferences(PREF_NAME).getInteger(NO_HINTS, 0) == 0) {
+		if (always || (Gdx.app.getPreferences(PREF_NAME).getInteger(text, 0) == 0 && Gdx.app.getPreferences(PREF_NAME).getInteger(NO_HINTS, 0) == 0)) {
 			Gdx.app.getPreferences(PREF_NAME).putInteger(text, 1);
 			Gdx.app.getPreferences(PREF_NAME).flush();
 

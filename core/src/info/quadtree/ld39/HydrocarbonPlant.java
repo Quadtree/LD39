@@ -14,7 +14,12 @@ public class HydrocarbonPlant extends Building {
 
 	@Override
 	public double getNetPower() {
-		return 2.0;
+		return 2.5;
+	}
+
+	@Override
+	public double getRetained() {
+		return 0.9;
 	}
 
 	@Override

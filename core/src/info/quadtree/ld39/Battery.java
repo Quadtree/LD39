@@ -23,12 +23,17 @@ public class Battery extends Building {
 
 	@Override
 	public double getRetained() {
-		return 0.8;
+		return 0.97;
 	}
 
 	@Override
 	public int getSinkPriority() {
 		return 1;
+	}
+
+	@Override
+	public float getSinkRetained() {
+		return 0.75f;
 	}
 
 	@Override

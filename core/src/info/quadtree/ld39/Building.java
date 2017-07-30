@@ -164,6 +164,10 @@ public abstract class Building {
 		return 0;
 	}
 
+	public float getSinkRetained() {
+		return 1;
+	}
+
 	public abstract TilePos getSize();
 
 	public double getSurgeDestructionOdds() {
@@ -329,7 +333,7 @@ public abstract class Building {
 
 				if (topNode.building.isSource()) {
 					if (!isSource() || topNode.building.getSinkPriority() < this.getSinkPriority()) {
-						connections.add(new Connection(topNode.retained, topNode.building, this, getSinkPriority()));
+						connections.add(new Connection(topNode.retained / topNode.building.getRetained() * this.getSinkRetained(), topNode.building, this, getSinkPriority()));
 					}
 				}
 

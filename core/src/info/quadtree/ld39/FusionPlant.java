@@ -14,7 +14,7 @@ public class FusionPlant extends Building {
 	}
 
 	public float getFuelCost() {
-		return LD39.POWER_PRICE * 8;
+		return LD39.POWER_PRICE * 6;
 	}
 
 	@Override
@@ -23,8 +23,18 @@ public class FusionPlant extends Building {
 	}
 
 	@Override
+	public double getMaxPower() {
+		return getBaseNetPower();
+	}
+
+	@Override
 	public double getNetPower() {
 		return hasFuel ? this.getBaseNetPower() : 0;
+	}
+
+	@Override
+	public double getRetained() {
+		return 0.9;
 	}
 
 	@Override
@@ -41,7 +51,7 @@ public class FusionPlant extends Building {
 	public void update() {
 		super.update();
 
-		if (LD39.s.gs.money >= 250) {
+		if (LD39.s.gs.money >= 250 && power < getMaxPower() - 1) {
 			LD39.s.gs.money -= getFuelCost();
 			hasFuel = true;
 			isPowered = 1;

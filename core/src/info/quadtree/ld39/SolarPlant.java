@@ -18,6 +18,11 @@ public class SolarPlant extends Building {
 	}
 
 	@Override
+	public double getRetained() {
+		return 0.9;
+	}
+
+	@Override
 	public TilePos getSize() {
 		return new TilePos(3, 3);
 	}

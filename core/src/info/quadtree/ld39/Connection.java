@@ -31,6 +31,10 @@ public class Connection implements Comparable<Connection> {
 	}
 
 	public void execute() {
+
+		if (source instanceof Battery && retained < 0.4)
+			return;
+
 		double transfer = ((sink.getMaxPower() - sink.power) / retained);
 		transfer = Math.min(transfer, source.power);
 

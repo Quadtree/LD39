@@ -267,8 +267,11 @@ public class GameState implements InputProcessor {
 		if (keycode == Input.Keys.NUM_6)
 			heldBuilding = new FusionPlant();
 
+		if (keycode == Input.Keys.S)
+			sellMode = true;
+
 		if (LD39.CHEATS) {
-			if (keycode == Input.Keys.S) {
+			if (keycode == Input.Keys.V) {
 				powerSurge(getMouseTilePos());
 			}
 
@@ -493,6 +496,17 @@ public class GameState implements InputProcessor {
 		return false;
 	}
 
+	protected void sellBuildingUnderCursor() {
+		Building bldg = getBuildingOnTile(getMouseTilePos());
+
+		if (bldg != null && !bldg.isColonyBuilding()) {
+			money += bldg.getCost() * LD39.REFUND_PCT;
+			buildings.remove(bldg);
+		}
+
+		topologyChanged();
+	}
+
 	public void setHeldBuildingLoc() {
 		// System.out.println(mx + " " + my);
 		// System.out.println(getMouseTilePos());
@@ -575,16 +589,18 @@ public class GameState implements InputProcessor {
 		mx = screenX;
 		my = screenY;
 
-		if (button == Input.Buttons.RIGHT || sellMode) {
+		if (button == Input.Buttons.RIGHT) {
+			if (heldBuilding != null)
+				heldBuilding = null;
+			if (sellMode)
+				sellMode = false;
+		}
+
+		if (sellMode) {
 			if (heldBuilding != null) {
 				heldBuilding = null;
 			} else {
-				Building bldg = getBuildingOnTile(getMouseTilePos());
-
-				if (bldg != null && !bldg.isColonyBuilding()) {
-					money += bldg.getCost() * LD39.REFUND_PCT;
-					buildings.remove(bldg);
-				}
+				sellBuildingUnderCursor();
 			}
 			sellMode = false;
 			return true;
@@ -653,7 +669,7 @@ public class GameState implements InputProcessor {
 
 	public void update() {
 
-		Util.createHelpText("Click on a solar plant on the right sidebar\nand place it next to the colony in the middle", new Vector2(800, 300));
+		Util.createHelpText("Click on a solar plant on the right sidebar\nand place it next to the colony in the middle.\nPower only flows between adjacent buildings.", new Vector2(500, 300));
 
 		int solarCount = 0;
 		int batteryCount = 0;
