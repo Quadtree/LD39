@@ -191,6 +191,10 @@ public abstract class Building {
 		sprite.draw(LD39.s.batch);
 	}
 
+	public boolean requiresGeo() {
+		return false;
+	}
+
 	public void update() {
 
 		isPowered = 1;

@@ -173,7 +173,20 @@ public class GameState implements InputProcessor {
 	}
 
 	public boolean isAreaClearFor(Building b) {
-		return isAreaClear(b.pos, b.getSize());
+		boolean ret = isAreaClear(b.pos, b.getSize());
+
+		if (ret && b.requiresGeo()) {
+			for (int x = b.pos.x; x < b.pos.x + b.getSize().x; x++) {
+				for (int y = b.pos.y; y < b.pos.y + b.getSize().y; y++) {
+					if (x >= 0 && y >= 0 && x < 75 && y < 75 && terrainTypes[x][y] == TerrainType.Geothermal)
+						return true;
+				}
+			}
+
+			return false;
+		}
+
+		return ret;
 	}
 
 	@Override

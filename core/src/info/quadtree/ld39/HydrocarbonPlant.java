@@ -27,4 +27,9 @@ public class HydrocarbonPlant extends FusionPlant {
 		return new TilePos(2, 2);
 	}
 
+	@Override
+	public boolean requiresGeo() {
+		return true;
+	}
+
 }
