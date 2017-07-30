@@ -36,6 +36,15 @@ dialog2
   orig: 8, 9
   offset: 0, 0
   index: -1
+dialog3
+  rotate: false
+  xy: 52, 95
+  size: 8, 9
+  split: 3, 3, 3, 3
+  pad: 3, 3, 3, 4
+  orig: 8, 9
+  offset: 0, 0
+  index: -1
 dirt1
   rotate: false
   xy: 260, 328

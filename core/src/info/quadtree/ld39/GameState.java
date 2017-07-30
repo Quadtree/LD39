@@ -414,7 +414,7 @@ public class GameState implements InputProcessor {
 		 * LD39.s.mainFont.draw(LD39.s.batch, "Income/minute: " + (int)
 		 * getGrossIncome() + "/" + LD39.GROSS_INCOME_TO_WIN, 20,
 		 * Gdx.graphics.getHeight() - 20);
-		 * 
+		 *
 		 * LD39.s.mainFont.draw(LD39.s.batch, "== Power ==",
 		 * Gdx.graphics.getWidth() - 140, Gdx.graphics.getHeight() - 20);
 		 * LD39.s.mainFont.draw(LD39.s.batch, "Generated: " + (int)
@@ -663,6 +663,9 @@ public class GameState implements InputProcessor {
 		if (dayTicks >= LD39.DAY_TICKS) {
 			dayTicks = 0;
 			isDay = !isDay;
+
+			// this really should NOT be needed!
+			topologyChanged();
 		}
 
 		colonyGrowthTimer++;

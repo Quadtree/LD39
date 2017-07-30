@@ -86,7 +86,7 @@ public class LD39 extends ApplicationAdapter {
 
 		defaultLabelStyle = new LabelStyle(mainFont, Color.WHITE);
 		defaultDialogStyle = new WindowStyle(mainFont, Color.WHITE, new NinePatchDrawable(atlas.createPatch("dialog1")));
-		defaultButtonStyle = new TextButtonStyle(new NinePatchDrawable(atlas.createPatch("dialog1")), new NinePatchDrawable(atlas.createPatch("dialog2")), new NinePatchDrawable(atlas.createPatch("dialog1")), mainFont);
+		defaultButtonStyle = new TextButtonStyle(new NinePatchDrawable(atlas.createPatch("dialog3")), new NinePatchDrawable(atlas.createPatch("dialog2")), new NinePatchDrawable(atlas.createPatch("dialog3")), mainFont);
 
 		gs = new GameState();
 
