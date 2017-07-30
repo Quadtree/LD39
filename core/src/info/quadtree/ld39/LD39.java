@@ -79,10 +79,9 @@ public class LD39 extends ApplicationAdapter {
 		atlas = new TextureAtlas(Gdx.files.internal("main.atlas"));
 
 		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
 		shapeRnd = new ShapeRenderer();
 
-		mainFont = new BitmapFont();
+		mainFont = new BitmapFont(Gdx.files.internal("in14.fnt"));
 
 		defaultLabelStyle = new LabelStyle(mainFont, Color.WHITE);
 		defaultDialogStyle = new WindowStyle(mainFont, Color.WHITE, new NinePatchDrawable(atlas.createPatch("dialog1")));
