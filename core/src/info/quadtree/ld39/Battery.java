@@ -3,6 +3,11 @@ package info.quadtree.ld39;
 public class Battery extends Building {
 
 	@Override
+	public int getCost() {
+		return 150;
+	}
+
+	@Override
 	public String getGraphic() {
 		return "battery";
 	}

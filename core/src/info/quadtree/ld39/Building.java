@@ -106,6 +106,10 @@ public abstract class Building {
 		return new Vector2(pos.x * LD39.TILE_SIZE + getSize().x * LD39.TILE_SIZE / 2, pos.y * LD39.TILE_SIZE + getSize().y * LD39.TILE_SIZE / 2);
 	}
 
+	public int getCost() {
+		return 0;
+	}
+
 	public abstract String getGraphic();
 
 	public double getMaxPower() {

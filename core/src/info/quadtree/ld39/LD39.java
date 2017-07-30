@@ -9,13 +9,11 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 
 public class LD39 extends ApplicationAdapter {
@@ -24,9 +22,10 @@ public class LD39 extends ApplicationAdapter {
 
 	public final static int DAY_TICKS = 1000;
 	public final static int GROSS_INCOME_TICKS = 60 * 60;
-	public final static int GROSS_INCOME_TO_WIN = 400;
-	public final static float POWER_PRICE = .2f;
+	public final static int GROSS_INCOME_TO_WIN = 2500;
+	public final static float POWER_PRICE = .14f;
 	public static LD39 s;
+	public final static int START_MONEY = 750;
 	public final static int TILE_SIZE = 16;
 
 	public TextureAtlas atlas;
@@ -73,13 +72,14 @@ public class LD39 extends ApplicationAdapter {
 
 		uiStage = new Stage();
 
-		Util.createDialog("TEST", Util.createButton("Click", new ChangeListener() {
-			@Override
-			public void changed(ChangeEvent event, Actor actor) {
-				System.out.println("CLICK");
-				Util.getParentDialog(actor).remove();
-			}
-		}));
+		/*
+		 * Util.createDialog("TEST", Util.createButton("Click", new
+		 * ChangeListener() {
+		 *
+		 * @Override public void changed(ChangeEvent event, Actor actor) {
+		 * System.out.println("CLICK"); Util.getParentDialog(actor).remove(); }
+		 * })).setPosition(100, 100);
+		 */
 
 		multiplexer = new InputMultiplexer();
 		multiplexer.addProcessor(uiStage);
@@ -118,5 +118,11 @@ public class LD39 extends ApplicationAdapter {
 
 		// batch.end();
 
+	}
+
+	public void restart() {
+		multiplexer.removeProcessor(gs);
+		gs = new GameState();
+		multiplexer.addProcessor(gs);
 	}
 }

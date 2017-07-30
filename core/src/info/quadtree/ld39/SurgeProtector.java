@@ -3,6 +3,11 @@ package info.quadtree.ld39;
 public class SurgeProtector extends Building {
 
 	@Override
+	public int getCost() {
+		return 100;
+	}
+
+	@Override
 	public String getGraphic() {
 		return "wire_prot";
 	}

@@ -3,6 +3,11 @@ package info.quadtree.ld39;
 public class PowerLine extends Building {
 
 	@Override
+	public int getCost() {
+		return 25;
+	}
+
+	@Override
 	public String getGraphic() {
 		return "wire";
 	}

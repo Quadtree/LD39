@@ -3,6 +3,11 @@ package info.quadtree.ld39;
 public class SolarPlant extends Building {
 
 	@Override
+	public int getCost() {
+		return 250;
+	}
+
+	@Override
 	public String getGraphic() {
 		return "solar";
 	}

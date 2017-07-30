@@ -4,6 +4,11 @@ public class FusionPlant extends Building {
 
 	boolean hasFuel = false;
 
+	@Override
+	public int getCost() {
+		return 1500;
+	}
+
 	public float getFuelCost() {
 		return LD39.POWER_PRICE * 6;
 	}

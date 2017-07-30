@@ -12,6 +12,8 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
 public class GameState implements InputProcessor {
 	TilePos buildingDragStart = null;
@@ -26,11 +28,13 @@ public class GameState implements InputProcessor {
 
 	public List<Float> grossIncome = new ArrayList<Float>();
 
+	boolean hasWonYet = false;
+
 	Building heldBuilding = null;
 
 	public boolean isDay = true;
+	float money = LD39.START_MONEY;
 
-	float money = 1000;
 	int mx, my;
 
 	List<VisualEffect> visualEffects = new ArrayList<VisualEffect>();
@@ -355,15 +359,25 @@ public class GameState implements InputProcessor {
 		if (heldBuilding != null) {
 			List<Building> buildingsToPlace = getBuildingsToPlace();
 
+			int totalCost = 0;
+
 			for (Building b : buildingsToPlace) {
-				if (isAreaClearFor(b))
-					buildings.add(b);
+				totalCost += b.getCost();
 			}
 
-			heldBuilding = null;
-			buildingDragStart = null;
+			if (totalCost <= money) {
+				for (Building b : buildingsToPlace) {
+					if (isAreaClearFor(b))
+						buildings.add(b);
+				}
 
-			topologyChanged();
+				heldBuilding = null;
+				buildingDragStart = null;
+
+				topologyChanged();
+				money -= totalCost;
+			}
+
 		}
 
 		return false;
@@ -420,8 +434,24 @@ public class GameState implements InputProcessor {
 			colonyGrowthTimer = 0;
 		}
 
-		if (getGrossIncome() >= LD39.GROSS_INCOME_TO_WIN) {
+		if (!hasWonYet && getGrossIncome() >= LD39.GROSS_INCOME_TO_WIN) {
+			hasWonYet = true;
+			Util.createDialog("You have met your quota for income! Your advancement is assured.\nYou can continue playing if you like, or you can restart and play again!",
+					Util.createButton("Continue", new ChangeListener() {
 
+						@Override
+						public void changed(ChangeEvent event, Actor actor) {
+							Util.getParentDialog(actor).remove();
+						}
+					}),
+					Util.createButton("Restart", new ChangeListener() {
+
+						@Override
+						public void changed(ChangeEvent event, Actor actor) {
+							Util.getParentDialog(actor).remove();
+							LD39.s.restart();
+						}
+					}));
 		}
 
 		long endTime = System.currentTimeMillis();
