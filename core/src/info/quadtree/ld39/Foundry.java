@@ -24,7 +24,7 @@ public class Foundry extends Building {
 
 	@Override
 	public TilePos getSize() {
-		return new TilePos(2, 2);
+		return new TilePos(3, 3);
 	}
 
 	@Override
