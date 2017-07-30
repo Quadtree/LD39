@@ -58,7 +58,9 @@ public class GameState implements InputProcessor {
 	float money = LD39.START_MONEY;
 	int mx, my;
 	Sprite rockSprite;
+	public boolean sellMode = false;
 	float[][] terrainFacing;
+
 	TerrainType[][] terrainTypes;
 
 	char[][] terrainVariation;
@@ -449,6 +451,15 @@ public class GameState implements InputProcessor {
 			LD39.s.mainFont.draw(LD39.s.batch, "$" + totalCost, getMouseTilePos().toVector2().x, getMouseTilePos().toVector2().y - 10);
 		}
 
+		if (sellMode) {
+			Building bldg = getBuildingOnTile(getMouseTilePos());
+
+			if (bldg != null && !bldg.isColonyBuilding()) {
+				LD39.s.mainFont.setColor(Color.GREEN);
+				LD39.s.mainFont.draw(LD39.s.batch, "Sell for $" + bldg.getCost() * LD39.REFUND_PCT, getMouseTilePos().toVector2().x, getMouseTilePos().toVector2().y - 10);
+			}
+		}
+
 		LD39.s.batch.end();
 
 		/*
@@ -564,7 +575,7 @@ public class GameState implements InputProcessor {
 		mx = screenX;
 		my = screenY;
 
-		if (button == Input.Buttons.RIGHT) {
+		if (button == Input.Buttons.RIGHT || sellMode) {
 			if (heldBuilding != null) {
 				heldBuilding = null;
 			} else {
@@ -575,6 +586,7 @@ public class GameState implements InputProcessor {
 					buildings.remove(bldg);
 				}
 			}
+			sellMode = false;
 			return true;
 		}
 

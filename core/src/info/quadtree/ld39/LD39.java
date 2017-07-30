@@ -136,7 +136,7 @@ public class LD39 extends ApplicationAdapter {
 
 		Table infoLabels = new Table();
 		infoLabels.add(Util.createLabel("$", "Your current money.")).pad(4);
-		infoLabels.add(infoMoney = Util.createLabel("")).width(rghColWidth).pad(4).row();
+		infoLabels.add(infoMoney = Util.createLabel("", "Your current money.")).width(rghColWidth).pad(4).row();
 
 		infoLabels.add(Util.createLabel("$/min", "Your gross income per minute,\ncompared to the amount needed to win.")).pad(4);
 		infoLabels.add(infoGrossIncome = Util.createLabel("")).width(rghColWidth).pad(4).row();
@@ -155,7 +155,31 @@ public class LD39 extends ApplicationAdapter {
 
 		rightPaneTable.add(infoLabels).align(Align.top).fill().top().row();
 
-		rightPaneTable.add().height(80).row();
+		rightPaneTable.add().height(55).row();
+
+		Table controlButtons = new Table();
+
+		Button b2 = null;
+
+		controlButtons.add(b2 = Util.createButton("Sell", new ChangeListener() {
+
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				gs.sellMode = !gs.sellMode;
+			}
+		})).pad(2);
+		b2.addListener(new TextTooltip("Click this then mouseover a building to\nsell it.", defaultTooltipStyle));
+
+		controlButtons.add(b2 = Util.createButton("Restart", new ChangeListener() {
+
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				restart();
+			}
+		})).pad(2);
+		b2.addListener(new TextTooltip("Restarts the level.", defaultTooltipStyle));
+
+		rightPaneTable.add(controlButtons).row();
 
 		Table buyButtons = new Table();
 
