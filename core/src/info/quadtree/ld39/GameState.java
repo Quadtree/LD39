@@ -11,6 +11,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -32,9 +33,11 @@ public class GameState implements InputProcessor {
 
 	int dayTicks = 0;
 
-	public List<Float> grossIncome = new ArrayList<Float>();
+	Sprite geoSprite;
 
+	public List<Float> grossIncome = new ArrayList<Float>();
 	boolean hasWonYet = false;
+
 	Building heldBuilding = null;
 
 	public boolean isDay = true;
@@ -42,6 +45,8 @@ public class GameState implements InputProcessor {
 	float money = LD39.START_MONEY;
 
 	int mx, my;
+
+	Sprite rockSprite;
 
 	TerrainType[][] terrainTypes;
 
@@ -55,6 +60,9 @@ public class GameState implements InputProcessor {
 		 * buildings.add(nh); } }
 		 */
 
+		geoSprite = LD39.s.atlas.createSprite("geo");
+		rockSprite = LD39.s.atlas.createSprite("rock");
+
 		terrainTypes = new TerrainType[75][];
 		for (int i = 0; i < terrainTypes.length; ++i)
 			terrainTypes[i] = new TerrainType[75];
@@ -63,9 +71,9 @@ public class GameState implements InputProcessor {
 			for (int y = 0; y < 75; ++y) {
 				terrainTypes[x][y] = TerrainType.Ground;
 
-				if (MathUtils.randomBoolean(0.03f))
-					terrainTypes[x][y] = TerrainType.Rock;
 				if (MathUtils.randomBoolean(0.005f))
+					terrainTypes[x][y] = TerrainType.Rock;
+				if (MathUtils.randomBoolean(0.001f))
 					terrainTypes[x][y] = TerrainType.Geothermal;
 			}
 		}
@@ -286,6 +294,16 @@ public class GameState implements InputProcessor {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		LD39.s.batch.begin();
+
+		for (int x = 0; x < 75; ++x) {
+			for (int y = 0; y < 75; ++y) {
+				if (terrainTypes[x][y] == TerrainType.Geothermal)
+					LD39.s.batch.draw(geoSprite, x * LD39.TILE_SIZE, y * LD39.TILE_SIZE);
+				if (terrainTypes[x][y] == TerrainType.Rock)
+					LD39.s.batch.draw(rockSprite, x * LD39.TILE_SIZE, y * LD39.TILE_SIZE);
+			}
+		}
+
 		for (Building b : buildings)
 			b.render();
 
@@ -405,10 +423,11 @@ public class GameState implements InputProcessor {
 			int totalCost = 0;
 
 			for (Building b : buildingsToPlace) {
-				totalCost += b.getCost();
+				if (isAreaClearFor(b))
+					totalCost += b.getCost();
 			}
 
-			if (totalCost <= money) {
+			if (totalCost > 0 && totalCost <= money) {
 				for (Building b : buildingsToPlace) {
 					if (isAreaClearFor(b))
 						buildings.add(b);

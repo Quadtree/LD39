@@ -13,7 +13,7 @@ battery
   index: -1
 dialog1
   rotate: false
-  xy: 260, 299
+  xy: 294, 333
   size: 8, 9
   split: 3, 3, 3, 3
   pad: 3, 3, 3, 4
@@ -32,6 +32,13 @@ fusion
   xy: 260, 344
   size: 48, 48
   orig: 48, 48
+  offset: 0, 0
+  index: -1
+geo
+  rotate: false
+  xy: 52, 68
+  size: 16, 16
+  orig: 16, 16
   offset: 0, 0
   index: -1
 hab
@@ -55,6 +62,13 @@ lab
   orig: 32, 32
   offset: 0, 0
   index: -1
+rock
+  rotate: false
+  xy: 102, 118
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
 solar
   rotate: false
   xy: 52, 86
@@ -71,14 +85,14 @@ thundercloud
   index: -1
 wire
   rotate: false
-  xy: 52, 68
+  xy: 260, 292
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 wire_prot
   rotate: false
-  xy: 102, 118
+  xy: 344, 376
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
