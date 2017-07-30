@@ -135,23 +135,30 @@ public class LD39 extends ApplicationAdapter {
 		final int rghColWidth = 75;
 
 		Table infoLabels = new Table();
-		infoLabels.add(Util.createLabel("$", "Your current money.")).pad(4);
-		infoLabels.add(infoMoney = Util.createLabel("", "Your current money.")).width(rghColWidth).pad(4).row();
+		String txt = null;
+		txt = "Your current money.";
+		infoLabels.add(Util.createLabel("$", txt)).pad(4);
+		infoLabels.add(infoMoney = Util.createLabel("", txt)).width(rghColWidth).pad(4).row();
 
-		infoLabels.add(Util.createLabel("$/min", "Your gross income per minute,\ncompared to the amount needed to win.")).pad(4);
-		infoLabels.add(infoGrossIncome = Util.createLabel("")).width(rghColWidth).pad(4).row();
+		txt = "Your gross income per minute,\ncompared to the amount needed to win.";
+		infoLabels.add(Util.createLabel("$/min", txt)).pad(4);
+		infoLabels.add(infoGrossIncome = Util.createLabel("", txt)).width(rghColWidth).pad(4).row();
 
-		infoLabels.add(Util.createLabel("P/s Genr", "Power generated per second by all\nyour generators.")).pad(4);
-		infoLabels.add(infoLastFramePowerGenerated = Util.createLabel("")).width(rghColWidth).pad(4).row();
+		txt = "Power generated per second by all\nyour generators.";
+		infoLabels.add(Util.createLabel("P/s Genr", txt)).pad(4);
+		infoLabels.add(infoLastFramePowerGenerated = Util.createLabel("", txt)).width(rghColWidth).pad(4).row();
 
-		infoLabels.add(Util.createLabel("P/s Lost", "Power lost in transit per second.\nConsider shortening wires.")).pad(4);
-		infoLabels.add(infoLastFramePowerWasted = Util.createLabel("")).width(rghColWidth).pad(4).row();
+		txt = "Power lost in transit per second.\nConsider shortening wires.";
+		infoLabels.add(Util.createLabel("P/s Lost", txt)).pad(4);
+		infoLabels.add(infoLastFramePowerWasted = Util.createLabel("", txt)).width(rghColWidth).pad(4).row();
 
-		infoLabels.add(Util.createLabel("P/s Sold", "Power sold per second.")).pad(4);
-		infoLabels.add(infoLastFramePowerSold = Util.createLabel("")).width(rghColWidth).pad(4).row();
+		txt = "Power sold per second.";
+		infoLabels.add(Util.createLabel("P/s Sold", txt)).pad(4);
+		infoLabels.add(infoLastFramePowerSold = Util.createLabel("", txt)).width(rghColWidth).pad(4).row();
 
-		infoLabels.add(Util.createLabel("P Stored", "Total power stored in all your batteries.")).pad(4);
-		infoLabels.add(infoLastFrameTotalPowerStored = Util.createLabel("")).width(rghColWidth).pad(4).row();
+		txt = "Total power stored in all your batteries.";
+		infoLabels.add(Util.createLabel("P Stored", txt)).pad(4);
+		infoLabels.add(infoLastFrameTotalPowerStored = Util.createLabel("", txt)).width(rghColWidth).pad(4).row();
 
 		rightPaneTable.add(infoLabels).align(Align.top).fill().top().row();
 
@@ -289,11 +296,24 @@ public class LD39 extends ApplicationAdapter {
 		}
 
 		infoMoney.setText("" + (int) gs.money);
-		infoGrossIncome.setText((int) gs.getGrossIncome() + "/" + LD39.GROSS_INCOME_TO_WIN);
+		if (gs.getGrossIncome() < 1000) {
+			infoGrossIncome.setText((int) gs.getGrossIncome() + "/" + LD39.GROSS_INCOME_TO_WIN);
+		} else {
+			infoGrossIncome.setText(((int) gs.getGrossIncome() / 1000) + "K/" + (LD39.GROSS_INCOME_TO_WIN / 1000) + "K");
+		}
+
 		infoLastFramePowerGenerated.setText("" + (int) (gs.lastFramePowerGenerated * LD39.POWER_PRICE * 60));
 		infoLastFramePowerSold.setText("" + (int) (gs.lastFramePowerSold * LD39.POWER_PRICE * 60));
 		infoLastFramePowerWasted.setText("" + (int) (gs.lastFramePowerWasted * LD39.POWER_PRICE * 60));
-		infoLastFrameTotalPowerStored.setText("" + (int) (gs.lastFrameTotalPowerStored * LD39.POWER_PRICE * 60));
+
+		int storedAmt = (int) (gs.lastFrameTotalPowerStored * LD39.POWER_PRICE);
+
+		if (storedAmt < 1000)
+			infoLastFrameTotalPowerStored.setText("" + storedAmt);
+		else if (gs.lastFrameTotalPowerStored < 1000000)
+			infoLastFrameTotalPowerStored.setText("" + (storedAmt / 1000) + "K");
+		else
+			infoLastFrameTotalPowerStored.setText("" + (storedAmt / 1000000) + "M");
 
 		// Gdx.gl.glClearColor(0.3f, 0.3f, 0.3f, 1);
 		// Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
