@@ -16,10 +16,14 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
 public class GameState implements InputProcessor {
-	TilePos buildingDragStart = null;
+	enum TerrainType {
+		Geothermal, Ground, Rock
+	}
 
+	TilePos buildingDragStart = null;
 	List<Building> buildings = new ArrayList<Building>();
 	List<Thundercloud> clouds = new ArrayList<Thundercloud>();
+
 	public int colonyGrowthTimer = 0;
 
 	private List<Connection> connections = new ArrayList<Connection>();
@@ -31,13 +35,15 @@ public class GameState implements InputProcessor {
 	public List<Float> grossIncome = new ArrayList<Float>();
 
 	boolean hasWonYet = false;
-
 	Building heldBuilding = null;
+
 	public boolean isDay = true;
 
 	float money = LD39.START_MONEY;
 
 	int mx, my;
+
+	TerrainType[][] terrainTypes;
 
 	List<VisualEffect> visualEffects = new ArrayList<VisualEffect>();
 
@@ -48,6 +54,21 @@ public class GameState implements InputProcessor {
 		 *
 		 * buildings.add(nh); } }
 		 */
+
+		terrainTypes = new TerrainType[75][];
+		for (int i = 0; i < terrainTypes.length; ++i)
+			terrainTypes[i] = new TerrainType[75];
+
+		for (int x = 0; x < 75; ++x) {
+			for (int y = 0; y < 75; ++y) {
+				terrainTypes[x][y] = TerrainType.Ground;
+
+				if (MathUtils.randomBoolean(0.03f))
+					terrainTypes[x][y] = TerrainType.Rock;
+				if (MathUtils.randomBoolean(0.005f))
+					terrainTypes[x][y] = TerrainType.Geothermal;
+			}
+		}
 
 		spawnColonyBuilding();
 	}
@@ -133,6 +154,8 @@ public class GameState implements InputProcessor {
 	public boolean isAreaClear(TilePos area, TilePos size) {
 		for (int x = area.x; x < area.x + size.x; x++) {
 			for (int y = area.y; y < area.y + size.y; y++) {
+				if (x >= 0 && y >= 0 && x < 75 && y < 75 && terrainTypes[x][y] == TerrainType.Rock)
+					return false;
 				if (this.getBuildingOnTile(TilePos.create(x, y)) != null)
 					return false;
 			}
