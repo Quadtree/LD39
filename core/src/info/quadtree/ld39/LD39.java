@@ -133,6 +133,8 @@ public class LD39 extends ApplicationAdapter {
 
 		rightPaneTable.add(infoLabels).align(Align.top).fill().top().row();
 
+		rightPaneTable.add().height(120).row();
+
 		Table buyButtons = new Table();
 
 		buyButtons.add(createBuyButton("Wire", new BuildingFactory() {
