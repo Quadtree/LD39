@@ -76,7 +76,7 @@ public class Lightning extends VisualEffect {
 				float pct = (float) i / vertArr.length;
 				float width = (pct * endWidth) + ((1 - pct) * startWidth);
 
-				sp.setColor(1, 1, 1, fade);
+				sp.setColor(1, 1, 1, Math.max(0, fade));
 				sp.setPosition((vertArr[i - 2] + vertArr[i]) / 2 - 16, (vertArr[i - 1] + vertArr[i + 1]) / 2 - 16);
 				sp.setRotation(MathUtils.atan2(vertArr[i + 1] - vertArr[i - 1], vertArr[i] - vertArr[i - 2]) * 180 / MathUtils.PI);
 				sp.setOrigin(16, 16);
