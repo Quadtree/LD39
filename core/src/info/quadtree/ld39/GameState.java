@@ -320,7 +320,7 @@ public class GameState implements InputProcessor {
 				 * byte[] pixels = ScreenUtils.getFrameBufferPixels(0, 0,
 				 * Gdx.graphics.getBackBufferWidth(),
 				 * Gdx.graphics.getBackBufferHeight(), true);
-				 * 
+				 *
 				 * Pixmap mixmap = new Pixmap(Gdx.graphics.getBackBufferWidth(),
 				 * Gdx.graphics.getBackBufferHeight(), Pixmap.Format.RGBA8888);
 				 * BufferUtils.copy(pixels, 0, mixmap.getPixels(),
@@ -328,7 +328,7 @@ public class GameState implements InputProcessor {
 				 * System.currentTimeMillis() + ".png";
 				 * PixmapIO.writePNG(Gdx.files.external(ssn), mixmap);
 				 * mixmap.dispose();
-				 * 
+				 *
 				 * System.out.println("Screenshot saved as " + ssn);
 				 */
 			}
@@ -694,6 +694,7 @@ public class GameState implements InputProcessor {
 				money -= totalCost;
 			} else {
 				LD39.s.playSound("nope.wav");
+				buildingDragStart = null;
 			}
 
 		}
