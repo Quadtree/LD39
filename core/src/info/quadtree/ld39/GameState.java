@@ -12,15 +12,11 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.PixmapIO;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.utils.BufferUtils;
-import com.badlogic.gdx.utils.ScreenUtils;
 
 public class GameState implements InputProcessor {
 	enum TerrainType {
@@ -320,15 +316,21 @@ public class GameState implements InputProcessor {
 			}
 
 			if (keycode == Input.Keys.F12) {
-				byte[] pixels = ScreenUtils.getFrameBufferPixels(0, 0, Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight(), true);
-
-				Pixmap mixmap = new Pixmap(Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight(), Pixmap.Format.RGBA8888);
-				BufferUtils.copy(pixels, 0, mixmap.getPixels(), pixels.length);
-				String ssn = ".ld39-screenshots/ss" + System.currentTimeMillis() + ".png";
-				PixmapIO.writePNG(Gdx.files.external(ssn), mixmap);
-				mixmap.dispose();
-
-				System.out.println("Screenshot saved as " + ssn);
+				/*
+				 * byte[] pixels = ScreenUtils.getFrameBufferPixels(0, 0,
+				 * Gdx.graphics.getBackBufferWidth(),
+				 * Gdx.graphics.getBackBufferHeight(), true);
+				 * 
+				 * Pixmap mixmap = new Pixmap(Gdx.graphics.getBackBufferWidth(),
+				 * Gdx.graphics.getBackBufferHeight(), Pixmap.Format.RGBA8888);
+				 * BufferUtils.copy(pixels, 0, mixmap.getPixels(),
+				 * pixels.length); String ssn = ".ld39-screenshots/ss" +
+				 * System.currentTimeMillis() + ".png";
+				 * PixmapIO.writePNG(Gdx.files.external(ssn), mixmap);
+				 * mixmap.dispose();
+				 * 
+				 * System.out.println("Screenshot saved as " + ssn);
+				 */
 			}
 		}
 
