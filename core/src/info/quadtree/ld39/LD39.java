@@ -96,6 +96,8 @@ public class LD39 extends ApplicationAdapter {
 	public void create() {
 		LD39.s = this;
 
+		LD39.CHEATS = false;
+
 		Music mainMusic = Gdx.audio.newMusic(Gdx.files.internal("ld39.ogg"));
 		mainMusic.setLooping(true);
 		mainMusic.setVolume(0.25f);
